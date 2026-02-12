@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplement Oracle v11.6 | トレーナー向けサプリメント診断ツール</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --primary: #3b82f6;
+            --accent: #06b6d4;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --success: #10b981;
+            --gold: #fbbf24;
+            --font-main: 'Montserrat', -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        /* English/Number Font Override */
+        h1, h2, .plan-price, .hero-tag, .plan-name, .btn, .mail-link, .lane-pill span {
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- Utilities --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .text-center { text-align: center; }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* PCで改行させないクラス（修正箇所） */
+        .text-nowrap-pc {
+            white-space: nowrap;
+        }
+
+        .section { padding: 80px 0; position: relative; }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.6);
+        }
+        .btn-outline {
+            border: 2px solid #475569;
+            color: white;
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: white;
+        }
+
+        /* --- Animations --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        #canvas-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+        }
+        .hero-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            background: rgba(6, 182, 212, 0.1);
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-sub);
+            margin-bottom: 40px;
+        }
+
+        /* --- UI Mockup in Hero --- */
+        .mockup-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 350px;
+            margin: 0 auto 30px;
+            transform: perspective(1000px) rotateX(10deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: perspective(1000px) rotateX(10deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateX(10deg) translateY(-15px); }
+        }
+        .lane-pill {
+            display: flex; justify-content: space-between; padding: 10px;
+            background: var(--bg-card); border-radius: 8px; margin-bottom: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* --- Problem Section --- */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .problem-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .problem-icon { font-size: 2rem; margin-bottom: 15px; display: block; }
+        .problem-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #f87171; }
+
+        /* --- Features Section --- */
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 100px;
+        }
+        .feature-row:nth-child(even) { flex-direction: row-reverse; }
+        .feature-text { flex: 1; }
+        .feature-visual {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        .feature-h2 { font-size: 2rem; margin-bottom: 20px; font-weight: 800; }
+        .feature-p { color: var(--text-sub); margin-bottom: 20px; }
+        
+        .badge-pubmed {
+            background: #2563eb; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; font-family: var(--font-main);
+        }
+
+        /* --- Pricing Section --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+            align-items: center;
+        }
+        .price-card {
+            background: var(--bg-card);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            transition: 0.3s;
+        }
+        .price-card.featured {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+        .plan-name { font-size: 1.4rem; color: var(--text-sub); margin-bottom: 10px; font-weight: 600; }
+        .plan-price { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; }
+        .plan-price span { font-size: 1rem; color: var(--text-sub); font-weight: normal; margin-left: 5px; }
+        .plan-features { list-style: none; margin-bottom: 30px; text-align: left; }
+        .plan-features li { margin-bottom: 12px; color: var(--text-sub); display: flex; align-items: flex-start; gap: 10px; font-size: 0.95rem; line-height: 1.4; }
+        .plan-features li.check { color: var(--text-main); }
+        .plan-features li::before { content: "✓"; color: var(--success); font-weight: bold; flex-shrink: 0; }
+        .plan-features li.cross::before { content: "×"; color: #64748b; }
+        
+        .recommend-badge {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: white; padding: 5px 20px; border-radius: 20px;
+            font-weight: bold; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-family: var(--font-main); letter-spacing: 1px;
+        }
+
+        /* --- CTA Footer --- */
+        .footer-cta {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 80px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .mail-link {
+            font-size: 1.5rem;
+            color: white;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 20px;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .mail-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        /* SNS Icons */
+        .sns-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .sns-icon {
+            width: 40px;
+            height: 40px;
+            fill: var(--text-sub);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .sns-icon:hover {
+            fill: var(--text-main);
+            transform: translateY(-3px);
+        }
+        .sns-instagram:hover {
+            fill: #E1306C; /* Instagram Color */
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .feature-row { flex-direction: column; text-align: center; }
+            .feature-row:nth-child(even) { flex-direction: column; }
+            .price-card.featured { transform: scale(1); }
+            /* スマホでは改行を許可する場合、以下のコメントアウトを外す */
+            /* .text-nowrap-pc { white-space: normal; } */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <canvas id="canvas-bg"></canvas>
+        <div class="container hero-content">
+            <div class="hero-tag fade-up">For Professional Trainers</div>
+            <h1 class="fade-up">
+                アドバイスを、<br>
+                <span class="text-nowrap-pc">
+                    <span class="text-gradient">「信頼」</span>と<span class="text-gradient">「収益」</span>に変える。
+                </span>
+            </h1>
+            <p class="fade-up" style="transition-delay: 0.2s;">
+                科学的根拠（PubMed）に基づくサプリメント診断を、あなたの武器に。<br>
+                紹介だけで終わらせない。収益化まで完結する次世代ツール。
+            </p>
+            
+            <div class="mockup-card fade-up" style="transition-delay: 0.3s;">
+                <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:10px; display:flex; justify-content:space-between;">
+                    <span>Supplement Oracle v11.6</span>
+                    <span style="color:var(--success);">● Active</span>
+                </div>
+                <div class="lane-pill">
+                    <span style="font-weight:bold;">クレアチン</span>
+                    <span style="color:var(--primary);">推奨: Lane B</span>
+                </div>
+                <div class="lane-pill" style="border-color:#f59e0b;">
+                    <span style="font-weight:bold;">ビタミンD3</span>
+                    <span style="color:#f59e0b;">不足: 2000IU</span>
+                </div>
+                <div class="lane-pill" style="border-color:#ef4444; opacity:0.7;">
+                    <span style="font-weight:bold;">カフェイン</span>
+                    <span style="color:#ef4444;">除外: Lane C</span>
+                </div>
+            </div>
+
+            <a href="#pricing" class="btn btn-primary fade-up" style="transition-delay: 0.4s;">
+                プランを見る ➔
+            </a>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center fade-up" style="margin-bottom:50px;">こんな「もったいない」をしていませんか？</h2>
+            <div class="problem-grid">
+                <div class="problem-card fade-up">
+                    <span class="problem-icon">💬</span>
+                    <div class="problem-title">LINEでの長文指導</div>
+                    <p style="color:var(--text-sub);">「おすすめは何ですか？」と聞かれるたびに、毎回同じような長文を打っていませんか？その時間は指導に使えます。</p>
+                </div>
+                <div class="problem-card fade-up" style="transition-delay: 0.1s;">
+                    <span class="problem-icon">💸</span>
+                    <div class="problem-title">紹介しても1円にもならない</div>
+                    <p style="color:var(--text-sub);">良かれと思って教えたサプリ。結局Amazonや薬局で買われ、あなたの知識はタダ働きになっていませんか？</p>
+                </div>
+                <div class="problem-card fade-up" style="transition-delay: 0.2s;">
+                    <span class="problem-icon">📉</span>
+                    <div class="problem-title">感覚だけのアドバイス</div>
+                    <p style="color:var(--text-sub);">「なんとなく効く」では信頼されません。エビデンスベースの指導がなければ、クライアントは離れていきます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #111827;">
+        <div class="container">
+            <div class="feature-row fade-up">
+                <div class="feature-text">
+                    <div style="color:var(--primary); font-weight:bold; margin-bottom:10px;">EVIDENCE BASED</div>
+                    <h2 class="feature-h2">50種以上の成分DBと<br>PubMedエビデンス</h2>
+                    <p class="feature-p">
+                        最新の論文データに基づき、クライアントの「体重・性別・トレーニング歴・目的」から最適な摂取量を自動計算。<br>
+                        提案には<span class="badge-pubmed">PMID: 28615996</span>のように根拠論文へのリンクが付与され、医療従事者レベルの信頼性を担保します。
+                    </p>
+                </div>
+                <div class="feature-visual">
+                    <div style="font-family:monospace; color:var(--accent);">
+                        > Check: Creatine<br>
+                        > Goal: Bulking<br>
+                        > Evidence: High<br>
+                        > Result: <span style="color:white; background:var(--primary);">Priority Lane B</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-row fade-up">
+                <div class="feature-text">
+                    <div style="color:var(--success); font-weight:bold; margin-bottom:10px;">MONETIZATION</div>
+                    <h2 class="feature-h2">あなたの紹介料を<br>自動で組み込む</h2>
+                    <p class="feature-p">
+                        診断結果の最後には「推奨ショップへ行く」ボタンを設置。<br>
+                        ここにあなたのアフィリエイトリンク（iHerb等）を設定することで、クライアントが購入するたびに収益が発生します。
+                    </p>
+                </div>
+                <div class="feature-visual" style="display:flex; align-items:center; justify-content:center;">
+                    <button class="btn btn-primary" style="background:var(--success); width:80%;">🛒 推奨ショップへ行く</button>
+                    <div style="position:absolute; bottom:20px; right:20px; font-size:0.8rem; color:var(--text-sub);">Link: your-affiliate-code</div>
+                </div>
+            </div>
+
+            <div class="feature-row fade-up">
+                <div class="feature-text">
+                    <div style="color:var(--gold); font-weight:bold; margin-bottom:10px;">BRANDING</div>
+                    <h2 class="feature-h2">「〇〇ジム監修」として<br>ブランド化</h2>
+                    <p class="feature-p">
+                        ツール上部にあなたのジム名や屋号を表示可能。<br>
+                        「先生が作ってくれた専用の診断」としてクライアントに共有でき、顧客満足度とリピート率を劇的に向上させます。
+                    </p>
+                </div>
+                <div class="feature-visual" style="text-align:center; padding-top:60px;">
+                    <div style="font-weight:bold; font-size:1.2rem;">SUPER BODY GYM</div>
+                    <div style="font-size:0.8rem; color:var(--text-sub);">Personalized Supplement Planner</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section">
+        <div class="container">
+            <h2 class="text-center fade-up" style="margin-bottom:10px;">プラン・価格</h2>
+            <p class="text-center fade-up" style="color:var(--text-sub);">サプリ紹介料1〜2件分で元が取れる設定です。</p>
+            
+            <div class="pricing-grid">
+                <div class="price-card fade-up">
+                    <div class="plan-name">🌿 梅 (Lite)</div>
+                    <div class="plan-price">980<span>円/月</span></div>
+                    <ul class="plan-features">
+                        <li class="check">全サプリDB利用可能</li>
+                        <li class="check">診断・レポート無制限</li>
+                        <li class="cross">屋号の変更不可</li>
+                        <li class="cross">アフィリエイト設定不可</li>
+                    </ul>
+                    <a href="mailto:muscleprime17@gmail.com?subject=Liteプラン申し込み" class="btn btn-outline" style="width:100%;">選択する</a>
+                </div>
+
+                <div class="price-card featured fade-up" style="transition-delay: 0.1s;">
+                    <div class="recommend-badge">RECOMMENDED</div>
+                    <div class="plan-name" style="color:var(--primary); font-weight:bold;">🎋 竹 (Standard)</div>
+                    <div class="plan-price">3,980<span>円/月</span></div>
+                    <ul class="plan-features">
+                        <li class="check">全サプリDB利用可能</li>
+                        <li class="check">診断・レポート無制限</li>
+                        <li class="check" style="font-weight:bold; color:#fff;">屋号・トレーナー名表示</li>
+                        <li class="check" style="font-weight:bold; color:var(--success);">アフィリエイトリンク設定</li>
+                        <li class="check">優先サポート</li>
+                    </ul>
+                    <a href="mailto:muscleprime17@gmail.com?subject=Standardプラン申し込み" class="btn btn-primary" style="width:100%;">今すぐ始める</a>
+                </div>
+
+                <div class="price-card fade-up" style="transition-delay: 0.2s;">
+                    <div class="plan-name">🌲 松 (Pro)</div>
+                    <div class="plan-price">9,800<span>円〜/月</span></div>
+                    <ul class="plan-features">
+                        <li class="check">完全ホワイトラベル</li>
+                        <li class="check">ロゴ・配色カスタマイズ</li>
+                        <li class="check" style="color:var(--gold);">カスタムロジック追加可能</li>
+                        <li class="check" style="color:var(--gold);">自社オプションへの誘導広告</li>
+                        <li class="check">専任サポート</li>
+                    </ul>
+                    <a href="mailto:muscleprime17@gmail.com?subject=Proプランお問い合わせ" class="btn btn-outline" style="width:100%;">お問い合わせ</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-cta text-center">
+        <div class="container">
+            <h2 class="fade-up" style="margin-bottom:10px;">お問い合わせ・導入相談</h2>
+            <p class="fade-up" style="color:var(--text-sub);">導入に関するご質問や、プランのご相談はお気軽に。</p>
+            
+            <a href="mailto:muscleprime17@gmail.com" class="mail-link fade-up">
+                muscleprime17@gmail.com
+            </a>
+
+            <div class="sns-links fade-up">
+                <a href="#" target="_blank" title="Instagram">
+                    <svg class="sns-icon sns-instagram" viewBox="0 0 24 24">
+                        <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                    </svg>
+                </a>
+            </div>
+
+            <div style="margin-top:50px; color:var(--text-sub); font-size:0.8rem;">
+                &copy; 2026 Supplement Oracle v11.6. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Canvas Particle Animation ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+                this.color = Math.random() > 0.5 ? 'rgba(59, 130, 246, ' : 'rgba(6, 182, 212, ';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if(this.x < 0 || this.x > width) this.vx *= -1;
+                if(this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + Math.random() * 0.5 + ')';
+                ctx.fill();
+            }
+        }
+
+        for(let i=0; i<50; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            // Connect particles
+            for(let i=0; i<particles.length; i++) {
+                for(let j=i+1; j<particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if(dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(59, 130, 246, ${1 - dist/150})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- Scroll Reveal Animation ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
