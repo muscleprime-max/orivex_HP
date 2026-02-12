@@ -28,7 +28,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
-        /* English/Number Font Override */
         h1, h2, .plan-price, .hero-tag, .plan-name, .btn, .mail-link, .lane-pill span {
             font-family: var(--font-main);
         }
@@ -36,7 +35,7 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            overflow-x: hidden; /* 横スクロール防止の絶対ルール */
+            overflow-x: hidden;
             line-height: 1.6;
             scroll-behavior: smooth;
         }
@@ -54,7 +53,7 @@
             font-weight: 800;
         }
 
-        /* PCでの改行禁止設定（スマホで解除） */
+        /* PC用：改行させない */
         .text-nowrap-pc {
             white-space: nowrap;
         }
@@ -106,8 +105,10 @@
 
         /* --- Hero Section --- */
         .hero {
-            min-height: 100vh; /* 高さの崩れ防止 */
-            padding: 100px 0; /* スマホでの余白確保 */
+            /* 修正: 固定heightではなくmin-heightにして、スマホで内容が増えても切れないようにする */
+            min-height: 100vh;
+            height: auto; 
+            padding: 120px 0 80px; /* 上下の余白を確保 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -144,7 +145,7 @@
         }
         .hero h1 {
             font-size: 3.5rem;
-            line-height: 1.2;
+            line-height: 1.3;
             margin-bottom: 20px;
             font-weight: 800;
         }
@@ -162,7 +163,7 @@
             border-radius: 20px;
             padding: 20px;
             max-width: 350px;
-            width: 100%; /* スマホ対応 */
+            width: 90%; /* スマホでは画面幅の90% */
             margin: 0 auto 30px;
             transform: perspective(1000px) rotateX(10deg);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -217,7 +218,7 @@
         
         .badge-pubmed {
             background: #2563eb; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; font-family: var(--font-main);
-            display: inline-block; /* 改行時の崩れ防止 */
+            display: inline-block;
         }
 
         /* --- Pricing Section --- */
@@ -275,7 +276,7 @@
             border-bottom: 2px solid var(--primary);
             font-weight: 600;
             letter-spacing: 1px;
-            word-break: break-all; /* 長いメアドの改行対応 */
+            word-break: break-all;
         }
         .mail-link:hover {
             color: var(--accent);
@@ -301,34 +302,28 @@
             transform: translateY(-3px);
         }
         .sns-instagram:hover {
-            fill: #E1306C; /* Instagram Color */
+            fill: #E1306C;
         }
 
         /* --- Responsive / Mobile Fixes --- */
         @media (max-width: 768px) {
             .hero h1 { 
-                font-size: 2.0rem; /* スマホ用にフォントサイズ縮小 */
-                line-height: 1.4;
+                font-size: 1.8rem; /* スマホ用にさらに少し小さくして1行に収まりやすくする */
+                line-height: 1.5;
+                word-break: keep-all; /* 【重要】単語の途中で改行させない */
+                overflow-wrap: break-word; /* どうしても入らない場合は単語で改行 */
             }
             .feature-row { flex-direction: column; text-align: center; }
             .feature-row:nth-child(even) { flex-direction: column; }
             .price-card.featured { transform: scale(1); }
             
-            /* 【重要】スマホでは強制改行禁止を解除し、自然に折り返す */
+            /* スマホでは改行禁止を解除し、自然な折り返しを許可する */
             .text-nowrap-pc { 
                 white-space: normal; 
-                display: block; /* ブロック要素にして自然な流れを作る */
+                display: inline;
             }
             
-            /* モックアップが画面外にはみ出ないようにする */
-            .mockup-card {
-                width: 90%;
-                max-width: 320px;
-            }
-
-            .mail-link {
-                font-size: 1.2rem; /* メアドも少し小さく */
-            }
+            .mail-link { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -341,7 +336,7 @@
             <h1 class="fade-up">
                 アドバイスを、<br>
                 <span class="text-nowrap-pc">
-                    <span class="text-gradient">「信頼」</span>と<span class="text-gradient">「収益」</span>に変える。
+                    <span class="text-gradient">「信頼」</span>と<span class="text-gradient">「収益」</span>に<span style="display:inline-block;">変える。</span>
                 </span>
             </h1>
             <p class="fade-up" style="transition-delay: 0.2s;">
@@ -530,15 +525,17 @@
 
         function resize() {
             width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            height = canvas.height = document.documentElement.scrollHeight; // コンテンツの高さに合わせる修正
         }
         window.addEventListener('resize', resize);
-        resize();
+        
+        // ページロード時にもサイズを調整
+        window.addEventListener('load', resize);
 
         class Particle {
             constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.size = Math.random() * 2;
@@ -547,8 +544,8 @@
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                if(this.x < 0 || this.x > width) this.vx *= -1;
-                if(this.y < 0 || this.y > height) this.vy *= -1;
+                if(this.x < 0 || this.x > window.innerWidth) this.vx *= -1;
+                if(this.y < 0 || this.y > window.innerHeight) this.vy *= -1;
             }
             draw() {
                 ctx.beginPath();
@@ -559,9 +556,10 @@
         }
 
         for(let i=0; i<50; i++) particles.push(new Particle());
+        resize(); // Init size
 
         function animate() {
-            ctx.clearRect(0, 0, width, height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
                 p.update();
                 p.draw();
