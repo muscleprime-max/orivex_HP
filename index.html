@@ -53,7 +53,6 @@
             font-weight: 800;
         }
 
-        /* PC用：改行させない */
         .text-nowrap-pc {
             white-space: nowrap;
         }
@@ -105,10 +104,9 @@
 
         /* --- Hero Section --- */
         .hero {
-            /* 修正: 固定heightではなくmin-heightにして、スマホで内容が増えても切れないようにする */
             min-height: 100vh;
             height: auto; 
-            padding: 120px 0 80px; /* 上下の余白を確保 */
+            padding: 120px 0 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -163,7 +161,7 @@
             border-radius: 20px;
             padding: 20px;
             max-width: 350px;
-            width: 90%; /* スマホでは画面幅の90% */
+            width: 90%;
             margin: 0 auto 30px;
             transform: perspective(1000px) rotateX(10deg);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -283,7 +281,6 @@
             border-color: var(--accent);
         }
         
-        /* SNS Icons */
         .sns-links {
             margin-top: 30px;
             display: flex;
@@ -305,24 +302,20 @@
             fill: #E1306C;
         }
 
-        /* --- Responsive / Mobile Fixes --- */
         @media (max-width: 768px) {
             .hero h1 { 
-                font-size: 1.8rem; /* スマホ用にさらに少し小さくして1行に収まりやすくする */
+                font-size: 1.8rem;
                 line-height: 1.5;
-                word-break: keep-all; /* 【重要】単語の途中で改行させない */
-                overflow-wrap: break-word; /* どうしても入らない場合は単語で改行 */
+                word-break: keep-all;
+                overflow-wrap: break-word;
             }
             .feature-row { flex-direction: column; text-align: center; }
             .feature-row:nth-child(even) { flex-direction: column; }
             .price-card.featured { transform: scale(1); }
-            
-            /* スマホでは改行禁止を解除し、自然な折り返しを許可する */
             .text-nowrap-pc { 
                 white-space: normal; 
                 display: inline;
             }
-            
             .mail-link { font-size: 1.2rem; }
         }
     </style>
@@ -340,8 +333,8 @@
                 </span>
             </h1>
             <p class="fade-up" style="transition-delay: 0.2s;">
-                科学的根拠（PubMed）に基づくサプリメント診断を、あなたの武器に。<br>
-                紹介だけで終わらせない。収益化まで完結する次世代ツール。
+                まるで「処方箋」のようなサプリメント診断書を、1分で発行。<br>
+                エビデンスに基づく権威性と、紹介料（アフィリエイト）による収益化を同時に実現します。
             </p>
             
             <div class="mockup-card fade-up" style="transition-delay: 0.3s;">
@@ -380,8 +373,8 @@
                 </div>
                 <div class="problem-card fade-up" style="transition-delay: 0.1s;">
                     <span class="problem-icon">💸</span>
-                    <div class="problem-title">紹介しても1円にもならない</div>
-                    <p style="color:var(--text-sub);">良かれと思って教えたサプリ。結局Amazonや薬局で買われ、あなたの知識はタダ働きになっていませんか？</p>
+                    <div class="problem-title">物販収益の取りこぼし</div>
+                    <p style="color:var(--text-sub);">iHerbやAmazonで適当に買われていませんか？あなたのリンク経由で購入してもらうだけで、それは立派な副収入になります。</p>
                 </div>
                 <div class="problem-card fade-up" style="transition-delay: 0.2s;">
                     <span class="problem-icon">📉</span>
@@ -430,11 +423,11 @@
 
             <div class="feature-row fade-up">
                 <div class="feature-text">
-                    <div style="color:var(--gold); font-weight:bold; margin-bottom:10px;">BRANDING</div>
-                    <h2 class="feature-h2">「〇〇ジム監修」として<br>ブランド化</h2>
+                    <div style="color:var(--gold); font-weight:bold; margin-bottom:10px;">PRESCRIPTION</div>
+                    <h2 class="feature-h2">「〇〇ジム監修」の<br>処方箋として発行</h2>
                     <p class="feature-p">
                         ツール上部にあなたのジム名や屋号を表示可能。<br>
-                        「先生が作ってくれた専用の診断」としてクライアントに共有でき、顧客満足度とリピート率を劇的に向上させます。
+                        単なるアドバイスではなく、「先生が作ってくれた専用の処方箋（レポート）」としてクライアントに提供でき、満足度が向上します。
                     </p>
                 </div>
                 <div class="feature-visual" style="text-align:center; padding-top:60px;">
@@ -470,9 +463,9 @@
                     <ul class="plan-features">
                         <li class="check">全サプリDB利用可能</li>
                         <li class="check">診断・レポート無制限</li>
+                        <li class="check" style="font-weight:bold; color:#fff;">処方箋風レポート発行</li>
                         <li class="check" style="font-weight:bold; color:#fff;">屋号・トレーナー名表示</li>
                         <li class="check" style="font-weight:bold; color:var(--success);">アフィリエイトリンク設定</li>
-                        <li class="check">優先サポート</li>
                     </ul>
                     <a href="mailto:muscleprime17@gmail.com?subject=Standardプラン申し込み" class="btn btn-primary" style="width:100%;">今すぐ始める</a>
                 </div>
@@ -483,9 +476,9 @@
                     <ul class="plan-features">
                         <li class="check">完全ホワイトラベル</li>
                         <li class="check">ロゴ・配色カスタマイズ</li>
-                        <li class="check" style="color:var(--gold);">カスタムロジック追加可能</li>
-                        <li class="check" style="color:var(--gold);">自社オプションへの誘導広告</li>
-                        <li class="check">専任サポート</li>
+                        <li class="check" style="color:var(--gold);">こだわりの除外リスト設定</li>
+                        <li class="check" style="color:var(--gold);">独自ロジック・広告枠追加</li>
+                        <li class="check">設定代行コンシェルジュ</li>
                     </ul>
                     <a href="mailto:muscleprime17@gmail.com?subject=Proプランお問い合わせ" class="btn btn-outline" style="width:100%;">お問い合わせ</a>
                 </div>
@@ -525,11 +518,9 @@
 
         function resize() {
             width = canvas.width = window.innerWidth;
-            height = canvas.height = document.documentElement.scrollHeight; // コンテンツの高さに合わせる修正
+            height = canvas.height = document.documentElement.scrollHeight;
         }
         window.addEventListener('resize', resize);
-        
-        // ページロード時にもサイズを調整
         window.addEventListener('load', resize);
 
         class Particle {
@@ -556,7 +547,7 @@
         }
 
         for(let i=0; i<50; i++) particles.push(new Particle());
-        resize(); // Init size
+        resize();
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -564,7 +555,6 @@
                 p.update();
                 p.draw();
             });
-            // Connect particles
             for(let i=0; i<particles.length; i++) {
                 for(let j=i+1; j<particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
