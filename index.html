@@ -22,6 +22,7 @@
             --gray-light: #f3f4f6;
             --font-main: 'Noto Sans JP', sans-serif;
             --font-eng: 'Montserrat', sans-serif;
+            --line-color: #06c755; /* LINE Official Color */
         }
 
         * {
@@ -432,11 +433,21 @@
 
         .contact-link-item i {
             font-size: 2rem;
-            color: var(--accent-color);
+            color: var(--text-color);
+            transition: 0.3s;
         }
 
-        .contact-link-item:hover {
+        /* 個別アイコン色設定 */
+        .contact-link-item:hover i {
             color: var(--accent-color);
+        }
+        
+        .contact-link-item.line-link:hover i {
+            color: var(--line-color);
+        }
+        
+        .contact-link-item.insta-link:hover i {
+            color: #E1306C;
         }
 
         /* --- Footer --- */
@@ -498,7 +509,7 @@
             }
 
             .contact-links {
-                gap: 20px;
+                gap: 30px;
             }
         }
     </style>
@@ -609,7 +620,7 @@
                         「こんな機能が欲しい」「独自のメソッドをシステム化したい」<br>
                         そんな想いを、私たちにぜひお聞かせください。
                     </p>
-                    <a href="#contact" class="btn">お問い合わせはこちら</a>
+                    <a href="https://muscleprime-max.github.io/ORIVEXLAB1/" target="_blank" class="btn">ORIVEX LAB. サイトへ</a>
                 </div>
             </div>
         </div>
@@ -695,11 +706,17 @@
                 <p style="color:#6b7280;">サービスに関するご質問やご要望は、<br>下記よりお気軽にご連絡ください。</p>
 
                 <div class="contact-links">
+                    <a href="https://lin.ee/3ClYbhu" target="_blank" class="contact-link-item line-link">
+                        <i class="fa-brands fa-line"></i>
+                        <span>Official LINE</span>
+                    </a>
+
                     <a href="mailto:muscleprime17@gmail.com" class="contact-link-item">
                         <i class="fa-regular fa-envelope"></i>
                         <span>Email Us</span>
                     </a>
-                    <a href="https://www.instagram.com/orivex_official/" target="_blank" class="contact-link-item">
+                    
+                    <a href="https://www.instagram.com/orivex_official/" target="_blank" class="contact-link-item insta-link">
                         <i class="fa-brands fa-instagram"></i>
                         <span>orivex_official</span>
                     </a>
