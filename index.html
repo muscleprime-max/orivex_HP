@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
@@ -18,6 +19,7 @@
             --text-sub: #94a3b8;
             --success: #10b981;
             --gold: #fbbf24;
+            --danger: #ef4444;
             --font-main: 'Montserrat', -apple-system, sans-serif;
         }
 
@@ -28,7 +30,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
-        h1, h2, .plan-price, .hero-tag, .plan-name, .btn, .mail-link, .lane-pill span {
+        h1, h2, h3, .plan-price, .hero-tag, .plan-name, .btn, .mail-link, .lane-pill span {
             font-family: var(--font-main);
         }
 
@@ -193,6 +195,180 @@
         }
         .problem-icon { font-size: 2rem; margin-bottom: 15px; display: block; }
         .problem-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #f87171; }
+
+        /* --- Comparison Section --- */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .comp-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .comp-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .comp-icon-box {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary);
+        }
+        .comp-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        .comp-row {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        .comp-row.bad {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid var(--danger);
+            color: #fca5a5;
+        }
+        .comp-row.good {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--success);
+            color: #86efac;
+        }
+        .comp-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.75rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .comp-label i { margin-right: 5px; }
+
+        /* --- Voice & Efficiency (FIXED Graph) --- */
+        .voice-section {
+            background: linear-gradient(to bottom, var(--bg-dark), #131c2e);
+        }
+        .voice-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .voice-card::before {
+            content: "“";
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            font-size: 6rem;
+            color: var(--primary);
+            font-family: serif;
+            line-height: 1;
+            opacity: 0.5;
+        }
+        .voice-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        .voice-author {
+            text-align: right;
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .graph-box {
+            background: rgba(255,255,255,0.03);
+            padding: 50px 30px;
+            border-radius: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+        .graph-title {
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+        }
+        .graph-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 60px;
+            height: 300px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        .graph-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+            height: 100%;
+            justify-content: flex-end; /* Bottom align bars */
+            position: relative;
+        }
+        .graph-bar {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: height 1s ease-out;
+        }
+        /* Fixed Heights for visibility */
+        .graph-bar.old {
+            height: 85%; /* 15 mins (Visual scale) */
+            background: linear-gradient(to bottom, #64748b, #334155);
+            opacity: 0.7;
+        }
+        .graph-bar.new {
+            height: 8%; /* 1 min (Visual scale, approx 1/12th of old) */
+            background: linear-gradient(to top, var(--primary), var(--accent));
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+        .bar-label {
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--text-sub);
+        }
+        .bar-value {
+            position: absolute;
+            top: -35px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            white-space: nowrap;
+        }
+        .new .bar-value {
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+        
+        @media (max-width: 600px) {
+            .graph-container { gap: 30px; height: 250px; }
+            .graph-bar-wrapper { width: 70px; }
+        }
 
         /* --- Features Section --- */
         .feature-row {
@@ -381,6 +557,94 @@
                     <div class="problem-title">感覚だけのアドバイス</div>
                     <p style="color:var(--text-sub);">「なんとなく効く」では信頼されません。エビデンスベースの指導がなければ、クライアントは離れていきます。</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center fade-up">物理サーバーから、<br><span class="text-gradient">「デジタルソリューション」</span>の時代へ。</h2>
+            
+            <div class="comparison-grid fade-up">
+                <div class="comp-card">
+                    <div class="comp-icon-box"><i class="fa-solid fa-file-medical"></i></div>
+                    <div class="comp-title">パーソナライズされた<br>「処方箋」の発行</div>
+                    <div class="comp-row bad">
+                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 他社のサプリメントサーバー</span>
+                        決まったものを売るだけ。「なぜ今それが必要か」の根拠は提示できません。
+                    </div>
+                    <div class="comp-row good">
+                        <span class="comp-label"><i class="fa-solid fa-check"></i> ORIVEX</span>
+                        クライアントデータに基づき「根拠」を1分で提示。「納得感」が生まれ、トレーナーへの信頼に直結します。
+                    </div>
+                </div>
+
+                <div class="comp-card">
+                    <div class="comp-icon-box"><i class="fa-solid fa-ban"></i></div>
+                    <div class="comp-title">在庫リスクと<br>メンテナンス「ゼロ」</div>
+                    <div class="comp-row bad">
+                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 他社のサプリメントサーバー</span>
+                        粉末の補充、日々の清掃、故障対応...。物理的な管理コストが現場の時間を奪います。
+                    </div>
+                    <div class="comp-row good">
+                        <span class="comp-label"><i class="fa-solid fa-check"></i> ORIVEX</span>
+                        完全デジタルなため、在庫もメンテも不要。多忙な業務の合間でも、100%「指導の質」に集中できます。
+                    </div>
+                </div>
+
+                <div class="comp-card">
+                    <div class="comp-icon-box"><i class="fa-solid fa-users-gear"></i></div>
+                    <div class="comp-title">「標準化」による<br>ジム経営の武器</div>
+                    <div class="comp-row bad">
+                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 他社のサプリメントサーバー</span>
+                        サーバーを導入しても、トレーナー自身の知識や指導スキルは向上しません。
+                    </div>
+                    <div class="comp-row good">
+                        <span class="comp-label"><i class="fa-solid fa-check"></i> ORIVEX</span>
+                        新人トレーナーでもベテラン級のサプリ指導が可能に。属人化を防ぎ、サービス品質を標準化します。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section voice-section">
+        <div class="container">
+            <h2 class="text-center fade-up" style="margin-bottom: 50px;">導入トレーナーの声と<br><span class="text-gradient">圧倒的な業務効率化</span></h2>
+            
+            <div class="voice-card fade-up">
+                <p class="voice-text">
+                    「以前はクライアント一人ひとりに合わせてサプリメントを調べ、LINEで長文を送るのに15分はかかっていました。SUPPLEMENT-ORACLE-導入後は、クライアントにQRコードを読み取ってもらうだけ。わずか1分で、しかも根拠に基づいた完璧な提案ができるようになりました。空いた時間でセッションの準備や自身のトレーニングに集中できています。」
+                </p>
+                <div class="voice-author">
+                    パーソナルトレーナー (30代・男性)
+                </div>
+            </div>
+
+            <div class="graph-box fade-up">
+                <div class="graph-title">クライアント1人あたりのフィードバック時間</div>
+                
+                <div class="graph-container">
+                    <div class="graph-bar-wrapper">
+                        <div class="bar-value">15分</div>
+                        <div class="graph-bar old"></div>
+                        <div class="bar-label">従来</div>
+                    </div>
+
+                    <div style="padding-bottom: 20px;">
+                        <i class="fa-solid fa-arrow-right fa-2x" style="color:var(--text-sub);"></i>
+                    </div>
+
+                    <div class="graph-bar-wrapper">
+                        <div class="bar-value">1分</div>
+                        <div class="graph-bar new"></div>
+                        <div class="bar-label" style="color:var(--accent);">ORIVEX</div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 20px; color: var(--accent); font-weight: bold;">
+                    業務時間を <span style="font-size: 1.5rem;">1/15</span> に短縮！
+                </p>
             </div>
         </div>
     </section>
