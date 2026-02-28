@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>ORIVEX | 現場に、余裕を。トレーナーの指導をシンプルにする支援ツール</title>
-    <meta name="description" content="ORIVEXはトレーナーの指導をテクノロジーでシンプルにし、現場に、余裕を生み出す支援ツールです。サプリ指導のロジックを自動化し、業務効率を劇的に向上させます。">
+    <meta name="description" content="ORIVEXはトレーナーの指導をテクノロジーでシンプルにし、現場に、余裕を生み出す支援ツールです。指導のロジックを自動化し、業務効率を劇的に向上させます。">
 
     <meta property="og:title" content="ORIVEX | 現場に、余裕を。">
     <meta property="og:description" content="トレーナーの指導をテクノロジーでシンプルにする支援ツール">
@@ -45,6 +45,7 @@
             font-family: var(--font-main);
             line-height: 1.8;
             overflow-x: hidden;
+            word-break: auto-phrase; /* 自然な折り返しをサポート */
         }
 
         a {
@@ -138,7 +139,6 @@
             max-width: 800px;
             z-index: 2;
             margin-top: -50px;
-            /* Adjust for fixed bar */
         }
 
         .hero-sub {
@@ -176,7 +176,7 @@
             z-index: 1;
         }
 
-        /* --- 3-Line Value Proposition (New) --- */
+        /* --- 3-Line Value Proposition --- */
         .value-prop {
             background: var(--text-color);
             color: white;
@@ -324,34 +324,151 @@
             font-weight: 700;
             border: none;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         .btn:hover {
             background: var(--accent-color);
         }
 
-        /* --- Community --- */
-        .community-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        /* --- Simulation Section --- */
+        .simulation-section {
+            background-color: var(--bg-color);
+        }
+        
+        .sim-box {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            border-top: 5px solid var(--accent-color);
+        }
+        
+        .sim-time {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            font-family: var(--font-eng);
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 20px;
-            margin-top: 50px;
+        }
+        
+        .sim-time span {
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .sim-ideas {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .sim-idea {
+            flex: 1;
+            background: var(--gray-light);
+            padding: 30px 20px;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+        
+        .sim-idea:hover {
+            transform: translateY(-5px);
+            background: #e6f9f0;
+        }
+        
+        .sim-idea i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
         }
 
-        .comm-img {
-            height: 250px;
-            border-radius: 12px;
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(100%);
-            transition: 0.5s;
+        /* --- Ethics & Security Section --- */
+        .ethics-section {
+            background: var(--gray-light);
+        }
+        
+        .ethics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .ethics-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        
+        .ethics-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--text-color);
+        }
+        
+        .ethics-icon {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
         }
 
-        .comm-img:hover {
-            filter: grayscale(0%);
+        /* --- Custom Development Box --- */
+        .custom-dev-box {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+            padding: 50px 30px;
+            border-radius: 20px;
+            margin-top: 60px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+            border: 2px dashed rgba(16, 185, 129, 0.4);
+            position: relative;
         }
 
-        /* --- FAQ Section (New) --- */
+        .custom-dev-icon {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-custom {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: var(--accent-dark);
+            border-radius: 50px;
+            font-weight: 700;
+            border: 2px solid var(--accent-color);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* --- FAQ Section --- */
         .faq-section {
             background: white;
         }
@@ -405,7 +522,7 @@
             padding-bottom: 20px;
         }
 
-        /* --- Contact Section (New) --- */
+        /* --- Contact Section --- */
         .contact-section {
             background: var(--gray-light);
             padding: 80px 20px;
@@ -445,18 +562,9 @@
             transition: 0.3s;
         }
 
-        /* 個別アイコン色設定 */
-        .contact-link-item:hover i {
-            color: var(--accent-color);
-        }
-        
-        .contact-link-item.line-link:hover i {
-            color: var(--line-color);
-        }
-        
-        .contact-link-item.insta-link:hover i {
-            color: #E1306C;
-        }
+        .contact-link-item:hover i { color: var(--accent-color); }
+        .contact-link-item.line-link:hover i { color: var(--line-color); }
+        .contact-link-item.insta-link:hover i { color: #E1306C; }
 
         /* --- Footer --- */
         footer {
@@ -483,42 +591,22 @@
             color: #9ca3af;
         }
 
-        /* Responsive */
+        /* --- Responsive / Smartphone adjustments --- */
         @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            nav {
-                display: none;
-            }
-
-            .value-grid {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-
-            .value-item {
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                padding: 20px 0;
-            }
-
-            .value-item:last-child {
-                border-bottom: none;
-            }
-
-            .contact-links {
-                gap: 30px;
-            }
+            header { padding: 15px 20px; }
+            .hero h1 { font-size: 2.2rem; }
+            .section-title { font-size: 1.8rem; }
+            nav { display: none; }
+            .value-grid { grid-template-columns: 1fr; gap: 0; }
+            .value-item { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding: 20px 0; }
+            .value-item:last-child { border-bottom: none; }
+            .contact-links { gap: 30px; }
+            .sim-time { font-size: 2.5rem; }
+            .sim-ideas { flex-direction: column; gap: 15px; }
+            .sim-box { padding: 30px 20px; }
+            
+            /* スマホで不自然な改行を防ぐためのクラス */
+            .sp-none { display: none; }
         }
     </style>
 </head>
@@ -543,7 +631,7 @@
             <span class="hero-sub fade-in">TRAINER SUPPORT TOOLS</span>
             <h1 class="fade-in" style="transition-delay: 0.2s;">現場に、余裕を。</h1>
             <p class="fade-in" style="transition-delay: 0.4s;">
-                ORIVEXはトレーナー支援ツールを作り続ける。<br>
+                ORIVEXはトレーナー支援ツールを作り続ける。<br class="sp-none">
                 過酷な現場環境を、テクノロジーでシンプルに。
             </p>
             <a href="#products" class="btn fade-in" style="transition-delay: 0.6s;">プロダクトを見る</a>
@@ -554,15 +642,15 @@
         <div class="value-grid">
             <div class="value-item">
                 <span class="value-label">TARGET</span>
-                <div class="value-text">指導と事務作業に追われる<br>パーソナルトレーナーへ</div>
+                <div class="value-text">指導と事務作業に追われる<br class="sp-none">パーソナルトレーナーへ</div>
             </div>
             <div class="value-item">
                 <span class="value-label">SOLUTION</span>
-                <div class="value-text">メニュー作成・提案業務を<br>テクノロジーで自動化する</div>
+                <div class="value-text">メニュー作成・提案業務を<br class="sp-none">テクノロジーで自動化する</div>
             </div>
             <div class="value-item">
                 <span class="value-label">BENEFIT</span>
-                <div class="value-text">クライアントと向き合う<br>「時間」と「質」が最大化する</div>
+                <div class="value-text">クライアントと向き合う<br class="sp-none">「時間」と「質」が最大化する</div>
             </div>
         </div>
     </section>
@@ -573,11 +661,11 @@
             <h2 class="section-title fade-in">トレーナーの「本質」を守るために。</h2>
             <div class="philosophy-text fade-in">
                 <p>
-                    早朝から深夜までのセッション、尽きない事務作業、クライアントごとの個別管理。<br>
+                    早朝から深夜までのセッション、尽きない事務作業、クライアントごとの個別管理。<br class="sp-none">
                     トレーナーの現場は、情熱だけではカバーしきれないほど過酷です。<br><br>
-                    ORIVEX（オリベックス）は、そんな現場の「不」を解消するツールを開発します。<br>
-                    事務作業や管理業務を効率化し、<br>
-                    あなたがクライアントと向き合うための「余裕」と「時間」を取り戻すこと。<br>
+                    ORIVEX（オリベックス）は、そんな現場の「不」を解消するツールを開発します。<br class="sp-none">
+                    事務作業や管理業務を効率化し、<br class="sp-none">
+                    あなたがクライアントと向き合うための「余裕」と「時間」を取り戻すこと。<br class="sp-none">
                     それが私たちの使命です。
                 </p>
             </div>
@@ -599,7 +687,7 @@
                     <div class="product-title">Supplement Oracle <span
                             style="font-size:0.8em; color:var(--accent-color);">v11.6</span></div>
                     <p class="product-desc">
-                        科学的根拠（PubMed）に基づいたサプリメント処方箋作成ツール。<br>
+                        科学的根拠（PubMed）に基づいたサプリメント処方箋作成ツール。<br class="sp-none">
                         1分でクライアントに最適なスタックを提案し、物販収益の自動化と権威付けを実現します。
                     </p>
                     <a href="https://muscleprime-max.github.io/SUPPLEMENT-ORACLE-/" target="_blank" class="btn">デモを体験する
@@ -609,26 +697,88 @@
         </div>
     </section>
 
+    <section class="section simulation-section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-tag fade-in">SIMULATION</span>
+                <h2 class="section-title fade-in">浮いた時間は、あなたの「資産」に。</h2>
+            </div>
+            
+            <div class="sim-box fade-in">
+                <p style="font-size: 1.1rem; font-weight: 700; color: #4b5563;">クライアントへの提案・メニュー作成にかかっていた時間</p>
+                
+                <div class="sim-time">
+                    60<span>min</span> 
+                    <i class="fa-solid fa-arrow-right" style="color: #cbd5e1; font-size: 2rem;"></i> 
+                    1<span>min</span>
+                </div>
+                
+                <p style="color: #111827; margin-bottom: 30px; font-weight: 500;">
+                    リサーチや長文作成にかかっていた時間がわずか1分に短縮されます。<br class="sp-none">
+                    <span style="color: var(--accent-dark); font-size: 1.1rem;">残りの「59分」を、あなたはどう使いますか？</span>
+                </p>
+                
+                <div class="sim-ideas">
+                    <div class="sim-idea">
+                        <i class="fa-solid fa-user-group"></i>
+                        <h4 style="margin-bottom: 10px; font-size: 1.1rem;">もう1セッション増やす</h4>
+                        <p style="font-size: 0.9rem; color: #6b7280;">指導枠を増やし、直接的な売上アップへ。月額の投資もすぐに回収できます。</p>
+                    </div>
+                    <div class="sim-idea">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        <h4 style="margin-bottom: 10px; font-size: 1.1rem;">自身のトレーニング</h4>
+                        <p style="font-size: 0.9rem; color: #6b7280;">プレイヤーとしての説得力を磨く時間に。自分自身への投資に活用。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section ethics-section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-tag fade-in">ETHICS & SECURITY</span>
+                <h2 class="section-title fade-in">安全と信頼を守る、堅牢なシステム。</h2>
+                <p class="fade-in" style="color: #6b7280; margin-bottom: 50px;">指導者としての責任を果たすため、ジム経営におけるリスクをシステム側で排除します。</p>
+            </div>
+            
+            <div class="ethics-grid fade-in">
+                <div class="ethics-card">
+                    <div class="ethics-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 15px;">過剰摂取を防ぐ計算ロジック</h3>
+                    <p style="color: #6b7280; font-size: 0.95rem;">成分同士の重複や、クライアントの体重・性別に合わせた上限値をシステムが自動で計算。誤った指導による健康被害のリスクを未然に防ぎます。</p>
+                </div>
+                <div class="ethics-card">
+                    <div class="ethics-icon"><i class="fa-solid fa-lock"></i></div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 15px;">クライアントデータの厳重管理</h3>
+                    <p style="color: #6b7280; font-size: 0.95rem;">入力されたパーソナルデータや診断履歴は強固なセキュリティで保護。ペーパーレス化により、物理的な紛失や情報漏洩リスクを最小化します。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="future" class="section">
         <div class="container text-center">
             <span class="section-tag fade-in">FUTURE & CUSTOM</span>
-            <h2 class="section-title fade-in">終わらない進化と、<br>あなただけのソリューション。</h2>
+            <h2 class="section-title fade-in">終わらない進化と、<br class="sp-none">あなただけのソリューション。</h2>
             
             <div class="fade-in" style="max-width: 800px; margin: 0 auto; line-height: 2; color: #4b5563;">
                 <p style="margin-bottom: 20px;">
-                    ORIVEXは、現場の声を反映した新しいツールを今後も継続的に開発してまいります。<br>
+                    ORIVEXは、現場の声を反映した新しいツールを今後も継続的に開発してまいります。<br class="sp-none">
                     フィットネス業界の「不」を解消し続けること。それが私たちの約束です。
                 </p>
-                <div style="background: var(--gray-light); padding: 50px 30px; border-radius: 15px; margin-top: 60px;">
+                
+                <div class="custom-dev-box">
+                    <div class="custom-dev-icon"><i class="fa-solid fa-lightbulb"></i></div>
                     <h3 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--text-color); font-weight: 700;">
-                        オーダーメイド開発（受託開発）</h3>
+                        オーダーメイド開発</h3>
                     <p style="margin-bottom: 30px;">
-                        既存のラインナップだけでなく、あなたのジムやメソッドに合わせた<br>
-                        <strong>オーダーメイドのシステム開発</strong>も承っております。<br>
-                        「こんな機能が欲しい」「独自のメソッドをシステム化したい」<br>
-                        そんな想いを、私たちにぜひお聞かせください。
+                        既存のツールだけでなく、あなたのジムや指導メソッドに合わせた<br class="sp-none">
+                        <strong>完全オリジナルのシステム開発</strong>も承っております。<br class="sp-none">
+                        「こんな機能があったらいいな」「独自の計算式をアプリにしたい」<br class="sp-none">
+                        といったアイデアベースから、お気軽にご相談ください。
                     </p>
-                    <a href="https://muscleprime-max.github.io/ORIVEXLAB1/" target="_blank" class="btn">ORIVEX LAB. サイトへ</a>
+                    <a href="https://muscleprime-max.github.io/ORIVEXLAB1/" target="_blank" class="btn-custom">ORIVEX LAB. サイトを見る</a>
                 </div>
             </div>
         </div>
@@ -657,7 +807,7 @@
                 <div class="faq-item">
                     <button class="faq-question">料金体系について教えてください。</button>
                     <div class="faq-answer">
-                        <p>現在はβ版として主要機能を無料で公開しております。今後、高度な機能を備えたプレミアムプラン（月額サブスクリプション）の提供を予定しています。</p>
+                        <p>月額1,980円〜のプラン制となっております。ご自身の利用規模や必要な機能に合わせて最適なプランをお選びいただけます。</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -693,7 +843,7 @@
                 <div class="faq-item">
                     <button class="faq-question">解約はいつでも可能ですか？</button>
                     <div class="faq-answer">
-                        <p>はい。有料プラン導入後も契約期間の縛りはなく、マイページからいつでも解約手続きが可能です。</p>
+                        <p>本サービスは最低契約期間を6ヶ月とさせていただいております。6ヶ月経過後は、運営へのご連絡によりいつでも解約手続きが可能です。</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -711,7 +861,7 @@
             <div class="contact-box">
                 <span class="section-tag">CONTACT</span>
                 <h2 style="font-size: 2rem; margin-bottom: 20px;">お問い合わせ</h2>
-                <p style="color:#6b7280;">サービスに関するご質問やご要望は、<br>下記よりお気軽にご連絡ください。</p>
+                <p style="color:#6b7280;">サービスに関するご質問やご要望は、<br class="sp-none">下記よりお気軽にご連絡ください。</p>
 
                 <div class="contact-links">
                     <a href="https://lin.ee/3ClYbhu" target="_blank" class="contact-link-item line-link">
@@ -780,7 +930,4 @@
     </script>
 
 </body>
-
 </html>
-
-
