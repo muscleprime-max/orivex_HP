@@ -597,6 +597,277 @@
         .opt-price span { font-size: 0.8rem; color: var(--text-sub); }
         .opt-desc { font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; }
 
+        /* --- Safety Shield Section --- */
+        .safety-section {
+            background: linear-gradient(180deg, #111827 0%, #0f172a 50%, #0d1a2d 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0;
+        }
+        .safety-section::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .safety-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+        .safety-headline { font-size: 2.2rem; font-weight: 800; line-height: 1.4; margin-bottom: 20px; }
+        .safety-headline .green { color: var(--success); }
+        .safety-desc { color: var(--text-sub); font-size: 1rem; line-height: 1.8; margin-bottom: 30px; }
+        .safety-badge-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .safety-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+            color: var(--success); padding: 6px 14px; border-radius: 20px;
+            font-size: 0.82rem; font-weight: 600; font-family: var(--font-main);
+        }
+        .safety-badge i { font-size: 0.75rem; }
+
+        /* Safety mockup card */
+        .safety-mockup {
+            background: rgba(30,41,59,0.9);
+            border: 1px solid rgba(16,185,129,0.25);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(16,185,129,0.08);
+            position: relative;
+        }
+        .safety-mockup-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 20px; padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .safety-mockup-header .shield-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1rem;
+        }
+        .safety-mockup-header .title { font-weight: 700; font-size: 1rem; }
+        .safety-mockup-header .ver { font-size: 0.75rem; color: var(--text-sub); }
+        .safety-check-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 10px; margin-bottom: 20px;
+        }
+        .safety-check-item {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px; padding: 10px 12px;
+            font-size: 0.85rem; color: var(--text-main);
+            transition: 0.3s;
+        }
+        .safety-check-item .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 6px rgba(16,185,129,0.6);
+            flex-shrink: 0;
+        }
+        .safety-mockup-footer {
+            background: rgba(16,185,129,0.08);
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 10px; padding: 12px 16px;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 0.82rem; color: var(--success);
+        }
+        .safety-mockup-footer i { font-size: 1rem; }
+
+        /* Update timeline */
+        .safety-update-section { margin-top: 20px; }
+        .safety-update-title {
+            text-align: center; font-size: 1.4rem; font-weight: 800;
+            margin-bottom: 40px;
+        }
+        .update-timeline {
+            display: flex; justify-content: center; gap: 0;
+            position: relative; max-width: 900px; margin: 0 auto;
+        }
+        .update-timeline::before {
+            content: '';
+            position: absolute; top: 36px; left: 10%; right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(16,185,129,0.4), var(--success), rgba(16,185,129,0.4), transparent);
+        }
+        .update-node {
+            flex: 1; text-align: center; position: relative;
+            padding: 0 10px;
+        }
+        .update-node .circle {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: var(--bg-card); border: 2px solid rgba(16,185,129,0.4);
+            margin: 26px auto 16px; position: relative; z-index: 2;
+            transition: 0.3s;
+        }
+        .update-node.active .circle {
+            border-color: var(--success);
+            background: var(--success);
+            box-shadow: 0 0 12px rgba(16,185,129,0.6), 0 0 24px rgba(16,185,129,0.2);
+        }
+        .update-node .ver-label {
+            font-family: var(--font-main); font-size: 0.75rem; font-weight: 700;
+            color: var(--text-sub); margin-bottom: 4px;
+        }
+        .update-node.active .ver-label { color: var(--success); }
+        .update-node .update-desc {
+            font-size: 0.78rem; color: var(--text-sub); line-height: 1.5;
+        }
+        .update-node.active .update-desc { color: var(--text-main); }
+
+        /* Safety stats row */
+        .safety-stats {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 20px; max-width: 800px; margin: 50px auto 0;
+        }
+        .safety-stat {
+            text-align: center; background: rgba(16,185,129,0.05);
+            border: 1px solid rgba(16,185,129,0.15);
+            border-radius: 16px; padding: 25px 15px;
+        }
+        .safety-stat .num {
+            font-family: var(--font-main); font-size: 2rem; font-weight: 800;
+            color: var(--success); display: block; margin-bottom: 6px;
+        }
+        .safety-stat .label { font-size: 0.85rem; color: var(--text-sub); }
+
+        /* Pulse animation for live dot */
+        @keyframes safePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+        }
+        .safety-live-dot {
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            background: var(--success);
+            animation: safePulse 2s ease-in-out infinite;
+            margin-right: 6px; vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .safety-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+            .safety-check-grid { grid-template-columns: 1fr; }
+            .update-timeline { flex-direction: column; gap: 20px; align-items: center; }
+            .update-timeline::before { display: none; }
+            .safety-stats { grid-template-columns: 1fr; }
+            .safety-headline { font-size: 1.6rem; text-align: center; }
+            .safety-desc { text-align: center; }
+            .safety-badge-row { justify-content: center; }
+        }
+
+        /* --- Contact Form --- */
+        .contact-form-wrap {
+            max-width: 600px;
+            margin: 40px auto 0;
+            text-align: left;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-family: var(--font-main);
+        }
+        .form-group label .req {
+            color: var(--danger);
+            font-size: 0.75rem;
+            margin-left: 6px;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+            font-family: inherit;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+        }
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(148,163,184,0.5);
+        }
+        .form-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2394a3b8'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+        .form-select option {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(6,182,212,0.4);
+            margin-top: 10px;
+        }
+        .form-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(6,182,212,0.6);
+        }
+        .form-submit-btn:active { transform: translateY(0); }
+        .form-note {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-sub);
+            margin-top: 16px;
+        }
+        /* Success message */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .form-success.show { display: block; }
+        .form-success .check-circle {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: rgba(16,185,129,0.15);
+            border: 2px solid var(--success);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px; font-size: 1.8rem; color: var(--success);
+        }
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
         /* Footer */
         .footer-cta { background: linear-gradient(135deg, #0f172a, #1e293b); padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.1); }
         .mail-link { font-size: 1.5rem; color: white; transition: 0.3s; display: inline-block; margin-top: 20px; border-bottom: 2px solid var(--primary); font-weight: 600; letter-spacing: 1px; word-break: break-all; }
@@ -634,7 +905,7 @@
             </div>
             <div class="i-eyebrow">For Professional Trainers</div>
             <div class="i-logo">Supplement Oracle</div>
-            <div class="i-sub">v11.6 &middot; AI-Powered Analysis</div>
+            <div class="i-sub">v12 &middot; AI-Powered Analysis</div>
             <div class="i-tag">Trainer Support Tools by ORIVEX</div>
         </div>
 
@@ -857,7 +1128,7 @@
             
             <div class="mockup-card fade-up" style="transition-delay: 0.3s;">
                 <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:10px; display:flex; justify-content:space-between;">
-                    <span>Supplement Oracle v11.6</span>
+                    <span>Supplement Oracle v12</span>
                     <span style="color:var(--success);">● Active</span>
                 </div>
                 <div class="lane-pill">
@@ -1034,6 +1305,115 @@
         </div>
     </section>
 
+    <!-- ===== SAFETY SHIELD SECTION ===== -->
+    <section class="safety-section">
+        <div class="container">
+            <div class="safety-hero-grid fade-up">
+                <div class="safety-text-side">
+                    <div style="color:var(--success); font-weight:bold; margin-bottom:10px; font-family:var(--font-main); letter-spacing:2px; font-size:0.85rem;">
+                        <i class="fa-solid fa-shield-halved"></i>&nbsp; SAFETY SYSTEM
+                    </div>
+                    <h2 class="safety-headline">
+                        提案の前に、まず<br>
+                        <span class="green">「安全性チェック」</span>が<br>
+                        走る設計。
+                    </h2>
+                    <p class="safety-desc">
+                        Supplement Oracleは、診断を開始する前に必ず<strong style="color:white;">安全性スクリーニング</strong>を実行します。<br>
+                        高血圧・腎機能・甲状腺疾患・服薬状況など、健康リスクに関わる項目をチェックし、<strong style="color:white;">該当成分を自動で除外・警告</strong>。<br>
+                        クライアントの安全を第一に考えた提案が、トレーナーの信頼をさらに強固にします。
+                    </p>
+                    <div class="safety-badge-row">
+                        <span class="safety-badge"><i class="fa-solid fa-rotate"></i> 継続アップデート</span>
+                        <span class="safety-badge"><i class="fa-solid fa-database"></i> 最新医学データ反映</span>
+                        <span class="safety-badge"><i class="fa-solid fa-user-shield"></i> 自動除外ロジック</span>
+                    </div>
+                </div>
+
+                <div class="safety-mockup">
+                    <div class="safety-mockup-header">
+                        <div class="shield-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <div class="title">安全性チェック</div>
+                            <div class="ver"><span class="safety-live-dot"></span>v12 — リアルタイム照合中</div>
+                        </div>
+                    </div>
+                    <div class="safety-check-grid">
+                        <div class="safety-check-item"><span class="dot"></span> 高血圧</div>
+                        <div class="safety-check-item"><span class="dot"></span> 不眠傾向</div>
+                        <div class="safety-check-item"><span class="dot"></span> 腎機能不安</div>
+                        <div class="safety-check-item"><span class="dot"></span> 甲状腺疾患</div>
+                        <div class="safety-check-item"><span class="dot"></span> 服薬中</div>
+                        <div class="safety-check-item"><span class="dot"></span> ピル服用</div>
+                    </div>
+                    <div class="safety-mockup-footer">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>チェック項目に該当する成分は診断結果から<strong>自動除外</strong>されます</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="safety-update-section fade-up">
+                <h3 class="safety-update-title">
+                    安全性ロジックは<span style="color:var(--success);">常にアップデート</span>され続けます
+                </h3>
+                <div class="update-timeline">
+                    <div class="update-node">
+                        <div class="ver-label">v10</div>
+                        <div class="circle"></div>
+                        <div class="update-desc">基本的な<br>禁忌チェック搭載</div>
+                    </div>
+                    <div class="update-node">
+                        <div class="ver-label">v11</div>
+                        <div class="circle"></div>
+                        <div class="update-desc">腎機能・肝機能<br>リスク項目追加</div>
+                    </div>
+                    <div class="update-node">
+                        <div class="ver-label">v11.6</div>
+                        <div class="circle"></div>
+                        <div class="update-desc">薬物相互作用<br>チェック強化</div>
+                    </div>
+                    <div class="update-node active">
+                        <div class="ver-label">v12 (現在)</div>
+                        <div class="circle"></div>
+                        <div class="update-desc">6カテゴリ対応<br>自動除外ロジック</div>
+                    </div>
+                    <div class="update-node" style="opacity:0.5;">
+                        <div class="ver-label">v13〜</div>
+                        <div class="circle" style="border-style: dashed;"></div>
+                        <div class="update-desc">アスリート対応<br>安全性精度向上</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="safety-stats fade-up">
+                <div class="safety-stat">
+                    <span class="num">6+</span>
+                    <span class="label">安全性チェック項目</span>
+                </div>
+                <div class="safety-stat">
+                    <span class="num">50+</span>
+                    <span class="label">除外対象の成分×条件</span>
+                </div>
+                <div class="safety-stat">
+                    <span class="num">継続的</span>
+                    <span class="label">アップデート保証</span>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:50px; max-width:700px; margin-left:auto; margin-right:auto;" class="fade-up">
+                <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:16px; padding:25px 30px;">
+                    <p style="font-size:0.95rem; color:var(--text-main); line-height:1.8; margin:0;">
+                        <i class="fa-solid fa-lightbulb" style="color:var(--success); margin-right:6px;"></i>
+                        サプリメントは体に良い反面、<strong style="color:white;">持病や服薬状況によっては健康リスク</strong>になることも。<br>
+                        Supplement Oracleは「提案する前に守る」という設計思想で、<br>
+                        <strong style="color:var(--success);">バージョンアップのたびに安全性チェックの精度が向上</strong>していきます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="pricing" class="section">
         <div class="container">
             <h2 class="text-center fade-up" style="margin-bottom:10px;">プラン・価格</h2>
@@ -1051,7 +1431,7 @@
                         <li class="cross">アフィリエイト設定不可</li>
                         <li class="cross">印刷・PDF出力不可</li>
                     </ul>
-                    <a href="mailto:muscleprime17@gmail.com?subject=Liteプラン申し込み" class="btn btn-outline" style="width:100%;">選択する</a>
+                    <a href="/cdn-cgi/l/email-protection#274a5254444b4257554e4a42161067404a464e4b0944484a185452454d4244531a6b4e5342c4a4b0c4a48ec4a494c0b394c4a6b0cf999bc4a698" class="btn btn-outline" style="width:100%;">選択する</a>
                 </div>
 
                 <div class="price-card featured fade-up" style="transition-delay: 0.1s;">
@@ -1077,7 +1457,7 @@
                         <div class="discount-text">約15,000円 OFF!!</div>
                         <div class="note">※バージョンアップ権なし (OP追加可)</div>
                     </div>
-                    <a href="mailto:muscleprime17@gmail.com?subject=Standardプラン申し込み" class="btn btn-primary" style="width:100%;">今すぐ始める</a>
+                    <a href="/cdn-cgi/l/email-protection#7d10080e1e11180d0f1410184c4a3d1a101c1411531e1210420e081f17181e09402e091c13191c0f199efeea9efed49efece9ae9ce9efcea95c3c19efcc2" class="btn btn-primary" style="width:100%;">今すぐ始める</a>
                 </div>
 
                 <div class="price-card fade-up" style="transition-delay: 0.2s;">
@@ -1102,7 +1482,7 @@
                         <div class="discount-text">約45,000円 OFF!!</div>
                         <div class="note">※バージョンアップ権なし (OP追加可)</div>
                     </div>
-                    <a href="mailto:muscleprime17@gmail.com?subject=Proプランお問い合わせ" class="btn btn-outline" style="width:100%;">お問い合わせ</a>
+                    <a href="/cdn-cgi/l/email-protection#305d4543535c554042595d55010770575d51595c1e535f5d0f4345525a5553440d60425fd3b3a7d3b399d3b383d3b1bad5a5bfd3b1b4d5a0b8d3b2bfd3b1ab" class="btn btn-outline" style="width:100%;">お問い合わせ</a>
                 </div>
             </div>
 
@@ -1201,16 +1581,66 @@
         </div>
     </section>
 
-    <footer class="footer-cta text-center">
+    <footer id="contact" class="footer-cta text-center">
         <div class="container">
             <h2 class="fade-up" style="margin-bottom:10px;">お問い合わせ・導入相談</h2>
-            <p class="fade-up" style="color:var(--text-sub);">導入に関するご質問や、プランのご相談はお気軽に。</p>
-            
-            <a href="mailto:muscleprime17@gmail.com" class="mail-link fade-up">
-                muscleprime17@gmail.com
-            </a>
+            <p class="fade-up" style="color:var(--text-sub);">導入に関するご質問や、プランのご相談はお気軽にどうぞ。<br>通常1〜2営業日以内にご返信いたします。</p>
 
-            <div class="sns-links fade-up">
+            <div class="contact-form-wrap fade-up">
+                <!-- Form -->
+                <div id="contactFormBody">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>お名前 <span class="req">必須</span></label>
+                            <input type="text" class="form-input" id="cf-name" placeholder="山田 太郎" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ジム名・屋号</label>
+                            <input type="text" class="form-input" id="cf-gym" placeholder="SUPER BODY GYM">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>メールアドレス <span class="req">必須</span></label>
+                        <input type="email" class="form-input" id="cf-email" placeholder="example@mail.com" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>電話番号</label>
+                            <input type="tel" class="form-input" id="cf-tel" placeholder="090-0000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label>ご興味のあるプラン</label>
+                            <select class="form-select" id="cf-plan">
+                                <option value="" disabled selected>選択してください</option>
+                                <option value="ume">🌿 梅 (Lite)</option>
+                                <option value="take">🎋 竹 (Standard)</option>
+                                <option value="matsu">🌲 松 (Pro)</option>
+                                <option value="undecided">まだ決めていない</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>お問い合わせ内容 <span class="req">必須</span></label>
+                        <textarea class="form-textarea" id="cf-message" placeholder="ご質問やご要望をお書きください。&#10;例：竹プランの買い切りを検討しています。デモ画面を見ることは可能ですか？" required></textarea>
+                    </div>
+                    <button type="button" class="form-submit-btn" id="cf-submit">
+                        <i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i>送信する
+                    </button>
+                    <p class="form-note">
+                        <i class="fa-solid fa-lock" style="margin-right:4px;"></i>
+                        ご入力いただいた情報は、お問い合わせ対応のみに使用いたします。
+                    </p>
+                </div>
+
+                <!-- Success State -->
+                <div class="form-success" id="contactSuccess">
+                    <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+                    <h3 style="margin-bottom:10px;">送信が完了しました</h3>
+                    <p style="color:var(--text-sub);">お問い合わせありがとうございます。<br>1〜2営業日以内にご返信いたします。</p>
+                </div>
+            </div>
+
+            <div class="sns-links fade-up" style="margin-top:40px;">
                 <a href="#" target="_blank" title="Instagram">
                     <svg class="sns-icon sns-instagram" viewBox="0 0 24 24">
                         <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
@@ -1219,7 +1649,7 @@
             </div>
 
             <div style="margin-top:50px; color:var(--text-sub); font-size:0.8rem;">
-                &copy; 2026 Supplement Oracle v11.6. All rights reserved.
+                &copy; 2026 Supplement Oracle v12. All rights reserved.
             </div>
         </div>
     </footer>
@@ -1286,17 +1716,52 @@
         }
         animateParticles();
 
-        // --- Scroll Reveal Animation ---
+        // --- Scroll Fade-up Observer ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
+                if(entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // --- Contact Form Handler ---
+        document.getElementById('cf-submit').addEventListener('click', function() {
+            const name = document.getElementById('cf-name').value.trim();
+            const gym = document.getElementById('cf-gym').value.trim();
+            const email = document.getElementById('cf-email').value.trim();
+            const tel = document.getElementById('cf-tel').value.trim();
+            const planEl = document.getElementById('cf-plan');
+            const plan = planEl.options[planEl.selectedIndex] ? planEl.options[planEl.selectedIndex].text : '';
+            const message = document.getElementById('cf-message').value.trim();
+
+            // Validation
+            if (!name) { alert('お名前を入力してください。'); document.getElementById('cf-name').focus(); return; }
+            if (!email) { alert('メールアドレスを入力してください。'); document.getElementById('cf-email').focus(); return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('有効なメールアドレスを入力してください。'); document.getElementById('cf-email').focus(); return; }
+            if (!message) { alert('お問い合わせ内容を入力してください。'); document.getElementById('cf-message').focus(); return; }
+
+            // Build mailto
+            const subject = encodeURIComponent('[Supplement Oracle] お問い合わせ: ' + name + (gym ? ' (' + gym + ')' : ''));
+            const body = encodeURIComponent(
+                '【お名前】' + name + '\n' +
+                '【ジム名・屋号】' + (gym || '未記入') + '\n' +
+                '【メールアドレス】' + email + '\n' +
+                '【電話番号】' + (tel || '未記入') + '\n' +
+                '【ご興味のあるプラン】' + (plan || '未選択') + '\n' +
+                '──────────────────\n' +
+                '【お問い合わせ内容】\n' + message + '\n'
+            );
+
+            window.location.href = 'mailto:muscleprime17@gmail.com?subject=' + subject + '&body=' + body;
+
+            // Show success
+            document.getElementById('contactFormBody').style.display = 'none';
+            document.getElementById('contactSuccess').classList.add('show');
+        });
     </script>
-    </div><!-- /#page-content -->
+    </div> <!-- /page-content -->
 </body>
 </html>
