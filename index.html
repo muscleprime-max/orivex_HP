@@ -750,14 +750,48 @@
         }
 
         @media (max-width: 768px) {
-            .safety-hero-grid { grid-template-columns: 1fr; gap: 40px; }
-            .safety-check-grid { grid-template-columns: 1fr; }
-            .update-timeline { flex-direction: column; gap: 20px; align-items: center; }
-            .update-timeline::before { display: none; }
-            .safety-stats { grid-template-columns: 1fr; }
-            .safety-headline { font-size: 1.6rem; text-align: center; }
-            .safety-desc { text-align: center; }
-            .safety-badge-row { justify-content: center; }
+            /* -- Safety section: compact mobile -- */
+            .safety-section { padding: 50px 0; }
+            .safety-hero-grid { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+            .safety-headline { font-size: 1.4rem; text-align: center; margin-bottom: 12px; }
+            .safety-headline br { display: none; }
+            .safety-desc { text-align: center; font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px; }
+            .safety-desc br { display: none; }
+            .safety-badge-row { justify-content: center; gap: 8px; }
+            .safety-badge { font-size: 0.72rem; padding: 4px 10px; }
+
+            /* Mockup card compact */
+            .safety-mockup { padding: 18px; border-radius: 14px; }
+            .safety-mockup-header { margin-bottom: 12px; padding-bottom: 10px; }
+            .safety-mockup-header .shield-icon { width: 30px; height: 30px; font-size: 0.85rem; }
+            .safety-mockup-header .title { font-size: 0.9rem; }
+            /* Keep 2-col grid on mobile — items are short */
+            .safety-check-grid { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+            .safety-check-item { padding: 7px 10px; font-size: 0.78rem; border-radius: 6px; }
+            .safety-check-item .dot { width: 6px; height: 6px; }
+            .safety-mockup-footer { padding: 10px 12px; font-size: 0.75rem; border-radius: 8px; }
+
+            /* Timeline: horizontal compact on mobile */
+            .safety-update-section { margin-top: 10px; }
+            .safety-update-title { font-size: 1.05rem; margin-bottom: 20px; }
+            .update-timeline { flex-direction: row; gap: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+            .update-timeline::before { display: block; top: 28px; left: 8%; right: 8%; }
+            .update-node { min-width: 0; flex: 1; padding: 0 4px; }
+            .update-node .ver-label { font-size: 0.62rem; }
+            .update-node .circle { width: 14px; height: 14px; margin: 18px auto 8px; }
+            .update-node .update-desc { font-size: 0.62rem; line-height: 1.4; }
+
+            /* Stats: stay 3-col compact */
+            .safety-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 30px; }
+            .safety-stat { padding: 14px 8px; border-radius: 12px; }
+            .safety-stat .num { font-size: 1.3rem; margin-bottom: 2px; }
+            .safety-stat .label { font-size: 0.7rem; }
+
+            /* Bottom message box compact */
+            .safety-section .container > .fade-up:last-child { margin-top: 30px !important; }
+            .safety-section .container > .fade-up:last-child > div { padding: 16px 18px !important; border-radius: 12px !important; }
+            .safety-section .container > .fade-up:last-child p { font-size: 0.82rem !important; line-height: 1.7 !important; }
+            .safety-section .container > .fade-up:last-child p br { display: none; }
         }
 
         /* --- Contact Form --- */
