@@ -959,7 +959,7 @@
     (function () {
         /* step labels */
         const steps = ['is1','is2','is3','is4'];
-        [200,900,1700,2600].forEach((d,i) => setTimeout(()=>{
+        [100,400,800,1200].forEach((d,i) => setTimeout(()=>{
             steps.forEach(s=>document.getElementById(s).classList.remove('active'));
             document.getElementById(steps[i]).classList.add('active');
         }, d));
@@ -1132,7 +1132,7 @@
             camera.position.y=Math.sin(t*.06)*.8;
             camera.lookAt(0,0,0);
 
-            if(elapsed>=3.0) dismiss();
+            if(elapsed>=1.5) dismiss();
             renderer.render(scene,camera);
         })();
 
@@ -1150,13 +1150,13 @@
         <div class="container hero-content">
             <div class="hero-tag fade-up">For Professional Trainers</div>
             <h1 class="fade-up">
-                アドバイスを、<br>
+                サプリ提案を１分で、<br>
                 <span class="text-nowrap-pc">
-                    <span class="text-gradient">「信頼」</span>と<span class="text-gradient">「収益」</span>に<span style="display:inline-block;">変える。</span>
+                    ジムの<span class="text-gradient">即戦力ツール</span>
                 </span>
             </h1>
             <p class="fade-up" style="transition-delay: 0.2s;">
-                まるで「処方箋」のようなサプリメント診断書を、1分で発行。<br>
+                まるで「処方箋」のようなサプリメント診断レポートを、1分で発行。<br>
                 エビデンスに基づく権威性と、紹介料（アフィリエイト）による収益化を同時に実現します。
             </p>
             
@@ -1210,12 +1210,12 @@
 
     <section class="section">
         <div class="container">
-            <h2 class="text-center fade-up">物理サーバーから、<br><span class="text-gradient">「デジタルソリューション」</span>の時代へ。</h2>
+            <h2 class="text-center fade-up">設置型のサプリサーバーから<br>管理不要の<span class="text-gradient">「デジタルツール」</span>へ</h2>
             
             <div class="comparison-grid fade-up">
                 <div class="comp-card">
                     <div class="comp-icon-box"><i class="fa-solid fa-file-medical"></i></div>
-                    <div class="comp-title">パーソナライズされた<br>「処方箋」の発行</div>
+                    <div class="comp-title">パーソナライズされた<br>「レポート」の発行</div>
                     <div class="comp-row bad">
                         <span class="comp-label"><i class="fa-solid fa-xmark"></i> 他社のサプリメントサーバー</span>
                         決まったものを売るだけ。「なぜ今それが必要か」の根拠は提示できません。
@@ -1325,10 +1325,10 @@
             <div class="feature-row fade-up">
                 <div class="feature-text">
                     <div style="color:var(--gold); font-weight:bold; margin-bottom:10px;">PRESCRIPTION</div>
-                    <h2 class="feature-h2">「〇〇ジム監修」の<br>処方箋として発行</h2>
+                    <h2 class="feature-h2">「〇〇ジム監修」の<br>レポートとして発行</h2>
                     <p class="feature-p">
                         ツール上部にあなたのジム名や屋号を表示可能。<br>
-                        単なるアドバイスではなく、「先生が作ってくれた専用の処方箋（レポート）」としてクライアントに提供でき、満足度が向上します。
+                        単なるアドバイスではなく、「先生が作ってくれた専用のレポート」としてクライアントに提供でき、満足度が向上します。
                     </p>
                 </div>
                 <div class="feature-visual" style="text-align:center; padding-top:60px;">
@@ -1452,12 +1452,23 @@
         <div class="container">
             <h2 class="text-center fade-up" style="margin-bottom:10px;">プラン・価格</h2>
             <p class="text-center fade-up" style="color:var(--text-sub);">サプリ紹介料1〜2件分で元が取れる設定です。</p>
+
+            <div class="fade-up" style="max-width:680px; margin:30px auto 0; background:linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.08)); border:2px solid rgba(6,182,212,0.4); border-radius:16px; padding:20px 28px; text-align:center; position:relative; overflow:hidden;">
+                <div style="position:absolute; top:0; right:0; background:var(--danger); color:white; font-size:0.72rem; font-weight:700; padding:4px 16px; border-radius:0 0 0 12px; font-family:var(--font-main); letter-spacing:1px;">期間限定</div>
+                <div style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-bottom:8px; font-family:var(--font-main);">
+                    🎁 <span style="color:var(--accent);">5月末まで限定</span>：QRコード作成 <span style="color:var(--success);">無料</span>！
+                </div>
+                <p style="font-size:0.88rem; color:var(--text-sub); margin:0; line-height:1.6;">
+                    通常オプション（¥4,980）のQRコード付きポップ作成が<strong style="color:white;">今だけ無料</strong>。<br>
+                    お申込み後、<strong style="color:var(--accent);">ジムに即日設置可能</strong>ですぐにご利用いただけます。
+                </p>
+            </div>
             
             <div class="pricing-grid">
                 <div class="price-card fade-up">
                     <div class="plan-name">🌿 梅 (Lite)</div>
-                    <div class="plan-price">3,980<span>円/月</span></div>
-                    <span class="contract-term-note">※最低契約期間 6ヶ月</span>
+                    <div class="plan-price" style="color:var(--success);">0<span>円/月</span></div>
+                    <span class="contract-term-note" style="background:rgba(16,185,129,0.15); color:var(--success);">🎉 完全無料プラン</span>
                     <ul class="plan-features">
                         <li>提案可能サプリ: 15種類限定</li>
                         <li>診断・レポート無制限</li>
@@ -1465,7 +1476,7 @@
                         <li class="cross">アフィリエイト設定不可</li>
                         <li class="cross">印刷・PDF出力不可</li>
                     </ul>
-                    <a href="/cdn-cgi/l/email-protection#274a5254444b4257554e4a42161067404a464e4b0944484a185452454d4244531a6b4e5342c4a4b0c4a48ec4a494c0b394c4a6b0cf999bc4a698" class="btn btn-outline" style="width:100%;">選択する</a>
+                    <a href="#contact" class="btn btn-outline" style="width:100%;">無料で始める</a>
                 </div>
 
                 <div class="price-card featured fade-up" style="transition-delay: 0.1s;">
@@ -1476,10 +1487,17 @@
                     <ul class="plan-features">
                         <li>全サプリDB利用可能</li>
                         <li>診断・レポート無制限</li>
-                        <li style="font-weight:bold; color:#fff;">処方箋風レポート発行</li>
+                        <li style="font-weight:bold; color:#fff;">専用レポート発行</li>
                         <li style="font-weight:bold; color:#fff;">屋号・トレーナー名表示</li>
                         <li style="font-weight:bold; color:var(--success);">アフィリエイトリンク設定</li>
                     </ul>
+                    <div style="background:linear-gradient(135deg, rgba(16,185,129,0.12), rgba(59,130,246,0.08)); border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:16px; margin-bottom:20px; text-align:center;">
+                        <div style="font-size:0.82rem; font-weight:700; color:var(--success); margin-bottom:6px;"><i class="fa-solid fa-chart-line" style="margin-right:5px;"></i>アフィリエイトで実質無料に！</div>
+                        <p style="font-size:0.8rem; color:var(--text-main); line-height:1.6; margin:0;">
+                            クライアント<strong style="color:var(--accent);">15人以上</strong>の店舗なら、紹介料だけでツール代をカバー可能。<br>
+                            それ以上の規模なら<strong style="color:var(--success);">さらなる収益源</strong>になります！
+                        </p>
+                    </div>
                     <div class="buyout-box">
                         <div class="label">買い切り (15ヶ月分)</div>
                         <div class="price-wrap">
@@ -1646,7 +1664,7 @@
                             <label>ご興味のあるプラン</label>
                             <select class="form-select" id="cf-plan">
                                 <option value="" disabled selected>選択してください</option>
-                                <option value="ume">🌿 梅 (Lite)</option>
+                                <option value="ume">🌿 梅 (Lite) — 無料</option>
                                 <option value="take">🎋 竹 (Standard)</option>
                                 <option value="matsu">🌲 松 (Pro)</option>
                                 <option value="undecided">まだ決めていない</option>
@@ -1797,5 +1815,52 @@
         });
     </script>
     </div> <!-- /page-content -->
+
+    <!-- ===== FREE INTRO POPUP ===== -->
+    <div id="freePopup" style="
+        position:fixed; bottom:24px; right:24px; z-index:9000;
+        background:linear-gradient(135deg,#1e293b,#0f172a);
+        border:2px solid var(--accent);
+        border-radius:16px;
+        padding:22px 28px;
+        box-shadow:0 8px 40px rgba(6,182,212,0.3), 0 0 60px rgba(6,182,212,0.08);
+        max-width:300px; width:90%;
+        animation: popupSlideIn 0.6s cubic-bezier(.16,1,.3,1) forwards;
+        display:none;
+    ">
+        <button onclick="document.getElementById('freePopup').style.display='none'" style="
+            position:absolute; top:10px; right:12px;
+            background:none; border:none; color:var(--text-sub);
+            font-size:1.3rem; cursor:pointer; line-height:1;
+            transition:color 0.2s;
+        " onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-sub)'">&times;</button>
+        <div style="font-size:0.72rem; color:var(--accent); font-weight:700; letter-spacing:2px; margin-bottom:8px; font-family:var(--font-main);">🎉 LIMITED OFFER</div>
+        <div style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-bottom:6px; font-family:var(--font-main);">梅プランが<span style="color:var(--success);">完全無料</span>！</div>
+        <p style="font-size:0.82rem; color:var(--text-sub); margin-bottom:16px; line-height:1.5;">まずは無料で試して、効果を実感してください。</p>
+        <a href="#contact" onclick="document.getElementById('freePopup').style.display='none'" style="
+            display:block; text-align:center;
+            padding:12px 20px;
+            background:linear-gradient(135deg, var(--primary), var(--accent));
+            color:white; border-radius:50px;
+            font-weight:700; font-size:0.95rem;
+            font-family:var(--font-main);
+            box-shadow:0 4px 15px rgba(6,182,212,0.4);
+            transition:all 0.3s;
+            text-decoration:none;
+        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(6,182,212,0.6)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(6,182,212,0.4)'">無料で導入する ➔</a>
+    </div>
+    <style>
+        @keyframes popupSlideIn {
+            from { opacity:0; transform:translateY(30px) scale(0.95); }
+            to   { opacity:1; transform:translateY(0) scale(1); }
+        }
+    </style>
+    <script>
+        // Show popup after 4 seconds
+        setTimeout(function(){
+            var popup = document.getElementById('freePopup');
+            if(popup) popup.style.display = 'block';
+        }, 4000);
+    </script>
 </body>
 </html>
