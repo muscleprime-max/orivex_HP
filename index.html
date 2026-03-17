@@ -156,7 +156,7 @@
       opacity: 0;
       transform: translateY(20px);
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.visible { opacity: 1 !important; transform: translateY(0) !important; }
     .reveal-d1 { transition-delay: .1s; }
     .reveal-d2 { transition-delay: .2s; }
     .reveal-d3 { transition-delay: .3s; }
@@ -1739,10 +1739,12 @@
     document.querySelectorAll('.product-tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('pane-' + id).classList.add('active');
     btn.classList.add('active');
-    // 切替後に reveal 要素を表示させる
-    document.getElementById('pane-' + id).querySelectorAll('.reveal').forEach(el => {
-      el.classList.add('visible');
-      obs.unobserve(el);
+    // 切替後に reveal 要素を表示させる（rAFで確実にレイアウト後に実行）
+    requestAnimationFrame(() => {
+      document.getElementById('pane-' + id).querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('visible');
+        obs.unobserve(el);
+      });
     });
   }
 
@@ -1775,4 +1777,13 @@
   // ESC key closes all modals
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-      ['message-modal',
+      ['message-modal','terms-modal', 'tokusho-modal'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+</body>
+</html>
