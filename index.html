@@ -902,6 +902,184 @@
             .form-row { grid-template-columns: 1fr; }
         }
 
+        /* --- Hero subcopy row --- */
+        .hero-subcopy-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .hero-subcopy-text {
+            font-size: 1.2rem;
+            color: var(--text-sub);
+            margin: 0;
+        }
+        .btn-philosophy {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            background: rgba(6,182,212,0.08);
+            border: 1px solid rgba(6,182,212,0.45);
+            border-radius: 50px;
+            color: var(--accent);
+            font-family: var(--font-main);
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(.16,1,.3,1);
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-philosophy::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(59,130,246,0.1));
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+        .btn-philosophy:hover::before { opacity: 1; }
+        .btn-philosophy:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(6,182,212,0.3);
+        }
+        .btn-philosophy-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 24px; height: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            font-size: 11px;
+            color: white;
+        }
+
+        /* --- Philosophy Modal --- */
+        .philosophy-modal-overlay {
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(15,23,42,0.85);
+            backdrop-filter: blur(12px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 20px;
+        }
+        .philosophy-modal-overlay.open {
+            opacity: 1; visibility: visible;
+        }
+        .philosophy-modal {
+            background: linear-gradient(165deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            padding: 48px 40px 40px;
+            position: relative;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.5s cubic-bezier(.16,1,.3,1);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 60px rgba(6,182,212,0.08);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .philosophy-modal-overlay.open .philosophy-modal {
+            transform: translateY(0) scale(1);
+        }
+        .philosophy-modal-close {
+            position: absolute; top: 16px; right: 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-sub); font-size: 1.2rem;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .philosophy-modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-color: rgba(255,255,255,0.2);
+        }
+        .philosophy-modal-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px;
+            background: rgba(6,182,212,0.08);
+            border: 1px solid rgba(6,182,212,0.3);
+            border-radius: 20px;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .philosophy-modal h3 {
+            font-family: var(--font-main);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        .philosophy-modal-body p {
+            color: var(--text-sub);
+            font-size: 0.98rem;
+            line-height: 1.9;
+            margin-bottom: 18px;
+        }
+        .philosophy-modal-body p:last-child { margin-bottom: 0; }
+        .philosophy-modal-divider {
+            width: 40px; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+            margin: 24px 0;
+        }
+        .philosophy-modal-sig {
+            display: flex; align-items: center; gap: 12px;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .philosophy-modal-sig-icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: white;
+            flex-shrink: 0;
+        }
+        .philosophy-modal-sig-text {
+            font-size: 0.82rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+        }
+        .philosophy-modal-sig-text strong {
+            color: var(--text-main);
+            font-family: var(--font-main);
+        }
+
+        /* --- Evidence Banner (reused subcopy) --- */
+        .evidence-banner {
+            text-align: center;
+            padding: 28px 20px;
+            background: linear-gradient(180deg, rgba(6,182,212,0.04) 0%, transparent 100%);
+            border-top: 1px solid rgba(6,182,212,0.1);
+            border-bottom: 1px solid rgba(6,182,212,0.1);
+        }
+        .evidence-banner p {
+            font-size: 1rem;
+            color: var(--text-sub);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        .evidence-banner .ev-highlight {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
         /* Footer */
         .footer-cta { background: linear-gradient(135deg, #0f172a, #1e293b); padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.1); }
         .mail-link { font-size: 1.5rem; color: white; transition: 0.3s; display: inline-block; margin-top: 20px; border-bottom: 2px solid var(--primary); font-weight: 600; letter-spacing: 1px; word-break: break-all; }
@@ -913,12 +1091,16 @@
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 1.8rem; line-height: 1.5; word-break: keep-all; overflow-wrap: break-word; }
+            .hero-subcopy-row { gap: 14px; }
+            .hero-subcopy-text { font-size: 1rem; }
             .feature-row { flex-direction: column; text-align: center; }
             .feature-row:nth-child(even) { flex-direction: column; }
             .price-card.featured { transform: scale(1); }
             .text-nowrap-pc { white-space: normal; display: inline; }
             .renewal-section { padding: 25px 15px; }
             .mail-link { font-size: 1.2rem; }
+            .philosophy-modal { padding: 36px 24px 32px; }
+            .philosophy-modal h3 { font-size: 1.25rem; }
         }
     </style>
 </head>
@@ -1155,10 +1337,15 @@
                     ジムの<span class="text-gradient">即戦力ツール</span>
                 </span>
             </h1>
-            <p class="fade-up" style="transition-delay: 0.2s;">
-                まるで「処方箋」のようなサプリメント診断レポートを、1分で発行。<br>
-                エビデンスに基づく権威性と、紹介料（アフィリエイト）による収益化を同時に実現します。
-            </p>
+            <div class="fade-up hero-subcopy-row" style="transition-delay: 0.2s;">
+                <p class="hero-subcopy-text">
+                    サプリ選びに迷いパーソナルに通う開発者だからこそ、<br>現場に本当に必要な機能と収益性を両立しました。
+                </p>
+                <button class="btn-philosophy" onclick="document.getElementById('philosophyModal').classList.add('open')">
+                    <span class="btn-philosophy-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+                    <span>開発者がこのツールにかけた思いを見る</span>
+                </button>
+            </div>
             
             <div class="mockup-card fade-up" style="transition-delay: 0.3s;">
                 <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:10px; display:flex; justify-content:space-between;">
@@ -1207,6 +1394,14 @@
             </div>
         </div>
     </section>
+
+    <!-- Evidence Banner (reused original subcopy) -->
+    <div class="evidence-banner fade-up">
+        <p>
+            まるで「処方箋」のようなサプリメント診断レポートを、1分で発行。<br>
+            <span class="ev-highlight">エビデンスに基づく権威性</span>と、<span class="ev-highlight">紹介料（アフィリエイト）による収益化</span>を同時に実現します。
+        </p>
+    </div>
 
     <section class="section">
         <div class="container">
@@ -1815,6 +2010,31 @@
         });
     </script>
     </div> <!-- /page-content -->
+
+    <!-- ===== PHILOSOPHY MODAL ===== -->
+    <div id="philosophyModal" class="philosophy-modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="philosophy-modal">
+            <button class="philosophy-modal-close" onclick="document.getElementById('philosophyModal').classList.remove('open')">&times;</button>
+            <div class="philosophy-modal-badge">
+                <i class="fa-solid fa-dumbbell"></i> FOUNDER'S PHILOSOPHY
+            </div>
+            <h3>なぜ、このツールを<br>つくったのか。</h3>
+            <div class="philosophy-modal-body">
+                <p>私は高校のころからフィジークを始めました。初めのころはプロテインを飲めばいいと思い、ただただプロテインを飲むだけでした。しかしそれでは意味がないことに気が付きました。</p>
+                <p>当時の私は基本を忘れてサプリメントに執着していました。それによりたくさんのサプリメントを飲むようになり大した実感がないまま時間は過ぎていきました。</p>
+                <div class="philosophy-modal-divider"></div>
+                <p>そのような経験から私は自分のような人たちを増やしたくないと思いこのツールを立ち上げました。</p>
+                <p>さらに、現在もお世話になっているパーソナルジムの方にも恩返しがしたいと思い、このブルーオーシャンであるパーソナルジム業界に何か付加価値を与えれたらと思いました。</p>
+            </div>
+            <div class="philosophy-modal-sig">
+                <div class="philosophy-modal-sig-icon"><i class="fa-solid fa-user"></i></div>
+                <div class="philosophy-modal-sig-text">
+                    <strong>Supplement Oracle 開発者</strong><br>
+                    フィジーク競技者 / ORIVEX Founder
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== FREE INTRO POPUP ===== -->
     <div id="freePopup" style="
