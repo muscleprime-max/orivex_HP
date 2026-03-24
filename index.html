@@ -8,182 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <style>
-        /* ====================================================
-           INTRO — Fluid Neural / Supplement Science Tech
-           bg: #0f172a / primary: #3b82f6 / accent: #06b6d4
-           ==================================================== */
-        #intro-overlay {
-            position: fixed; inset: 0; z-index: 9999;
-            background: radial-gradient(ellipse at 50% 50%, #0d1f3c 0%, #0f172a 65%);
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 1.4s cubic-bezier(0.7,0,0.3,1), visibility 1.4s;
-        }
-        #intro-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        #intro-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-        /* ── Center UI ── */
-        #intro-ui {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            pointer-events: none; z-index: 10;
-        }
-
-        /* Animated molecule ring — CSS only */
-        .i-ring-wrap {
-            position: relative; width: 160px; height: 160px;
-            margin-bottom: 36px;
-            opacity: 0; animation: i-fadein .6s ease forwards; animation-delay: .4s;
-        }
-        .i-ring {
-            position: absolute; inset: 0;
-            border-radius: 50%;
-            border: 1px solid transparent;
-        }
-        .i-ring-1 {
-            border-color: rgba(59,130,246,.5);
-            box-shadow: 0 0 20px rgba(59,130,246,.15), inset 0 0 20px rgba(59,130,246,.05);
-            animation: i-spin1 4s linear infinite;
-        }
-        .i-ring-2 {
-            inset: 18px;
-            border-color: rgba(6,182,212,.6);
-            box-shadow: 0 0 15px rgba(6,182,212,.2);
-            animation: i-spin2 3s linear infinite reverse;
-        }
-        .i-ring-3 {
-            inset: 36px;
-            border-color: rgba(96,165,250,.4);
-            animation: i-spin1 5s linear infinite;
-        }
-        /* Dots on rings */
-        .i-ring::before, .i-ring::after {
-            content: '';
-            position: absolute;
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            top: -3px; left: 50%; transform: translateX(-50%);
-        }
-        .i-ring-1::before { background: #3b82f6; box-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6; }
-        .i-ring-1::after  { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; top: auto; bottom: -3px; }
-        .i-ring-2::before { background: #06b6d4; box-shadow: 0 0 8px #06b6d4; width:5px;height:5px;top:-2.5px; }
-        .i-ring-2::after  { background: #60a5fa; box-shadow: 0 0 8px #60a5fa; width:5px;height:5px;top:auto;bottom:-2.5px; }
-
-        /* Center orb */
-        .i-orb {
-            position: absolute;
-            inset: 54px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 38% 35%, rgba(96,165,250,.25), rgba(6,182,212,.08) 60%, transparent);
-            border: 1px solid rgba(6,182,212,.25);
-            box-shadow:
-                0 0 30px rgba(59,130,246,.2),
-                0 0 60px rgba(59,130,246,.08),
-                inset 0 0 20px rgba(6,182,212,.1);
-            animation: i-pulse 2.5s ease-in-out infinite;
-        }
-        /* Molecule icon inside orb */
-        .i-orb-icon {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px;
-            background: linear-gradient(135deg,#3b82f6,#06b6d4);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-
-        @keyframes i-spin1  { to { transform: rotate(360deg); } }
-        @keyframes i-spin2  { to { transform: rotate(360deg); } }
-        @keyframes i-pulse  {
-            0%,100% { box-shadow: 0 0 30px rgba(59,130,246,.2), 0 0 60px rgba(59,130,246,.06), inset 0 0 20px rgba(6,182,212,.1); }
-            50%      { box-shadow: 0 0 40px rgba(59,130,246,.35), 0 0 80px rgba(59,130,246,.12), inset 0 0 30px rgba(6,182,212,.18); }
-        }
-
-        /* Text */
-        .i-eyebrow {
-            font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:6px;
-            text-transform:uppercase; color: rgba(6,182,212,.8);
-            opacity:0; transform:translateY(6px);
-            animation:i-rise .6s ease forwards; animation-delay:1s;
-            margin-bottom:12px;
-        }
-        .i-logo {
-            font-family:'Montserrat',sans-serif;
-            font-size: clamp(28px,5.5vw,64px);
-            font-weight:800; letter-spacing:.5px; line-height:1.1;
-            background: linear-gradient(90deg, #60a5fa 0%, #06b6d4 50%, #3b82f6 100%);
-            background-size: 200% auto;
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-            opacity:0; transform:translateY(10px);
-            animation: i-rise .7s cubic-bezier(.16,1,.3,1) forwards, i-shimmer 3s linear infinite;
-            animation-delay: 1.15s, 1.8s;
-        }
-        .i-sub {
-            font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:3px;
-            text-transform:uppercase; color:rgba(148,163,184,.5);
-            opacity:0; transform:translateY(6px);
-            animation:i-rise .6s ease forwards; animation-delay:1.5s;
-            margin-top:10px;
-        }
-        /* Pill tag */
-        .i-tag {
-            display:inline-block; margin-top:18px;
-            padding:5px 16px;
-            border:1px solid rgba(6,182,212,.4); color:rgba(6,182,212,.9);
-            border-radius:20px; font-family:'Montserrat',sans-serif;
-            font-size:.78rem; letter-spacing:1px; font-weight:600;
-            background:rgba(6,182,212,.06);
-            backdrop-filter: blur(4px);
-            opacity:0; animation:i-rise .6s ease forwards; animation-delay:1.8s;
-        }
-
-        @keyframes i-rise    { to { opacity:1; transform:translateY(0); } }
-        @keyframes i-fadein  { to { opacity:1; } }
-        @keyframes i-shimmer { 0%{background-position:0% center} 100%{background-position:200% center} }
-
-        /* Progress */
-        .i-progress-wrap {
-            position:absolute; bottom:44px; left:50%; transform:translateX(-50%);
-            width:220px; opacity:0; animation:i-fadein .5s ease forwards; animation-delay:1.1s;
-        }
-        /* Step dots */
-        .i-steps {
-            display:flex; justify-content:space-between; margin-bottom:10px;
-        }
-        .i-step {
-            font-family:'Montserrat',sans-serif; font-size:8px; letter-spacing:1.5px;
-            color:rgba(148,163,184,.3); text-transform:uppercase;
-            transition: color .4s;
-        }
-        .i-step.active { color:rgba(6,182,212,.8); }
-
-        .i-progress-track {
-            width:100%; height:2px;
-            background:rgba(255,255,255,.05);
-            border-radius:2px; overflow:hidden;
-        }
-        .i-progress-fill {
-            height:100%; width:0%;
-            border-radius:2px;
-            background: linear-gradient(90deg,#3b82f6,#06b6d4,#60a5fa);
-            background-size:200% auto;
-            box-shadow:0 0 10px rgba(6,182,212,.6);
-            animation: i-prog 4.5s cubic-bezier(.4,0,.2,1) forwards, i-bar-shine 1.5s linear infinite;
-            animation-delay:.3s, .3s;
-        }
-        @keyframes i-prog      { to { width:100%; } }
-        @keyframes i-bar-shine { 0%{background-position:0% center} 100%{background-position:200% center} }
-
-        .i-status {
-            margin-top:8px; text-align:right;
-            font-family:'Montserrat',sans-serif; font-size:9px; letter-spacing:2px;
-            color:rgba(148,163,184,.4); text-transform:uppercase;
-        }
-
-        body.intro-active { overflow:hidden; }
-    </style>
     <style>
         :root {
             --bg-dark: #0f172a;
@@ -266,13 +91,8 @@
             border-color: white;
         }
 
-        /* --- Page reveal animation --- */
+        /* --- Page always visible --- */
         #page-content {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 1.2s cubic-bezier(0.16,1,0.3,1), transform 1.2s cubic-bezier(0.16,1,0.3,1);
-        }
-        #page-content.revealed {
             opacity: 1;
             transform: translateY(0);
         }
@@ -794,6 +614,57 @@
             .safety-section .container > .fade-up:last-child p br { display: none; }
         }
 
+        /* --- FAQ Section --- */
+        .faq-section { background: linear-gradient(180deg, #0f172a 0%, #111827 100%); padding: 80px 0; }
+        .faq-list { max-width: 760px; margin: 50px auto 0; display: flex; flex-direction: column; gap: 12px; }
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .faq-item.open { border-color: rgba(59,130,246,0.4); }
+        .faq-question {
+            width: 100%; background: none; border: none; cursor: pointer;
+            padding: 22px 24px; display: flex; align-items: center;
+            justify-content: space-between; gap: 16px;
+            text-align: left; color: var(--text-main);
+            font-size: 0.98rem; font-weight: 700; line-height: 1.5;
+        }
+        .faq-question:hover { background: rgba(255,255,255,0.03); }
+        .faq-q-text { display: flex; align-items: flex-start; gap: 12px; }
+        .faq-q-label {
+            flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 800; color: white;
+            font-family: var(--font-main); margin-top: 1px;
+        }
+        .faq-chevron {
+            flex-shrink: 0; width: 28px; height: 28px;
+            border-radius: 50%; background: rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; color: var(--text-sub);
+            transition: transform 0.35s cubic-bezier(.16,1,.3,1), background 0.3s;
+        }
+        .faq-item.open .faq-chevron { transform: rotate(180deg); background: rgba(59,130,246,0.15); color: var(--primary); }
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(.16,1,.3,1);
+        }
+        .faq-answer-inner {
+            padding: 0 24px 22px 62px;
+            font-size: 0.9rem; color: var(--text-sub); line-height: 1.85;
+        }
+        .faq-answer-inner strong { color: var(--text-main); }
+        .faq-answer-inner a { color: var(--accent); text-decoration: none; }
+        @media (max-width: 768px) {
+            .faq-question { padding: 18px 16px; font-size: 0.9rem; }
+            .faq-answer-inner { padding: 0 16px 18px 50px; font-size: 0.86rem; }
+            .faq-q-label { width: 22px; height: 22px; font-size: 0.68rem; }
+        }
+
         /* --- Contact Form --- */
         .contact-form-wrap {
             max-width: 600px;
@@ -1089,243 +960,138 @@
         .sns-icon:hover { fill: var(--text-main); transform: translateY(-3px); }
         .sns-instagram:hover { fill: #E1306C; }
 
+        /* ====================================================
+           RESPONSIVE — tablet/small PC (≤ 1024px)
+           ==================================================== */
+        @media (max-width: 1024px) {
+            /* Safety section: 50/50 → single column at narrower widths */
+            .safety-hero-grid { grid-template-columns: 1fr; gap: 36px; }
+            .safety-headline { font-size: 1.9rem; }
+            /* Update timeline: prevent overflow */
+            .update-timeline { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 12px; }
+            .update-node { min-width: 100px; }
+            /* Feature rows: reduce gap on mid screens */
+            .feature-row { gap: 30px; }
+            .feature-h2 { font-size: 1.7rem; }
+            /* Comparison grid: always wrap to 1 col below 1024 */
+            .comparison-grid { grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
+            /* Pricing grid */
+            .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+            .price-card.featured { transform: none; }
+        }
+
+        /* ====================================================
+           RESPONSIVE — mobile (≤ 768px)
+           ==================================================== */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 1.8rem; line-height: 1.5; word-break: keep-all; overflow-wrap: break-word; }
+            /* -- Global -- */
+            .container { padding: 0 16px; }
+            .section { padding: 56px 0; }
+
+            /* -- Hero -- */
+            .hero { padding: 80px 0 60px; }
+            .hero h1 { font-size: 1.75rem; line-height: 1.45; word-break: keep-all; overflow-wrap: break-word; }
+            .hero p { font-size: 1rem; }
             .hero-subcopy-row { gap: 14px; }
-            .hero-subcopy-text { font-size: 1rem; }
-            .feature-row { flex-direction: column; text-align: center; }
-            .feature-row:nth-child(even) { flex-direction: column; }
+            .hero-subcopy-text { font-size: 0.95rem; text-align: center; }
+            .btn-philosophy { font-size: 0.82rem; padding: 9px 16px; white-space: normal; text-align: center; }
+            .mockup-card { max-width: 100%; transform: none; animation: none; }
+
+            /* -- Problem grid: 1 column -- */
+            .problem-grid { grid-template-columns: 1fr; gap: 16px; }
+
+            /* -- Comparison grid: 1 column, no overflow -- */
+            .comparison-grid { grid-template-columns: 1fr; gap: 16px; }
+            .comp-card { padding: 22px 18px; }
+            .comp-title { font-size: 1.05rem; }
+            .comp-row { font-size: 0.85rem; padding: 12px; }
+
+            /* -- Feature rows -- */
+            .feature-row { flex-direction: column !important; gap: 24px; margin-bottom: 60px; text-align: left; }
+            .feature-row:nth-child(even) { flex-direction: column !important; }
+            .feature-h2 { font-size: 1.5rem; }
+            .feature-visual { padding: 28px 20px; }
+
+            /* Affiliate support box: full width on mobile */
+            .feature-text div[style*="inline-flex"] {
+                display: flex !important;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* -- Pricing -- */
+            .pricing-grid { grid-template-columns: 1fr; }
             .price-card.featured { transform: scale(1); }
+            .price-card { padding: 30px 20px; }
+            .plan-price { font-size: 2.2rem; }
+            .buyout-box { padding: 12px; }
+
+            /* -- Renewal grid -- */
+            .renewal-grid { grid-template-columns: 1fr; gap: 12px; }
+            .renewal-section { padding: 24px 16px; }
+
+            /* -- Options grid -- */
+            .options-grid { grid-template-columns: 1fr; }
+
+            /* -- Safety section -- */
+            .safety-section { padding: 50px 0; }
+            .safety-hero-grid { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+            .safety-headline { font-size: 1.4rem; text-align: center; margin-bottom: 12px; }
+            .safety-headline br { display: none; }
+            .safety-desc { text-align: center; font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px; }
+            .safety-desc br { display: none; }
+            .safety-badge-row { justify-content: center; gap: 8px; }
+            .safety-badge { font-size: 0.72rem; padding: 4px 10px; }
+            .safety-mockup { padding: 18px; border-radius: 14px; }
+            .safety-mockup-header { margin-bottom: 12px; padding-bottom: 10px; }
+            .safety-mockup-header .shield-icon { width: 30px; height: 30px; font-size: 0.85rem; }
+            .safety-mockup-header .title { font-size: 0.9rem; }
+            .safety-check-grid { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+            .safety-check-item { padding: 7px 10px; font-size: 0.78rem; border-radius: 6px; }
+            .safety-check-item .dot { width: 6px; height: 6px; }
+            .safety-mockup-footer { padding: 10px 12px; font-size: 0.75rem; border-radius: 8px; }
+            .safety-update-section { margin-top: 10px; }
+            .safety-update-title { font-size: 1.05rem; margin-bottom: 20px; }
+            .update-timeline { flex-direction: row; gap: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+            .update-timeline::before { display: block; top: 28px; left: 8%; right: 8%; }
+            .update-node { min-width: 80px; flex: 1; padding: 0 4px; }
+            .update-node .ver-label { font-size: 0.62rem; }
+            .update-node .circle { width: 14px; height: 14px; margin: 18px auto 8px; }
+            .update-node .update-desc { font-size: 0.62rem; line-height: 1.4; }
+            .safety-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 30px; }
+            .safety-stat { padding: 14px 8px; border-radius: 12px; }
+            .safety-stat .num { font-size: 1.3rem; margin-bottom: 2px; }
+            .safety-stat .label { font-size: 0.7rem; }
+            .safety-section .container > .fade-up:last-child { margin-top: 30px !important; }
+            .safety-section .container > .fade-up:last-child > div { padding: 16px 18px !important; border-radius: 12px !important; }
+            .safety-section .container > .fade-up:last-child p { font-size: 0.82rem !important; line-height: 1.7 !important; }
+            .safety-section .container > .fade-up:last-child p br { display: none; }
+
+            /* -- Evidence banner -- */
+            .evidence-banner p { font-size: 0.9rem; }
+            .evidence-banner p br { display: none; }
+
+            /* -- Voice section -- */
+            .voice-card { padding: 28px 20px; }
+            .voice-text { font-size: 0.95rem; }
+            .graph-container { gap: 30px; height: 250px; }
+            .graph-bar-wrapper { width: 70px; }
+
+            /* -- Misc -- */
             .text-nowrap-pc { white-space: normal; display: inline; }
-            .renewal-section { padding: 25px 15px; }
             .mail-link { font-size: 1.2rem; }
             .philosophy-modal { padding: 36px 24px 32px; }
             .philosophy-modal h3 { font-size: 1.25rem; }
+            .form-row { grid-template-columns: 1fr; }
+
+            /* -- Affiliate section banner (independent) -- */
+            .affiliate-banner { flex-direction: column !important; text-align: center; }
+            .affiliate-banner-steps { grid-template-columns: 1fr !important; }
         }
     </style>
 </head>
-<body class="intro-active">
+<body>
 
-    <!-- ===== INTRO OVERLAY ===== -->
-    <div id="intro-overlay">
-        <canvas id="intro-canvas"></canvas>
-
-        <div id="intro-ui">
-            <div class="i-ring-wrap">
-                <div class="i-ring i-ring-1"></div>
-                <div class="i-ring i-ring-2"></div>
-                <div class="i-ring i-ring-3"></div>
-                <div class="i-orb">
-                    <div class="i-orb-icon"><i class="fa-solid fa-flask-vial"></i></div>
-                </div>
-            </div>
-            <div class="i-eyebrow">For Professional Trainers</div>
-            <div class="i-logo">Supplement Oracle</div>
-            <div class="i-sub">v12 &middot; AI-Powered Analysis</div>
-            <div class="i-tag">Trainer Support Tools by ORIVEX</div>
-        </div>
-
-        <div class="i-progress-wrap">
-            <div class="i-steps">
-                <span class="i-step active" id="is1">Init</span>
-                <span class="i-step" id="is2">Database</span>
-                <span class="i-step" id="is3">AI Engine</span>
-                <span class="i-step" id="is4">Ready</span>
-            </div>
-            <div class="i-progress-track"><div class="i-progress-fill"></div></div>
-            <div class="i-status">Loading &middot; <span id="i-pct">0</span>%</div>
-        </div>
-    </div>
-
-    <script>
-    (function () {
-        /* step labels */
-        const steps = ['is1','is2','is3','is4'];
-        [100,400,800,1200].forEach((d,i) => setTimeout(()=>{
-            steps.forEach(s=>document.getElementById(s).classList.remove('active'));
-            document.getElementById(steps[i]).classList.add('active');
-        }, d));
-
-        /* percent counter */
-        const pctEl = document.getElementById('i-pct');
-        let pct = 0;
-        const pctTimer = setInterval(()=>{
-            pct = Math.min(pct + (Math.random()*3.5+0.5|0), 99);
-            pctEl.textContent = pct;
-        }, 60);
-
-        /* Three.js */
-        const canvas = document.getElementById('intro-canvas');
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-        renderer.setSize(innerWidth, innerHeight);
-        renderer.setClearColor(0x000000, 0);
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 300);
-        camera.position.set(0, 0, 22);
-
-        /* Neural network nodes */
-        const NODE_COUNT = 80;
-        const nodes = [];
-        const nodeGeo = new THREE.SphereGeometry(.06, 8, 8);
-
-        for (let i = 0; i < NODE_COUNT; i++) {
-            const isHub = i < 12;
-            const mat = new THREE.MeshBasicMaterial({
-                color: isHub ? 0x06b6d4 : (Math.random() > .5 ? 0x3b82f6 : 0x60a5fa),
-                transparent: true,
-                opacity: isHub ? .9 : .55 + Math.random()*.3
-            });
-            const r = isHub ? 6 : 9 + Math.random()*7;
-            const theta = Math.random() * Math.PI * 2;
-            const phi   = Math.acos(2*Math.random()-1);
-            const mesh  = new THREE.Mesh(nodeGeo, mat);
-            mesh.position.set(
-                r * Math.sin(phi)*Math.cos(theta),
-                r * Math.sin(phi)*Math.sin(theta) * .6,
-                r * Math.cos(phi)
-            );
-            mesh.userData = {
-                ox: mesh.position.x, oy: mesh.position.y, oz: mesh.position.z,
-                phase: Math.random()*Math.PI*2,
-                freq:  .3 + Math.random()*.4,
-                amp:   .1 + Math.random()*.2,
-                isHub
-            };
-            scene.add(mesh);
-            nodes.push(mesh);
-        }
-
-        /* Edges */
-        const edges = [];
-        const edgePosBuf = [];
-        const edgeColBuf = [];
-        nodes.forEach((n, i) => {
-            nodes.forEach((m, j) => {
-                if (j <= i) return;
-                const d = n.position.distanceTo(m.position);
-                const maxD = n.userData.isHub || m.userData.isHub ? 14 : 7;
-                if (d < maxD && Math.random() > .55) {
-                    edges.push([i, j]);
-                    edgePosBuf.push(0,0,0,0,0,0);
-                    const c = n.userData.isHub ? [.02,.71,.83] : [.23,.51,.96];
-                    edgeColBuf.push(...c,...c);
-                }
-            });
-        });
-
-        const edgeGeo = new THREE.BufferGeometry();
-        const posAttr = new THREE.Float32BufferAttribute(edgePosBuf, 3);
-        posAttr.setUsage(THREE.DynamicDrawUsage);
-        edgeGeo.setAttribute('position', posAttr);
-        edgeGeo.setAttribute('color', new THREE.Float32BufferAttribute(edgeColBuf, 3));
-        scene.add(new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ vertexColors:true, transparent:true, opacity:.18 })));
-
-        /* Flowing signal particles */
-        const FLOW = 120;
-        const flowGeo = new THREE.BufferGeometry();
-        const flowPos = new Float32Array(FLOW*3);
-        const flowCol = new Float32Array(FLOW*3);
-        const flowData = Array.from({length:FLOW}, () => ({
-            edge: Math.floor(Math.random()*edges.length),
-            t: Math.random(),
-            speed: .004 + Math.random()*.008
-        }));
-        flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos,3));
-        flowGeo.setAttribute('color',    new THREE.BufferAttribute(flowCol,3));
-        const flowPts = new THREE.Points(flowGeo, new THREE.PointsMaterial({ size:.13, vertexColors:true, transparent:true, opacity:.9 }));
-        scene.add(flowPts);
-
-        /* Ambient dust */
-        const DUST = 600;
-        const dp = new Float32Array(DUST*3), dc = new Float32Array(DUST*3);
-        for(let i=0;i<DUST;i++){
-            dp[i*3]=(Math.random()-.5)*50; dp[i*3+1]=(Math.random()-.5)*28; dp[i*3+2]=(Math.random()-.5)*30;
-            const t=Math.random();
-            dc[i*3]=t<.5?.02:.15; dc[i*3+1]=t<.5?.45:.35; dc[i*3+2]=t<.5?.65:.78;
-        }
-        const dustGeo=new THREE.BufferGeometry();
-        dustGeo.setAttribute('position',new THREE.BufferAttribute(dp,3));
-        dustGeo.setAttribute('color',   new THREE.BufferAttribute(dc,3));
-        const dustPts=new THREE.Points(dustGeo,new THREE.PointsMaterial({size:.04,vertexColors:true,transparent:true,opacity:.32}));
-        scene.add(dustPts);
-
-        /* dismiss */
-        const clock = new THREE.Clock();
-        let elapsed=0, done=false;
-        function dismiss(){
-            if(done) return; done=true;
-            clearInterval(pctTimer); pctEl.textContent='100';
-            steps.forEach(s=>document.getElementById(s).classList.remove('active'));
-            document.getElementById('is4').classList.add('active');
-            setTimeout(()=>{
-                document.getElementById('intro-overlay').classList.add('hidden');
-                document.body.classList.remove('intro-active');
-                requestAnimationFrame(()=>{
-                    const pc = document.getElementById('page-content');
-                    if(pc) pc.classList.add('revealed');
-                });
-            }, 300);
-            setTimeout(()=>{ const el=document.getElementById('intro-overlay'); if(el) el.remove(); },1800);
-        }
-
-        (function tick(){
-            requestAnimationFrame(tick);
-            const dt=clock.getDelta(); elapsed+=dt; const t=elapsed;
-
-            scene.rotation.y=t*.04;
-            scene.rotation.x=Math.sin(t*.07)*.06;
-            dustPts.rotation.y-=.0003;
-
-            nodes.forEach(n=>{
-                const s=n.userData;
-                const w=Math.sin(t*s.freq+s.phase)*s.amp;
-                n.position.x=s.ox+w;
-                n.position.y=s.oy+Math.cos(t*s.freq*1.3+s.phase)*s.amp*.7;
-                n.position.z=s.oz+Math.sin(t*s.freq*.8+s.phase)*.15;
-                if(s.isHub) n.material.opacity=.65+.25*Math.sin(t*1.8+s.phase);
-            });
-
-            edges.forEach(([i,j],ei)=>{
-                const a=nodes[i].position, b=nodes[j].position, o=ei*6;
-                posAttr.array[o  ]=a.x; posAttr.array[o+1]=a.y; posAttr.array[o+2]=a.z;
-                posAttr.array[o+3]=b.x; posAttr.array[o+4]=b.y; posAttr.array[o+5]=b.z;
-            });
-            posAttr.needsUpdate=true;
-
-            flowData.forEach((f,fi)=>{
-                f.t+=f.speed;
-                if(f.t>1){ f.t=0; f.edge=Math.floor(Math.random()*edges.length); }
-                if(!edges[f.edge]) return;
-                const [i,j]=edges[f.edge];
-                const a=nodes[i].position, b=nodes[j].position;
-                flowPos[fi*3  ]=a.x+(b.x-a.x)*f.t;
-                flowPos[fi*3+1]=a.y+(b.y-a.y)*f.t;
-                flowPos[fi*3+2]=a.z+(b.z-a.z)*f.t;
-                flowCol[fi*3  ]=.23*(1-f.t)+.02*f.t;
-                flowCol[fi*3+1]=.51*(1-f.t)+.71*f.t;
-                flowCol[fi*3+2]=.96*(1-f.t)+.83*f.t;
-            });
-            flowGeo.attributes.position.needsUpdate=true;
-            flowGeo.attributes.color.needsUpdate=true;
-
-            camera.position.x=Math.sin(t*.08)*1.2;
-            camera.position.y=Math.sin(t*.06)*.8;
-            camera.lookAt(0,0,0);
-
-            if(elapsed>=1.5) dismiss();
-            renderer.render(scene,camera);
-        })();
-
-        window.addEventListener('resize',()=>{
-            camera.aspect=innerWidth/innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(innerWidth,innerHeight);
-        });
-    })();
-    </script>
-    <!-- ========================= -->
     <div id="page-content">
     <div class="hero">
         <canvas id="canvas-bg"></canvas>
@@ -1405,15 +1171,15 @@
 
     <section class="section">
         <div class="container">
-            <h2 class="text-center fade-up">設置型のサプリサーバーから<br>管理不要の<span class="text-gradient">「デジタルツール」</span>へ</h2>
-            
+            <h2 class="text-center fade-up">曖昧な口頭指導から<br>根拠のある<span class="text-gradient">「デジタル診断」</span>へ</h2>
+
             <div class="comparison-grid fade-up">
                 <div class="comp-card">
                     <div class="comp-icon-box"><i class="fa-solid fa-file-medical"></i></div>
                     <div class="comp-title">パーソナライズされた<br>「レポート」の発行</div>
                     <div class="comp-row bad">
-                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 他社のサプリメントサーバー</span>
-                        決まったものを売るだけ。「なぜ今それが必要か」の根拠は提示できません。
+                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 口頭によるサプリ指導</span>
+                        経験と勘に頼るだけ。「なぜ今それが必要か」の根拠をクライアントに示せません。
                     </div>
                     <div class="comp-row good">
                         <span class="comp-label"><i class="fa-solid fa-check"></i> ORIVEX</span>
@@ -1422,28 +1188,81 @@
                 </div>
                 <div class="comp-card">
                     <div class="comp-icon-box"><i class="fa-solid fa-ban"></i></div>
-                    <div class="comp-title">在庫リスクと<br>メンテナンス「ゼロ」</div>
+                    <div class="comp-title">指導品質の<br>「ブレ」をなくす</div>
                     <div class="comp-row bad">
-                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 他社のサプリメントサーバー</span>
-                        粉末の補充、日々の清掃、故障対応...。物理的な管理コストが現場の時間を奪います。
+                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 口頭によるサプリ指導</span>
+                        その日の状況やトレーナーの知識量で内容がブレ、クライアントへの対応に差が出てしまいます。
                     </div>
                     <div class="comp-row good">
                         <span class="comp-label"><i class="fa-solid fa-check"></i> ORIVEX</span>
-                        完全デジタルなため、在庫もメンテも不要。多忙な業務の合間でも、100%「指導の質」に集中できます。
+                        完全デジタルなため、誰が使っても同じ高品質な診断レポートを発行。指導の標準化が実現します。
                     </div>
                 </div>
                 <div class="comp-card">
                     <div class="comp-icon-box"><i class="fa-solid fa-users-gear"></i></div>
                     <div class="comp-title">「標準化」による<br>ジム経営の武器</div>
                     <div class="comp-row bad">
-                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 他社のサプリメントサーバー</span>
-                        サーバーを導入しても、トレーナー自身の知識や指導スキルは向上しません。
+                        <span class="comp-label"><i class="fa-solid fa-xmark"></i> 口頭によるサプリ指導</span>
+                        トレーナー個人の知識に依存するため、スタッフが変わると途端に指導品質が落ちてしまいます。
                     </div>
                     <div class="comp-row good">
                         <span class="comp-label"><i class="fa-solid fa-check"></i> ORIVEX</span>
                         新人トレーナーでもベテラン級のサプリ指導が可能に。属人化を防ぎ、サービス品質を標準化します。
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== AFFILIATE SUPPORT SECTION ===== -->
+    <section style="background: linear-gradient(135deg, #0a1628 0%, #0d2040 50%, #0a1628 100%); padding: 70px 0; border-top: 1px solid rgba(16,185,129,0.15); border-bottom: 1px solid rgba(16,185,129,0.15); position: relative; overflow: hidden;">
+        <!-- 背景グロー -->
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:300px; background:radial-gradient(ellipse, rgba(16,185,129,0.08) 0%, transparent 70%); pointer-events:none;"></div>
+        <div class="container" style="position:relative; z-index:1;">
+            <div style="text-align:center; margin-bottom:48px;">
+                <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.35); color:var(--success); padding:6px 18px; border-radius:20px; font-family:var(--font-main); font-size:0.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">
+                    <i class="fa-solid fa-headset"></i> AFFILIATE SUPPORT
+                </span>
+                <h2 style="font-family:var(--font-main); font-size:clamp(1.6rem, 3.5vw, 2.3rem); font-weight:800; line-height:1.35; margin-bottom:16px;">
+                    アフィリエイト設定、<span style="color:var(--success);">丸ごとサポート</span>します。
+                </h2>
+                <p style="color:var(--text-sub); font-size:1rem; max-width:560px; margin:0 auto; line-height:1.8;">
+                    「iHerbのアフィリエイトって何？」「リンクの貼り方がわからない」<br>
+                    そんな方でも大丈夫。公式LINEで<strong style="color:white;">初期設定から収益化まで</strong>、丁寧にサポートします。
+                </p>
+            </div>
+
+            <div class="affiliate-banner-steps" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; max-width:860px; margin:0 auto 48px;">
+                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.2); border-radius:16px; padding:24px 20px; text-align:center;">
+                    <div style="width:48px; height:48px; background:linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); border:1px solid rgba(16,185,129,0.4); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:1.3rem;">①</div>
+                    <div style="font-family:var(--font-main); font-weight:700; font-size:0.95rem; margin-bottom:8px; color:var(--text-main);">iHerbアカウント作成</div>
+                    <p style="font-size:0.82rem; color:var(--text-sub); line-height:1.6; margin:0;">アカウントの作り方から一緒に確認。スマホだけで完結します。</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.2); border-radius:16px; padding:24px 20px; text-align:center;">
+                    <div style="width:48px; height:48px; background:linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); border:1px solid rgba(16,185,129,0.4); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:1.3rem;">②</div>
+                    <div style="font-family:var(--font-main); font-weight:700; font-size:0.95rem; margin-bottom:8px; color:var(--text-main);">ツールへリンクを設定</div>
+                    <p style="font-size:0.82rem; color:var(--text-sub); line-height:1.6; margin:0;">発行したアフィリエイトURLをSuplement Oracleに設置。画面共有でサポート。</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.2); border-radius:16px; padding:24px 20px; text-align:center;">
+                    <div style="width:48px; height:48px; background:linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); border:1px solid rgba(16,185,129,0.4); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:1.3rem;">③</div>
+                    <div style="font-family:var(--font-main); font-weight:700; font-size:0.95rem; margin-bottom:8px; color:var(--text-main);">クライアントが購入→報酬発生</div>
+                    <p style="font-size:0.82rem; color:var(--text-sub); line-height:1.6; margin:0;">診断結果を見たクライアントが購入するだけで、自動的に紹介料が入ります。</p>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:10px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:50px; padding:12px 24px;">
+                    <i class="fa-solid fa-circle-check" style="color:var(--success); font-size:1.1rem;"></i>
+                    <span style="font-size:0.9rem; color:var(--text-main);">初期設定は<strong style="color:var(--success);">完全無料</strong>でサポート</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:50px; padding:12px 24px;">
+                    <i class="fa-solid fa-circle-check" style="color:var(--success); font-size:1.1rem;"></i>
+                    <span style="font-size:0.9rem; color:var(--text-main);">PC・スマホ不問で対応</span>
+                </div>
+                <a href="https://lin.ee/3ClYbhu" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#06C755; color:white; padding:13px 28px; border-radius:50px; font-family:var(--font-main); font-weight:700; font-size:0.95rem; text-decoration:none; box-shadow:0 4px 20px rgba(6,199,85,0.4); transition:all 0.3s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 30px rgba(6,199,85,0.6)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(6,199,85,0.4)'">
+                    <i class="fa-brands fa-line" style="font-size:1.1rem;"></i>
+                    LINEでサポートを受ける
+                </a>
             </div>
         </div>
     </section>
@@ -1678,7 +1497,7 @@
                     <div class="recommend-badge">RECOMMENDED</div>
                     <div class="plan-name" style="color:var(--primary);">🎋 竹 (Standard)</div>
                     <div class="plan-price">6,480<span>円/月</span></div>
-                    <span class="contract-term-note" style="background:rgba(255,255,255,0.1); color:white;">※最低契約期間 6ヶ月</span>
+                    <span class="contract-term-note" style="background:rgba(16,185,129,0.15); color:var(--success); border:1px solid rgba(16,185,129,0.4);">✓ 最低契約期間なし・1ヶ月〜OK</span>
                     <ul class="plan-features">
                         <li>全サプリDB利用可能</li>
                         <li>診断・レポート無制限</li>
@@ -1702,7 +1521,7 @@
                         </div>
                         <span class="badge-red">3月限定! 12ヶ月分料金</span>
                         <div class="discount-text">約15,000円 OFF!!</div>
-                        <div class="note">※バージョンアップ権なし (OP追加可)</div>
+                        <div class="note" style="color:var(--success);">✓ バージョンアップ権付き</div>
                     </div>
                     <a href="/cdn-cgi/l/email-protection#7d10080e1e11180d0f1410184c4a3d1a101c1411531e1210420e081f17181e09402e091c13191c0f199efeea9efed49efece9ae9ce9efcea95c3c19efcc2" class="btn btn-primary" style="width:100%;">今すぐ始める</a>
                 </div>
@@ -1710,7 +1529,7 @@
                 <div class="price-card fade-up" style="transition-delay: 0.2s;">
                     <div class="plan-name" style="color:var(--gold);">🌲 松 (Pro)</div>
                     <div class="plan-price">14,980<span>円/月</span></div>
-                    <span class="contract-term-note">※最低契約期間 6ヶ月</span>
+                    <span class="contract-term-note" style="background:rgba(16,185,129,0.15); color:var(--success); border:1px solid rgba(16,185,129,0.4);">✓ 最低契約期間なし・1ヶ月〜OK</span>
                     <ul class="plan-features">
                         <li>完全ホワイトラベル</li>
                         <li>ロゴ・配色カスタマイズ</li>
@@ -1727,7 +1546,7 @@
                         </div>
                         <span class="badge-red">3月限定! 12ヶ月分料金</span>
                         <div class="discount-text">約45,000円 OFF!!</div>
-                        <div class="note">※バージョンアップ権なし (OP追加可)</div>
+                        <div class="note" style="color:var(--success);">✓ バージョンアップ権付き</div>
                     </div>
                     <a href="/cdn-cgi/l/email-protection#305d4543535c554042595d55010770575d51595c1e535f5d0f4345525a5553440d60425fd3b3a7d3b399d3b383d3b1bad5a5bfd3b1b4d5a0b8d3b2bfd3b1ab" class="btn btn-outline" style="width:100%;">お問い合わせ</a>
                 </div>
@@ -1736,8 +1555,8 @@
             <div class="renewal-section fade-up">
                 <h3 style="font-size:1.5rem; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">契約・更新サイクルについて</h3>
                 <p style="color:var(--text-sub); font-size:0.95rem;">
-                    本サービスは、初期の導入サポートと確実な効果実感のため、全プラン共通で<strong style="color:white;">最低契約期間を6ヶ月</strong>とさせていただいております。<br>
-                    満了後は、ジムの状況に合わせて以下の3つの更新サイクルを選択いただけます。長期契約ほど経営上の固定費を削減できます。
+                    本サービスは<strong style="color:var(--success);">最低契約期間なし・1ヶ月からご利用可能</strong>です。まずは気軽にお試しいただけます。<br>
+                    ジムの状況に合わせて以下の3つの更新サイクルを選択いただけます。長期契約ほど経営上の固定費を削減できます。
                 </p>
                 <div class="renewal-grid">
                     <div class="renewal-card">
@@ -1819,32 +1638,126 @@
                 <div class="option-cat-title" style="border-color:var(--danger);">買い切り購入者限定</div>
                 <div class="options-grid">
                     <div class="opt-card" style="border-color:rgba(239,68,68,0.4);">
-                        <h5>カスタム保障</h5>
+                        <h5>カスタム権</h5>
                         <span class="opt-price" style="color:var(--danger);">¥1,280 <span>/ 月</span></span>
-                        <p class="opt-desc">バージョン更新対応 ＆ 毎月1回のカスタマイズが可能に。</p>
+                        <p class="opt-desc">毎月1回のカスタマイズが可能に。買い切り後も柔軟に内容を調整できます。</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ===== FAQ SECTION ===== -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="text-center fade-up" style="margin-bottom:8px;">
+                <span style="font-family:var(--font-main); font-size:0.78rem; font-weight:700; letter-spacing:2px; color:var(--accent); text-transform:uppercase;">FAQ</span>
+            </div>
+            <h2 class="text-center fade-up">よくあるご質問</h2>
+            <p class="text-center fade-up" style="color:var(--text-sub); margin-top:12px;">導入前に気になるポイントをまとめました。</p>
+
+            <div class="faq-list">
+
+                <div class="faq-item fade-up">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-q-text">
+                            <span class="faq-q-label">Q</span>
+                            無料の梅プランはどこまで使えますか？有料プランとの違いは何ですか？
+                        </span>
+                        <span class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            梅（Lite）プランは<strong>完全無料</strong>で使い始められるプランです。提案できるサプリメントは15種類に限定されますが、診断・レポート生成は無制限にご利用いただけます。<br><br>
+                            有料プランとの主な違いは、<strong>①アフィリエイトリンクの設定ができない（収益化不可）</strong>、<strong>②屋号・ジム名の変更が不可</strong>、<strong>③PDF・印刷出力が不可</strong>、の3点です。まずは無料でツールの使い勝手を確かめてから、収益化・本格導入を検討したい方に最適です。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item fade-up" style="transition-delay:0.05s;">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-q-text">
+                            <span class="faq-q-label">Q</span>
+                            最低契約期間はありますか？いつでも解約できますか？
+                        </span>
+                        <span class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <strong>最低契約期間は設けていません。1か月からご利用可能</strong>で、いつでも解約できます。次回更新を希望されない場合は当月10日までに解約手続きをいただければ、翌月以降の請求は発生しません。<br><br>
+                            なお、サービスの性質上、<strong>月途中での解約・日割計算・返金には対応しておりません</strong>。ご注意ください。半年・1年の一括更新プランを選択された場合も同様です。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item fade-up" style="transition-delay:0.1s;">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-q-text">
+                            <span class="faq-q-label">Q</span>
+                            買い切りプランとサブスクプランはどちらがお得ですか？
+                        </span>
+                        <span class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            買い切りプランは<strong>約12ヶ月分の料金でずっと使い続けられる</strong>お得なプランです（バージョンアップ権付き）。長期的にご利用いただく予定のある方や、毎月の固定費をなくしたい方に向いています。<br><br>
+                            一方でサブスクプランは初期費用ゼロ・1か月単位でご利用いただけるため、「まず試してみたい」「繁忙期だけ使いたい」という方にも柔軟に対応できます。<strong>どちらが向いているかは公式LINEでご相談ください。</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item fade-up" style="transition-delay:0.15s;">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-q-text">
+                            <span class="faq-q-label">Q</span>
+                            アフィリエイトの設定方法がわかりません。サポートしてもらえますか？
+                        </span>
+                        <span class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <strong>完全サポートします！</strong>「iHerbって何？」「アカウントの作り方がわからない」という段階からでも、公式LINEで丁寧にご案内します。<br><br>
+                            具体的には、①iHerbアカウント作成、②アフィリエイトURL発行、③ツールへの設定、の3ステップを一緒に進めます。スマホ・PCどちらでも対応可能で、<strong>初期設定のサポートは無料</strong>です。収益化の流れまで含めてご説明しますのでご安心ください。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item fade-up" style="transition-delay:0.2s;">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-q-text">
+                            <span class="faq-q-label">Q</span>
+                            複数店舗・複数トレーナーでの利用はできますか？
+                        </span>
+                        <span class="faq-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            はい、対応しています。複数店舗や複数トレーナーでの導入については、<strong>店舗数・規模に合わせた専用のご提案</strong>が可能です。<br><br>
+                            スタッフが変わっても同じ品質のサプリ提案ができる「標準化」は、複数店舗を運営するジムに特に喜ばれています。導入台数・運用体制などの詳細は、以下のお問い合わせフォームまたは公式LINEにてご相談ください。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <footer id="contact" class="footer-cta text-center">
         <div class="container">
-            <h2 class="fade-up" style="margin-bottom:10px;">お問い合わせ・導入相談</h2>
-            <p class="fade-up" style="color:var(--text-sub);">導入に関するご質問や、プランのご相談はお気軽にどうぞ。<br>通常1〜2営業日以内にご返信いたします。</p>
+            <!-- ターゲット絞り込みヘッダー -->
+            <div class="fade-up" style="display:inline-flex; align-items:center; gap:8px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.35); border-radius:20px; padding:6px 18px; margin-bottom:16px;">
+                <i class="fa-solid fa-building" style="color:var(--primary); font-size:0.85rem;"></i>
+                <span style="font-family:var(--font-main); font-size:0.8rem; font-weight:700; color:var(--primary); letter-spacing:0.5px;">複数店舗・本格導入を検討している方向け</span>
+            </div>
+            <h2 class="fade-up" style="margin-bottom:10px;">導入のご相談はこちら</h2>
+            <p class="fade-up" style="color:var(--text-sub); font-size:0.92rem;">複数店舗への展開や、竹・松プランの本格導入をご検討の方はお気軽にどうぞ。<br>通常1〜2営業日以内にご返信いたします。<br><span style="font-size:0.84rem; color:#64748b;">※ 梅（無料）プランは公式LINEから即ご利用開始できます。</span></p>
 
-            <div class="contact-form-wrap fade-up">
+            <div class="contact-form-wrap fade-up" style="max-width:480px;">
                 <!-- Form -->
                 <div id="contactFormBody">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>お名前 <span class="req">必須</span></label>
-                            <input type="text" class="form-input" id="cf-name" placeholder="山田 太郎" required>
-                        </div>
-                        <div class="form-group">
-                            <label>ジム名・屋号</label>
-                            <input type="text" class="form-input" id="cf-gym" placeholder="SUPER BODY GYM">
-                        </div>
+                    <div class="form-group">
+                        <label>お名前 <span class="req">必須</span></label>
+                        <input type="text" class="form-input" id="cf-name" placeholder="山田 太郎" required>
                     </div>
                     <div class="form-group">
                         <label>メールアドレス <span class="req">必須</span></label>
@@ -1852,23 +1765,24 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>電話番号</label>
-                            <input type="tel" class="form-input" id="cf-tel" placeholder="090-0000-0000">
+                            <label>ジム名・屋号</label>
+                            <input type="text" class="form-input" id="cf-gym" placeholder="SUPER BODY GYM">
                         </div>
                         <div class="form-group">
                             <label>ご興味のあるプラン</label>
                             <select class="form-select" id="cf-plan">
                                 <option value="" disabled selected>選択してください</option>
-                                <option value="ume">🌿 梅 (Lite) — 無料</option>
                                 <option value="take">🎋 竹 (Standard)</option>
                                 <option value="matsu">🌲 松 (Pro)</option>
+                                <option value="buyout">💡 買い切りを検討</option>
+                                <option value="multi">🏢 複数店舗での導入</option>
                                 <option value="undecided">まだ決めていない</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>お問い合わせ内容 <span class="req">必須</span></label>
-                        <textarea class="form-textarea" id="cf-message" placeholder="ご質問やご要望をお書きください。&#10;例：竹プランの買い切りを検討しています。デモ画面を見ることは可能ですか？" required></textarea>
+                        <textarea class="form-textarea" id="cf-message" placeholder="ご質問やご要望をお書きください。&#10;例：3店舗への一括導入を検討しています。見積もりをお願いできますか？" style="min-height:100px;" required></textarea>
                     </div>
                     <button type="button" class="form-submit-btn" id="cf-submit">
                         <i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i>送信する
@@ -1895,8 +1809,29 @@
                 </a>
             </div>
 
-            <div style="margin-top:50px; color:var(--text-sub); font-size:0.8rem;">
-                &copy; 2026 Supplement Oracle v12. All rights reserved.
+            <!-- ===== LEGAL / HP FOOTER LINKS ===== -->
+            <div style="margin-top:50px; padding-top:28px; border-top:1px solid rgba(255,255,255,0.08);">
+                <!-- Links row -->
+                <div style="display:flex; justify-content:center; align-items:center; gap:8px 28px; flex-wrap:wrap; margin-bottom:18px;">
+                    <a href="tos.html" target="_blank" style="color:rgba(148,163,184,0.75); font-size:0.82rem; text-decoration:none; display:inline-flex; align-items:center; gap:5px; transition:color .2s;" onmouseover="this.style.color='#f8fafc'" onmouseout="this.style.color='rgba(148,163,184,0.75)'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        利用規約
+                    </a>
+                    <span style="color:rgba(255,255,255,0.15); font-size:0.75rem;">|</span>
+                    <a href="tokusho.html" target="_blank" style="color:rgba(148,163,184,0.75); font-size:0.82rem; text-decoration:none; display:inline-flex; align-items:center; gap:5px; transition:color .2s;" onmouseover="this.style.color='#f8fafc'" onmouseout="this.style.color='rgba(148,163,184,0.75)'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        特定商取引法に基づく表記
+                    </a>
+                    <span style="color:rgba(255,255,255,0.15); font-size:0.75rem;">|</span>
+                    <a href="https://orivex.jp" target="_blank" rel="noopener noreferrer" style="color:rgba(148,163,184,0.75); font-size:0.82rem; text-decoration:none; display:inline-flex; align-items:center; gap:5px; transition:color .2s;" onmouseover="this.style.color='#f8fafc'" onmouseout="this.style.color='rgba(148,163,184,0.75)'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        ORIVEX 公式HP
+                    </a>
+                </div>
+                <!-- Copyright -->
+                <div style="color:var(--text-sub); font-size:0.78rem;">
+                    &copy; 2026 Supplement Oracle v12 by ORIVEX. All rights reserved.
+                </div>
             </div>
         </div>
     </footer>
@@ -1963,6 +1898,25 @@
         }
         animateParticles();
 
+        // --- FAQ Toggle ---
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('open');
+
+            // Close all open items
+            document.querySelectorAll('.faq-item.open').forEach(el => {
+                el.classList.remove('open');
+                el.querySelector('.faq-answer').style.maxHeight = '0';
+            });
+
+            // Open clicked item if it was closed
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        }
+
         // --- Scroll Fade-up Observer ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1977,9 +1931,9 @@
         // --- Contact Form Handler ---
         document.getElementById('cf-submit').addEventListener('click', function() {
             const name = document.getElementById('cf-name').value.trim();
-            const gym = document.getElementById('cf-gym').value.trim();
+            const gymEl = document.getElementById('cf-gym');
+            const gym = gymEl ? gymEl.value.trim() : '';
             const email = document.getElementById('cf-email').value.trim();
-            const tel = document.getElementById('cf-tel').value.trim();
             const planEl = document.getElementById('cf-plan');
             const plan = planEl.options[planEl.selectedIndex] ? planEl.options[planEl.selectedIndex].text : '';
             const message = document.getElementById('cf-message').value.trim();
@@ -1991,12 +1945,11 @@
             if (!message) { alert('お問い合わせ内容を入力してください。'); document.getElementById('cf-message').focus(); return; }
 
             // Build mailto
-            const subject = encodeURIComponent('[Supplement Oracle] お問い合わせ: ' + name + (gym ? ' (' + gym + ')' : ''));
+            const subject = encodeURIComponent('[Supplement Oracle] 導入相談: ' + name + (gym ? ' (' + gym + ')' : ''));
             const body = encodeURIComponent(
                 '【お名前】' + name + '\n' +
                 '【ジム名・屋号】' + (gym || '未記入') + '\n' +
                 '【メールアドレス】' + email + '\n' +
-                '【電話番号】' + (tel || '未記入') + '\n' +
                 '【ご興味のあるプラン】' + (plan || '未選択') + '\n' +
                 '──────────────────\n' +
                 '【お問い合わせ内容】\n' + message + '\n'
