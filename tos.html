@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>利用規約 | SUPPLEMENT-ORACLE- by ORIVEX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy:       #0d1f3c;
+      --navy-mid:   #1a3260;
+      --navy-light: #2a4a80;
+      --accent:     #3b6fd4;
+      --accent-lt:  #dce8ff;
+      --white:      #ffffff;
+      --gray-50:    #f7f8fb;
+      --gray-100:   #eef0f5;
+      --gray-200:   #d8dde8;
+      --gray-500:   #7a869e;
+      --gray-700:   #3d4a61;
+      --ink:        #1a2238;
+      --success:    #1e7a4a;
+      --font-sans:  'Noto Sans JP', sans-serif;
+      --font-mono:  'DM Mono', monospace;
+      --radius:     8px;
+      --shadow-sm:  0 1px 4px rgba(13,31,60,.07);
+      --shadow-md:  0 4px 20px rgba(13,31,60,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--gray-50);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--navy);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(13,31,60,.25);
+    }
+    .logo {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: .06em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .logo em { font-style: normal; color: #6fa3f5; }
+    .header-label {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.45);
+      text-transform: uppercase;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header { margin-bottom: 44px; }
+    .page-eyebrow {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .page-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .page-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -.01em;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .page-desc {
+      font-size: .88rem;
+      color: var(--gray-500);
+      max-width: 560px;
+      line-height: 1.85;
+    }
+    .page-divider {
+      width: 100%; height: 1px;
+      background: var(--gray-200);
+      margin-top: 28px;
+    }
+
+    /* ── DRAFT NOTICE ── */
+    .draft-notice {
+      background: #fef9ec;
+      border: 1px solid #f0d060;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-size: .84rem;
+      color: #7a5a00;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    /* ── PLAN TABLE ── */
+    .plan-table-wrap {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+    .plan-table-title {
+      background: var(--navy);
+      padding: 12px 24px;
+      font-size: .82rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.8);
+      font-family: var(--font-mono);
+      letter-spacing: .08em;
+    }
+    .plan-table { width: 100%; border-collapse: collapse; }
+    .plan-table th {
+      background: var(--gray-100);
+      padding: 10px 16px;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--gray-700);
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .plan-table td {
+      padding: 12px 16px;
+      font-size: .86rem;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .plan-table tr:last-child td { border-bottom: none; }
+    .plan-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .plan-badge--ume  { background: #e8f0fe; color: #3b5fc0; }
+    .plan-badge--take { background: #e3f5ec; color: #1e7a4a; }
+    .plan-badge--matu { background: #fef3e2; color: #9a5a00; }
+
+    /* ── NOTICE BOX ── */
+    .important-box {
+      background: #fff5f5;
+      border: 1px solid #fca5a5;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-size: .86rem;
+      color: #7f1d1d;
+      line-height: 1.75;
+      margin: 20px 0 28px;
+      font-weight: 500;
+    }
+    .important-box strong { color: #b91c1c; }
+
+    /* ── ARTICLE SECTION ── */
+    .tos-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .tos-article-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent-lt);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .tos-article-num {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: .05em;
+      flex-shrink: 0;
+    }
+    .tos-body { font-size: .9rem; color: var(--gray-700); line-height: 1.85; }
+    .tos-body p { margin-bottom: 10px; }
+    .tos-body p:last-child { margin-bottom: 0; }
+    .tos-body ul {
+      margin: 8px 0 10px 18px;
+      list-style: disc;
+    }
+    .tos-body ul li { margin-bottom: 6px; line-height: 1.75; }
+    .tos-highlight {
+      background: rgba(59,111,212,.06);
+      border-left: 3px solid var(--accent);
+      padding: 8px 14px;
+      border-radius: 0 4px 4px 0;
+      margin: 10px 0;
+      font-size: .86rem;
+    }
+
+    /* ── ADDENDUM ── */
+    .addendum {
+      background: var(--navy);
+      color: rgba(255,255,255,.75);
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      font-size: .85rem;
+      margin-top: 24px;
+      text-align: center;
+      letter-spacing: .03em;
+    }
+
+    /* ── INFO NOTICE ── */
+    .notice {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--accent-lt);
+      border: 1px solid #b3ccf8;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-top: 28px;
+      font-size: .83rem;
+      color: #1d3a7a;
+      line-height: 1.8;
+    }
+    .notice-icon {
+      flex-shrink: 0; width: 20px; height: 20px;
+      background: var(--accent); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .notice-icon::after {
+      content: 'i'; color: #fff; font-size: .7rem;
+      font-weight: 700; font-style: italic; font-family: Georgia, serif;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 28px 40px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-sans); font-weight: 700; font-size: 1rem;
+      letter-spacing: .06em; color: rgba(255,255,255,.75); margin-bottom: 8px;
+    }
+    .footer-logo em { font-style: normal; color: #6fa3f5; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap; }
+    .footer-links a { font-size: .78rem; color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.9); }
+    .footer-copy { font-size: .75rem; color: rgba(255,255,255,.32); letter-spacing: .04em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header { padding: 0 20px; }
+      main   { padding: 36px 16px 60px; }
+      footer { padding: 24px 20px; }
+      .tos-card { padding: 20px 18px; }
+      .plan-table th, .plan-table td { padding: 10px 12px; font-size: .82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="/" class="logo">ORIVEX<em>.</em></a>
+  <span class="header-label">Terms of Service</span>
+</header>
+
+<!-- MAIN -->
+<main>
+  <div class="page-header">
+    <p class="page-eyebrow">Legal</p>
+    <h1 class="page-title">SUPPLEMENT-ORACLE- 利用規約</h1>
+    <p class="page-desc">Ver. 2026-03-24｜運営者：ORIVEX<br>本サービスを利用する方は、本規約に同意のうえご利用ください。</p>
+    <div class="page-divider"></div>
+  </div>
+
+  <!-- Draft Notice -->
+  <div class="draft-notice">
+    ⚠️ 本規約は現在ドラフト版（2026年3月24日版）です。今後、QRコード再発行・買い切り範囲・個人情報保護方針等を別途追記・精査する予定です。
+  </div>
+
+  <!-- Plan Summary Table -->
+  <div class="plan-table-wrap">
+    <div class="plan-table-title">現行プラン概要（2026年3月24日時点）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th style="width:14%;">プラン</th>
+          <th style="width:16%;">料金</th>
+          <th>主な内容</th>
+          <th style="width:28%;">備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="plan-badge plan-badge--ume">梅 Lite</span></td>
+          <td><strong>0円</strong>／月</td>
+          <td>提案可能サプリ15種類限定<br>診断・レポート無制限</td>
+          <td>屋号変更不可<br>アフィリエイト設定不可<br>印刷・PDF出力不可</td>
+        </tr>
+        <tr>
+          <td><span class="plan-badge plan-badge--take">竹 Standard</span></td>
+          <td>6,480円／月</td>
+          <td>全サプリDB利用可<br>専用レポート発行<br>屋号・トレーナー名表示<br>アフィリエイトリンク設定可</td>
+          <td>買い切りプランあり</td>
+        </tr>
+        <tr>
+          <td><span class="plan-badge plan-badge--matu">松 Pro</span></td>
+          <td>14,980円／月</td>
+          <td>完全ホワイトラベル<br>ロゴ・配色カスタマイズ<br>除外リスト設定<br>設定代行コンシェルジュ</td>
+          <td>月3回まで無料カスタマイズ<br>買い切りプランあり</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="important-box">
+    ⚠️ <strong>日割計算はいたしません。</strong>利用料金は前払い制とし、月途中の開始・解約・プラン変更・利用停止・未使用その他いかなる場合であっても、日割計算・日割返金・月額料金の按分計算は一切行いません。
+  </div>
+
+  <!-- 第1条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第1条</span> 適用
+    </div>
+    <div class="tos-body">
+      <p>本規約は、本サービスの利用に関する当社と利用者との間の一切の関係に適用されます。</p>
+      <p>当社が本サービスのLP、申込書、見積書、料金表、メール、チャットその他の方法で提示する個別条件は、本規約の一部を構成するものとします。</p>
+      <p>本規約と個別条件の内容が異なる場合は、個別条件が優先するものとします。</p>
+    </div>
+  </div>
+
+  <!-- 第2条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第2条</span> 定義
+    </div>
+    <div class="tos-body">
+      <ul>
+        <li>「<strong>利用者</strong>」とは、本規約に同意のうえ本サービスを利用する個人事業主、法人、団体またはその担当者をいいます。</li>
+        <li>「<strong>エンドユーザー</strong>」とは、利用者が本サービスを用いてサプリメント提案、レポート提示その他のサービス提供を行う相手方をいいます。</li>
+        <li>「<strong>プラン</strong>」とは、梅（Lite）、竹（Standard）、松（Pro）その他当社が定める本サービスの提供区分をいいます。</li>
+        <li>「<strong>オプション</strong>」とは、当社が別途有償または無償で提供する追加機能、カスタマイズ、制作物その他の付随サービスをいいます。</li>
+        <li>「<strong>買い切りプラン</strong>」とは、当社が別途提示する条件に基づき、一定の対価の支払いにより利用権を付与するプランをいいます。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第3条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第3条</span> 本サービスの内容
+    </div>
+    <div class="tos-body">
+      <p>本サービスは、サプリメント提案、レポート発行、表示内容のカスタマイズ、アフィリエイト設定、その他これらに付随する機能を提供するトレーナー支援ツールです。</p>
+      <p>当社は、各プランに応じて利用可能な機能、サプリメント数、表示項目、出力機能、サポート範囲、カスタマイズ回数その他の内容を定めるものとします。</p>
+      <p>当社は、品質向上、法令対応、保守運用または事業上の必要性に応じて、本サービスの内容、画面、名称、提供方法または機能を変更できるものとします。</p>
+    </div>
+  </div>
+
+  <!-- 第4条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第4条</span> 利用契約の成立
+    </div>
+    <div class="tos-body">
+      <p>利用者が当社所定の方法により申込みを行い、当社がこれを承諾した時点で、本サービスの利用契約が成立するものとします。</p>
+      <p>当社は、申込内容に虚偽、誤記または重要な記載漏れがある場合、反社会的勢力との関係が認められる場合、過去に規約違反があった場合、その他当社が不適当と判断した場合には、申込みを承諾しないことがあります。</p>
+      <p>利用者は、申込時に登録した情報に変更が生じた場合、速やかに当社へ通知するものとします。</p>
+    </div>
+  </div>
+
+  <!-- 第5条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第5条</span> 料金、支払方法および日割計算
+    </div>
+    <div class="tos-body">
+      <p>本サービスの利用料金は、当社が別途定める料金表、LPまたは申込書記載のとおりとします。現時点の月額料金は、梅（Lite）0円、竹（Standard）6,480円、松（Pro）14,980円です。</p>
+      <p>利用者は、毎月更新・半年一括更新（5%OFF）・1年一括更新（約16%OFF）のいずれかの更新サイクルを選択できるものとします。</p>
+      <p>本サービスの<strong>最低契約期間は設けません</strong>（1か月からご利用可能）。</p>
+      <p>利用料金は、PayPal・Stripeによるクレジットカード決済・銀行振込その他当社が指定する方法により支払うものとします。銀行振込手数料は利用者の負担とします。</p>
+      <div class="tos-highlight">
+        <strong>⚠️ 日割計算は行いません。</strong>利用料金は前払いとし、月途中の開始・解約・プラン変更・利用停止・未使用その他いかなる場合であっても、日割計算・日割返金または月額料金の按分計算は行いません。
+      </div>
+      <p>当社が受領した利用料金・オプション料金その他一切の金員は、法令上返金が義務付けられる場合を除き、返金しません。</p>
+    </div>
+  </div>
+
+  <!-- 第6条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第6条</span> 梅（Lite）プランに関する特則
+    </div>
+    <div class="tos-body">
+      <p>梅（Lite）プランは、当社が無償（0円）で提供するプランです。</p>
+      <p>当社は、梅（Lite）プランについて、利用者への事前通知の有無を問わず、機能追加・制限・改定・停止または終了を行うことができるものとします。</p>
+      <p>梅（Lite）プランについては、竹（Standard）または松（Pro）に比べ、サポート範囲・継続提供・機能保証その他の取扱いが限定される場合があります。</p>
+      <p>梅（Lite）プランから有償プランへ変更した場合であっても、変更日を基準とした日割計算は行いません。</p>
+    </div>
+  </div>
+
+  <!-- 第7条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第7条</span> 買い切りプランおよびオプション
+    </div>
+    <div class="tos-body">
+      <p>当社は、竹（Standard）および松（Pro）その他のプランについて、買い切りプランを別途提供することがあります。買い切りプランの価格・対象バージョン・利用範囲・バージョンアップ権の範囲・カスタム権その他の条件は、当社が別途提示するLP・見積書・申込書または個別合意に従うものとします。</p>
+      <p>当社は、サプリ追加・ポップ作成・ロゴ制作・SNS導入報告バナー制作・カスタマイズ・コメント機能追加・カスタマイズ無制限・特定成分の解説文カスタムその他のオプションを提供することがあります。オプションの内容・価格・納期・提供回数・適用対象は当社所定の条件によるものとします。</p>
+      <p>オプションまたは買い切りプランの申込み後は、当社が別途認める場合を除き、キャンセル・返金または日割計算は行いません。</p>
+    </div>
+  </div>
+
+  <!-- 第8条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第8条</span> 利用範囲およびアカウント管理
+    </div>
+    <div class="tos-body">
+      <p>利用者は、当社が認めた範囲に限り、本サービスを自己の事業のために利用できるものとします。</p>
+      <p>利用者は、本サービスに関するURL・ログイン情報・パスワード・設定情報・レポート・テンプレートその他の利用情報を自己の責任で管理し、第三者に貸与・譲渡・共有または漏えいしてはなりません。</p>
+      <p>利用者の管理不十分・使用上の過誤または第三者による不正利用により生じた損害について、当社は責任を負いません。</p>
+    </div>
+  </div>
+
+  <!-- 第9条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第9条</span> 非医療性および最終判断
+    </div>
+    <div class="tos-body">
+      <p>本サービスは、サプリメント提案に関する情報整理および業務支援を目的とするものであり、医療行為・診断・治療・処方またはこれらに準ずる行為を目的とするものではありません。</p>
+      <p>本サービスにより表示される提案内容・解説文・注意喚起・レポートその他の情報は、一般的な参考情報として提供されるものであり、個別の健康状態・疾患・服薬状況または体質に対する完全性を保証するものではありません。</p>
+      <p>エンドユーザーへの提案実施の可否・提案内容の採否・摂取判断その他の最終判断は、利用者およびエンドユーザー自身の責任において行うものとします。必要に応じ、医師・薬剤師その他の専門家へ相談するものとします。</p>
+    </div>
+  </div>
+
+  <!-- 第10条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第10条</span> 知的財産権
+    </div>
+    <div class="tos-body">
+      <p>本サービスに関するプログラム・データベース・ロジック・画面デザイン・文章・画像・レポート様式・商標その他一切の知的財産権は、当社または正当な権利者に帰属します。</p>
+      <p>利用者は、当社の事前の書面承諾なく、本サービスの全部または一部について、複製・改変・転載・配布・公衆送信・翻案・販売・再許諾・リバースエンジニアリング・逆アセンブルまたは逆コンパイルを行ってはなりません。</p>
+    </div>
+  </div>
+
+  <!-- 第11条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第11条</span> 禁止事項
+    </div>
+    <div class="tos-body">
+      <p>利用者は、本サービスの利用にあたり、次の各号に該当する行為を行ってはなりません。</p>
+      <ul>
+        <li>法令・公序良俗または本規約に違反する行為</li>
+        <li>本サービスを医療行為または医療的助言であると誤認させる表示・勧誘を行う行為</li>
+        <li>虚偽または不正確な情報を入力し、または第三者になりすまして本サービスを利用する行為</li>
+        <li>本サービスの運営を妨害し、または不正アクセス・過度な負荷・スクレイピングその他これに類する行為を行うこと</li>
+        <li>本サービスの全部または一部を第三者へ再販売・再配布または無断提供する行為</li>
+        <li>当社または第三者の権利・利益・信用または名誉を侵害する行為</li>
+        <li>その他、当社が不適切と判断する行為</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第12条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第12条</span> 本サービスの変更、停止および終了
+    </div>
+    <div class="tos-body">
+      <p>当社は、保守点検・障害対応・通信回線または外部サービスの不具合・法令対応・天災地変・事業上の必要その他合理的な理由がある場合、本サービスの全部または一部を変更・停止または終了できるものとします。</p>
+      <p>当社は、前項に基づく変更・停止または終了により利用者に生じた損害について、当社に故意または重過失がある場合を除き、責任を負いません。</p>
+    </div>
+  </div>
+
+  <!-- 第13条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第13条</span> 免責および責任制限
+    </div>
+    <div class="tos-body">
+      <p>当社は、本サービスが特定目的に適合すること、期待する機能・収益・成果・正確性・完全性・継続性を有すること、または利用者の事業上の目的達成に寄与することを保証しません。</p>
+      <p>本サービスの利用または利用不能に関連して利用者に損害が生じた場合であっても、当社は、当社に故意または重過失がある場合を除き、一切責任を負わないものとします。</p>
+      <p>前項にかかわらず、当社が責任を負う場合であっても、当社の責任は、当該損害が直接かつ通常の損害である場合に限られ、かつ、当該損害発生月の直前12か月間に当社が当該利用者から現実に受領した利用料金総額を上限とします。なお、梅（Lite）プランについては、当社に故意または重過失がある場合を除き、責任を負いません。</p>
+    </div>
+  </div>
+
+  <!-- 第14条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第14条</span> 契約解除および利用停止
+    </div>
+    <div class="tos-body">
+      <p>当社は、利用者が本規約に違反した場合・利用料金の支払いを怠った場合・登録情報に虚偽があった場合・反社会的勢力との関係が判明した場合・その他当社が不適切と判断した場合、事前通知なく本サービスの利用停止・アカウント削除または契約解除を行うことができます。</p>
+      <p>前項の場合であっても、当社は既受領の料金を返金せず、利用者に損害が生じても責任を負いません。</p>
+    </div>
+  </div>
+
+  <!-- 第15条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第15条</span> 規約の変更
+    </div>
+    <div class="tos-body">
+      <p>当社は、法令改正・サービス内容の変更・事業上の必要その他合理的な理由がある場合、本規約を変更できるものとします。</p>
+      <p>変更後の規約は、当社ウェブサイト・LP・アプリ画面・メールその他当社が適当と判断する方法により告知した時点または当社が定める効力発生日から効力を生じるものとします。</p>
+    </div>
+  </div>
+
+  <!-- 第16条 -->
+  <div class="tos-card">
+    <div class="tos-article-title">
+      <span class="tos-article-num">第16条</span> 準拠法および合意管轄
+    </div>
+    <div class="tos-body">
+      <p>本規約は日本法に準拠し、日本法に従って解釈されるものとします。</p>
+      <p>本サービスまたは本規約に関連して当社と利用者との間に生じた一切の紛争については、当社本店所在地を管轄する地方裁判所または簡易裁判所を第一審の専属的合意管轄裁判所とします。</p>
+    </div>
+  </div>
+
+  <!-- 附則 -->
+  <div class="addendum">
+    附則｜本規約は、<strong>2026年3月24日</strong>から適用します。
+  </div>
+
+  <div class="notice">
+    <span class="notice-icon"></span>
+    <div>
+      本規約に関するお問い合わせは <strong>muscleprime17@gmail.com</strong> または公式LINEまでお気軽にどうぞ。
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ORIVEX<em>.</em></div>
+  <div class="footer-links">
+    <a href="tokusho.html">特定商取引法に基づく表記</a>
+    <a href="https://orivex.jp" target="_blank">ORIVEX 公式HP</a>
+  </div>
+  <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
