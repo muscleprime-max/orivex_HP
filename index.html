@@ -1094,6 +1094,9 @@
             /* -- Affiliate section banner (independent) -- */
             .affiliate-banner { flex-direction: column !important; text-align: center; }
             .affiliate-banner-steps { grid-template-columns: 1fr !important; }
+
+            /* -- AI Differentiation section -- */
+            .ai-diff-grid { grid-template-columns: 1fr !important; }
         }
     </style>
 </head>
@@ -1105,14 +1108,17 @@
         <div class="container hero-content">
             <div class="hero-tag fade-up">For Professional Trainers</div>
             <h1 class="fade-up">
-                サプリ提案を１分で、<br>
+                サプリの長文LINE指導、<br>
                 <span class="text-nowrap-pc">
-                    ジムの<span class="text-gradient">即戦力ツール</span>
+                    今日で<span class="text-gradient">もう終わりに</span>しませんか？
                 </span>
             </h1>
             <div class="fade-up hero-subcopy-row" style="transition-delay: 0.2s;">
                 <p class="hero-subcopy-text">
-                    サプリ選びに迷いパーソナルに通う開発者だからこそ、<br>現場に本当に必要な機能と収益性を両立しました。
+                    セッションのレスト中（1分間）に、最適なサプリ提案書が自動完成。<br>
+                    帰宅後の面倒なLINE返信からあなたを解放し、<br class="pc-br">
+                    これまでタダでやっていたアドバイスを、<br class="pc-br">
+                    毎月の<strong style="color:var(--accent);">「安定した副収入」</strong>に変える専用SaaSです。
                 </p>
                 <button class="btn-philosophy" onclick="document.getElementById('philosophyModal').classList.add('open')">
                     <span class="btn-philosophy-icon"><i class="fa-solid fa-heart-pulse"></i></span>
@@ -1217,6 +1223,112 @@
                         新人トレーナーでもベテラン級のサプリ指導が可能に。属人化を防ぎ、サービス品質を標準化します。
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== AI DIFFERENTIATION SECTION ===== -->
+    <section style="padding: 90px 0; background: linear-gradient(180deg, #0a0f1e 0%, #0f172a 100%); position: relative; overflow: hidden;">
+        <!-- 背景グロー -->
+        <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:700px; height:400px; background:radial-gradient(ellipse, rgba(239,68,68,0.06) 0%, transparent 70%); pointer-events:none;"></div>
+        <div class="container" style="position:relative; z-index:1;">
+            <div class="text-center fade-up" style="margin-bottom:56px;">
+                <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.35); color:#f87171; padding:6px 18px; border-radius:20px; font-family:var(--font-main); font-size:0.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">
+                    <i class="fa-solid fa-robot"></i> VS 生成AI
+                </span>
+                <h2 style="font-family:var(--font-main); font-size:clamp(1.7rem, 3.8vw, 2.4rem); font-weight:800; line-height:1.35; margin-bottom:16px;">
+                    「ChatGPTで代用できる」は<br><span style="background:linear-gradient(135deg,#ef4444,#f97316); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800;">誤解</span>です。
+                </h2>
+                <p style="color:var(--text-sub); font-size:1rem; max-width:600px; margin:0 auto; line-height:1.8;">
+                    生成AIはあくまで「テキストを生成する道具」。<br>ORIVEXは<strong style="color:white;">現場の収益と体験を設計するツール</strong>です。
+                </p>
+            </div>
+
+            <!-- ① 作業スピード -->
+            <div class="fade-up" style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:36px 40px; margin-bottom:24px; position:relative; overflow:hidden;">
+                <div style="position:absolute; top:0; left:0; width:4px; height:100%; background:linear-gradient(to bottom, #ef4444, #f97316);"></div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px;">
+                    <div style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; color:#f87171; font-size:0.9rem; font-weight:800; font-family:var(--font-main); flex-shrink:0;">①</div>
+                    <h3 style="font-family:var(--font-main); font-size:1.15rem; font-weight:800; margin:0;">作業スピード：<span style="color:#f87171;">5〜10分</span>か<span style="color:var(--success);">10秒</span>か</h3>
+                </div>
+                <div class="ai-diff-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div style="background:rgba(239,68,68,0.07); border:1px solid rgba(239,68,68,0.2); border-radius:14px; padding:22px 24px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                            <i class="fa-brands fa-robot" style="color:#f87171; font-size:1.1rem;"></i>
+                            <span style="font-family:var(--font-main); font-weight:700; color:#f87171; font-size:0.9rem;">ChatGPT の場合</span>
+                            <span style="background:#ef4444; color:white; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:10px; font-family:var(--font-main); margin-left:auto;">5〜10分</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-sub); line-height:1.75; margin:0;">スマホでプロンプトを打ち込み、出力されたテキストをコピーし、体裁を整えてPDF化し、自分のアフィリエイトリンクをわざわざ探してきて貼り付け、LINEで送る。</p>
+                    </div>
+                    <div style="background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:22px 24px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                            <i class="fa-solid fa-bolt" style="color:var(--success); font-size:1.1rem;"></i>
+                            <span style="font-family:var(--font-main); font-weight:700; color:var(--success); font-size:0.9rem;">ORIVEX の場合</span>
+                            <span style="background:var(--success); color:white; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:10px; font-family:var(--font-main); margin-left:auto;">10秒</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-sub); line-height:1.75; margin:0;">セッション中にスマホで項目を数タップするだけ。ジムのロゴ入りPDFと、自分専用のアフィリエイトリンクがセットになった綺麗なレポートが自動生成され、その場でQRコードを見せてクライアントのスマホに送れる。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② 情報の出口 -->
+            <div class="fade-up" style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:36px 40px; margin-bottom:24px; position:relative; overflow:hidden;">
+                <div style="position:absolute; top:0; left:0; width:4px; height:100%; background:linear-gradient(to bottom, var(--primary), var(--accent));"></div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.4); border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:0.9rem; font-weight:800; font-family:var(--font-main); flex-shrink:0;">②</div>
+                    <h3 style="font-family:var(--font-main); font-size:1.15rem; font-weight:800; margin:0;">情報の出口：単なる「回答」か「<span style="color:var(--accent);">利益</span>」か</h3>
+                </div>
+                <p style="font-size:0.88rem; color:var(--gold); font-weight:700; margin-bottom:20px; padding-left:46px;">経営者にとって一番刺さるのはここです。生成AIは情報を出して終わりですが、ORIVEXは情報を利益に変えます。</p>
+                <div class="ai-diff-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div style="background:rgba(239,68,68,0.07); border:1px solid rgba(239,68,68,0.2); border-radius:14px; padding:22px 24px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                            <i class="fa-brands fa-robot" style="color:#f87171; font-size:1.1rem;"></i>
+                            <span style="font-family:var(--font-main); font-weight:700; color:#f87171; font-size:0.9rem;">生成AI</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-sub); line-height:1.75; margin:0;">回答を得ても、クライアントがAmazon等で勝手に購入してしまい、ジム側の利益には<strong style="color:#f87171;">1円も繋がりません</strong>。</p>
+                    </div>
+                    <div style="background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:22px 24px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                            <i class="fa-solid fa-coins" style="color:var(--success); font-size:1.1rem;"></i>
+                            <span style="font-family:var(--font-main); font-weight:700; color:var(--success); font-size:0.9rem;">SUPPLEMENT-ORACLE</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-sub); line-height:1.75; margin:0;">診断結果の最後にトレーナー専用のアフィリエイトリンクを自動で組み込めます。サプリ選びの根拠（PubMed参照）を1分で提示し、そのまま物販の収益化スキームへとスムーズに繋げます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ③ 顧客体験・ブランディング -->
+            <div class="fade-up" style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:36px 40px; margin-bottom:40px; position:relative; overflow:hidden;">
+                <div style="position:absolute; top:0; left:0; width:4px; height:100%; background:linear-gradient(to bottom, var(--gold), #f59e0b);"></div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                    <div style="background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.4); border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:0.9rem; font-weight:800; font-family:var(--font-main); flex-shrink:0;">③</div>
+                    <h3 style="font-family:var(--font-main); font-size:1.15rem; font-weight:800; margin:0;">顧客体験（UX）とブランディング：「コピペ」か「<span style="color:var(--gold);">専用レポート</span>」か</h3>
+                </div>
+                <p style="font-size:0.88rem; color:var(--text-sub); margin-bottom:20px; padding-left:46px; line-height:1.7;">クライアントがお金を払うのは、<strong style="color:white;">納得感と特別感</strong>です。</p>
+                <div class="ai-diff-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div style="background:rgba(239,68,68,0.07); border:1px solid rgba(239,68,68,0.2); border-radius:14px; padding:22px 24px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                            <i class="fa-brands fa-robot" style="color:#f87171; font-size:1.1rem;"></i>
+                            <span style="font-family:var(--font-main); font-weight:700; color:#f87171; font-size:0.9rem;">生成AI</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-sub); line-height:1.75; margin:0;">AIの画面を見せたり、テキストをLINEにコピペするだけでは、「自分で調べられる」と思われてしまい<strong style="color:#f87171;">権威性が生まれません</strong>。</p>
+                    </div>
+                    <div style="background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:22px 24px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                            <i class="fa-solid fa-file-medical" style="color:var(--gold); font-size:1.1rem;"></i>
+                            <span style="font-family:var(--font-main); font-weight:700; color:var(--gold); font-size:0.9rem;">SUPPLEMENT-ORACLE</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-sub); line-height:1.75; margin:0;">ジムの屋号やトレーナー名が入った「専用のデジタル処方箋風レポート」として発行できます。「先生が自分のために作ってくれた」という体験を提供し、URLで即時送付できるため、クライアントの満足度と信頼関係の向上に直結します。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- まとめバナー -->
+            <div class="fade-up text-center" style="background:linear-gradient(135deg, rgba(59,130,246,0.1), rgba(6,182,212,0.1)); border:1px solid rgba(6,182,212,0.25); border-radius:16px; padding:28px 32px;">
+                <p style="font-size:1.05rem; font-weight:700; color:var(--text-main); line-height:1.8; margin:0;">
+                    生成AIは<span style="color:#f87171;">「情報を出す」</span>ツール。<br>
+                    ORIVEXは<span style="color:var(--accent);">「情報を収益と信頼に変える」</span>経営ツールです。
+                </p>
             </div>
         </div>
     </section>
