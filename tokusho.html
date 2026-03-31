@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>特定商取引法に基づく表記 | ORIVEX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy:       #0d1f3c;
+      --navy-mid:   #1a3260;
+      --navy-light: #2a4a80;
+      --accent:     #3b6fd4;
+      --accent-lt:  #dce8ff;
+      --white:      #ffffff;
+      --gray-50:    #f7f8fb;
+      --gray-100:   #eef0f5;
+      --gray-200:   #d8dde8;
+      --gray-500:   #7a869e;
+      --gray-700:   #3d4a61;
+      --ink:        #1a2238;
+      --font-sans:  'Noto Sans JP', sans-serif;
+      --font-mono:  'DM Mono', monospace;
+      --radius:     8px;
+      --shadow-sm:  0 1px 4px rgba(13,31,60,.07);
+      --shadow-md:  0 4px 20px rgba(13,31,60,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--gray-50);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--navy);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(13,31,60,.25);
+    }
+    .logo {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: .06em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .logo em {
+      font-style: normal;
+      color: #6fa3f5;
+    }
+    .header-label {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.45);
+      text-transform: uppercase;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 44px;
+    }
+    .page-eyebrow {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .page-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .page-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -.01em;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .page-desc {
+      font-size: .88rem;
+      color: var(--gray-500);
+      max-width: 520px;
+      line-height: 1.85;
+    }
+    .page-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--gray-200);
+      margin-top: 28px;
+    }
+
+    /* ── TABLE CARD ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead tr {
+      background: var(--navy);
+    }
+    thead th {
+      padding: 14px 28px;
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      color: rgba(255,255,255,.65);
+      text-transform: uppercase;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--gray-100);
+      transition: background .15s;
+    }
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+    tbody tr:hover {
+      background: var(--gray-50);
+    }
+    td {
+      padding: 18px 28px;
+      vertical-align: top;
+      font-size: .9rem;
+      line-height: 1.8;
+    }
+    td.label {
+      width: 36%;
+      font-weight: 700;
+      color: var(--navy);
+      white-space: nowrap;
+      border-right: 1px solid var(--gray-100);
+      font-size: .88rem;
+      letter-spacing: .01em;
+    }
+    td.value {
+      color: var(--gray-700);
+    }
+
+    /* ── PRICE LIST ── */
+    .plan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin: 4px 0 10px;
+    }
+    .plan-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .88rem;
+    }
+    .plan-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .plan-badge--ume  { background: #e8f0fe; color: #3b5fc0; }
+    .plan-badge--take { background: #e3f5ec; color: #1e7a4a; }
+    .plan-badge--matu { background: #fef3e2; color: #9a5a00; }
+    .plan-note {
+      font-size: .81rem;
+      color: var(--gray-500);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--gray-200);
+      line-height: 1.75;
+    }
+
+    /* ── SECTION HEADINGS inside td ── */
+    .td-section {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: .85rem;
+      margin-bottom: 4px;
+      margin-top: 14px;
+    }
+    .td-section:first-child { margin-top: 0; }
+    .td-sub {
+      font-size: .87rem;
+      color: var(--gray-700);
+      margin-bottom: 8px;
+      line-height: 1.8;
+    }
+
+    /* ── NOTICE BOX ── */
+    .notice {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--accent-lt);
+      border: 1px solid #b3ccf8;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-top: 28px;
+      font-size: .83rem;
+      color: #1d3a7a;
+      line-height: 1.8;
+    }
+    .notice-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .notice-icon::after {
+      content: 'i';
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      font-style: italic;
+      font-family: Georgia, serif;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 28px 40px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .06em;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 8px;
+    }
+    .footer-logo em {
+      font-style: normal;
+      color: #6fa3f5;
+    }
+    .footer-copy {
+      font-size: .75rem;
+      color: rgba(255,255,255,.32);
+      letter-spacing: .04em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header { padding: 0 20px; }
+      main   { padding: 36px 16px 60px; }
+      footer { padding: 24px 20px; }
+
+      thead { display: none; }
+      tbody tr {
+        display: block;
+        border-bottom: 1px solid var(--gray-100);
+        padding: 0;
+      }
+      td {
+        display: block;
+        padding: 12px 20px;
+        width: 100% !important;
+        white-space: normal;
+      }
+      td.label {
+        border-right: none;
+        border-bottom: 1px solid var(--gray-100);
+        padding-bottom: 8px;
+        font-size: .8rem;
+        color: var(--navy);
+        background: var(--gray-50);
+        letter-spacing: .02em;
+      }
+      td.value {
+        padding-top: 12px;
+        font-size: .87rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="/" class="logo">ORIVEX<em>.</em></a>
+  <span class="header-label">Legal Notice</span>
+</header>
+
+<!-- MAIN -->
+<main>
+  <div class="page-header">
+    <p class="page-eyebrow">Legal</p>
+    <h1 class="page-title">特定商取引法に基づく表記</h1>
+    <p class="page-desc">本ページは、特定商取引法第11条に基づき、通信販売に関する必要事項を記載したものです。</p>
+    <div class="page-divider"></div>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36%;">項目</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="label">事業者名</td>
+          <td class="value">ORIVEX</td>
+        </tr>
+
+        <tr>
+          <td class="label">代表者</td>
+          <td class="value">田舞 弘徳</td>
+        </tr>
+
+        <tr>
+          <td class="label">所在地</td>
+          <td class="value">〒603-8115<br>京都府京都市北区紫竹下本町27 ミノアール305</td>
+        </tr>
+
+        <tr>
+          <td class="label">電話番号</td>
+          <td class="value">070-9111-6002</td>
+        </tr>
+
+        <tr>
+          <td class="label">メールアドレス</td>
+          <td class="value">muscleprime17@gmail.com</td>
+        </tr>
+
+        <tr>
+          <td class="label">販売価格</td>
+          <td class="value">
+            <div class="plan-list">
+              <div class="plan-row">
+                <span class="plan-badge plan-badge--ume">梅 Lite</span>
+                0円（無料）
+              </div>
+              <div class="plan-row">
+                <span class="plan-badge plan-badge--take">竹 Standard</span>
+                月額 6,480円
+              </div>
+              <div class="plan-row">
+                <span class="plan-badge plan-badge--matu">松 Pro</span>
+                月額 14,980円
+              </div>
+            </div>
+            <p class="plan-note">※ 最低契約期間はありません（1か月からご利用可能）。半年一括更新（5%OFF）・1年一括更新（約16%OFF）の長期割引、買い切りプラン、その他オプション費用についての詳細は、料金プランページをご参照ください。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">販売価格以外に<br>必要な費用</td>
+          <td class="value">
+            ・銀行振込の場合、振込手数料はお客様負担となります。<br>
+            ・本サービスを利用するためのインターネット通信料、端末代金等はお客様のご負担となります。
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">支払方法</td>
+          <td class="value">クレジットカード決済（Stripe）、PayPal決済、銀行振込</td>
+        </tr>
+
+        <tr>
+          <td class="label">支払時期</td>
+          <td class="value">
+            <p class="td-section">毎月更新</p>
+            <p class="td-sub">前払い制とし、毎月10日までに翌月分をお支払いいただきます。最低契約期間はなく、1か月からご利用いただけます。</p>
+            <p class="td-section">半年一括更新 / 1年一括更新</p>
+            <p class="td-sub">契約開始日または更新日までに一括で前払いしていただきます。月途中の開始・終了その他いかなる場合であっても<strong>日割計算は行いません</strong>。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">サービスの<br>提供時期</td>
+          <td class="value">利用規約に同意のうえお申込みいただき、当社が利用開始を承諾した時点（決済手続完了後）で、すぐにご利用いただけます。</td>
+        </tr>
+
+        <tr>
+          <td class="label">返品・解約・<br>キャンセルについて</td>
+          <td class="value">
+            <p class="td-section">中途解約および返金</p>
+            <p class="td-sub">サービスの性質上、返品・返金には一切応じられません。月途中の開始・解約・プラン変更・利用停止・未使用その他いかなる場合であっても、<strong>日割計算・日割返金・月額料金の按分計算は行いません</strong>。買い切りプランおよびオプション料金についても、当社が別途認める場合を除き、キャンセル・返金・日割計算は行いません。</p>
+            <p class="td-section">定期決済の解約（更新停止）</p>
+            <p class="td-sub" style="margin-bottom:0;">次回更新を希望されない場合は、当月10日までに当社所定の方法により解約手続きを行ってください。10日を過ぎた場合は翌月末での解約となります。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">動作環境</td>
+          <td class="value">Google Chrome、Safariなどの主要ブラウザの最新版でのご利用を推奨いたします。</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="notice">
+    <span class="notice-icon"></span>
+    <div>
+      本表記は特定商取引法第11条に基づくものです。記載内容に変更が生じた場合は、本ページを更新いたします。ご不明な点は <strong>muscleprime17@gmail.com</strong> までお問い合わせください。
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ORIVEX<em>.</em></div>
+  <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
