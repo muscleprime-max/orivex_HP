@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Large media files
+videos/
+
+# Sensitive / private business documents
+documents/
+
+# Tool caches & local config
+.cache/
+.claude/
