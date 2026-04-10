@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriMind — 栄養提案レポートツール</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Noto Sans JP",sans-serif;background:#f7f8fa;color:#333;line-height:1.6}
+    a{color:#4a90d9;text-decoration:none;cursor:pointer}
+    a:hover{text-decoration:underline}
+    .app-container{display:flex;flex-direction:column;min-height:100vh}
+    .main-content{flex:1;max-width:900px;width:100%;margin:0 auto;padding:32px 16px}
+    .footer{text-align:center;padding:16px;font-size:.8rem;color:#999;border-top:1px solid #eee;background:#fff}
+    /* Header */
+    .header{background:#fff;border-bottom:1px solid #e8e8e8;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .header-inner{max-width:900px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .header-logo{font-size:1.3rem;font-weight:700;color:#2d6a4f;text-decoration:none;cursor:pointer}
+    .header-nav{display:flex;align-items:center;gap:16px}
+    .nav-link{color:#555;font-size:.9rem;font-weight:500;cursor:pointer}
+    .nav-link-primary{background:#2d6a4f;color:#fff!important;padding:6px 14px;border-radius:6px}
+    .nav-link-primary:hover{background:#245c43;text-decoration:none}
+    .btn-logout{background:none;border:1px solid #ddd;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:.85rem;color:#666}
+    .btn-logout:hover{background:#f5f5f5}
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 20px;border-radius:8px;font-size:.95rem;font-weight:500;cursor:pointer;border:none;transition:opacity .15s,background .15s;text-decoration:none}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .btn-primary{background:#2d6a4f;color:#fff}
+    .btn-primary:hover:not(:disabled){background:#245c43}
+    .btn-secondary{background:#f0f0f0;color:#555}
+    .btn-secondary:hover:not(:disabled){background:#e0e0e0}
+    .btn-full{width:100%}
+    .btn-large{padding:14px 28px;font-size:1.05rem}
+    /* Auth */
+    .auth-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f7f8fa;padding:24px}
+    .auth-logo{text-align:center;margin-bottom:32px}
+    .auth-logo h1{font-size:2rem;color:#2d6a4f}
+    .auth-logo p{color:#777;margin-top:4px}
+    .auth-card{background:#fff;border-radius:12px;padding:36px 40px;width:100%;max-width:420px;box-shadow:0 2px 16px rgba(0,0,0,.08)}
+    .auth-title{font-size:1.4rem;font-weight:700;margin-bottom:24px;color:#222}
+    .auth-form{display:flex;flex-direction:column;gap:16px}
+    .auth-footer{margin-top:20px;text-align:center;font-size:.875rem;color:#666}
+    /* Form */
+    .form-group{display:flex;flex-direction:column;gap:6px}
+    .form-group label{font-size:.875rem;font-weight:600;color:#444}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .input,.select,.textarea{padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:.95rem;color:#333;background:#fff;width:100%;transition:border-color .15s;font-family:inherit}
+    .input:focus,.select:focus,.textarea:focus{outline:none;border-color:#2d6a4f}
+    .textarea{resize:vertical}
+    .required{color:#e53e3e}
+    /* Report Form */
+    .report-form{background:#fff;border-radius:12px;padding:32px;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+    .form-section{margin-bottom:32px}
+    .section-title{font-size:1rem;font-weight:700;color:#2d6a4f;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #d8f3dc}
+    .form-submit{text-align:center;margin-top:8px}
+    .generating-note{margin-top:12px;font-size:.85rem;color:#888}
+    /* Page */
+    .page{width:100%}
+    .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    .page-title{font-size:1.6rem;font-weight:700;color:#222;margin-bottom:4px}
+    .page-subtitle{color:#777;font-size:.95rem;margin-bottom:24px}
+    /* Dashboard */
+    .dashboard-hero{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px}
+    .dashboard-stats{display:flex;gap:16px;margin-bottom:32px}
+    .stat-card{background:#fff;border-radius:10px;padding:20px 28px;box-shadow:0 1px 6px rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;min-width:120px}
+    .stat-number{font-size:2rem;font-weight:700;color:#2d6a4f}
+    .stat-label{font-size:.8rem;color:#888;margin-top:4px}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .section-header h3{font-size:1.1rem;font-weight:700;color:#333}
+    .link-more{font-size:.875rem;color:#4a90d9;cursor:pointer}
+    /* Report Cards */
+    .report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+    .report-card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.07);cursor:pointer;transition:transform .15s,box-shadow .15s;border:1.5px solid transparent}
+    .report-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:rgba(45,106,79,.19)}
+    .report-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .report-card-name{font-size:1.05rem;font-weight:700;color:#222}
+    .goal-badge{font-size:.75rem;font-weight:600;color:#fff;padding:3px 10px;border-radius:20px}
+    .report-card-summary{font-size:.875rem;color:#666;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .report-card-meta{display:flex;flex-wrap:wrap;gap:6px}
+    .meta-item{font-size:.75rem;color:#999}
+    /* Empty */
+    .empty-state{text-align:center;padding:48px 24px;color:#999}
+    .empty-state p{margin-bottom:16px;font-size:1rem}
+    /* Report Detail */
+    .report-detail{display:flex;flex-direction:column;gap:16px}
+    .report-meta-date,.report-meta-model{font-size:.8rem;color:#999;text-align:right}
+    .detail-card{background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+    .detail-card-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .client-info-card{background:linear-gradient(135deg,#f0faf4,#e8f7ef);border:1.5px solid #b7e4c7}
+    .detail-client-name{font-size:1.3rem;font-weight:700;color:#1b4332;margin-bottom:12px}
+    .client-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+    .tag{font-size:.8rem;background:#fff;border:1px solid #ccc;padding:3px 10px;border-radius:20px;color:#555}
+    .tag-goal{background:#2d6a4f;color:#fff;border-color:#2d6a4f;font-weight:600}
+    .tag-policy{background:#f0f4ff;border-color:#4a90d9;color:#4a90d9}
+    .allergies-note{font-size:.875rem;color:#c0392b;background:#fff8f8;padding:6px 12px;border-radius:6px;border-left:3px solid #e74c3c;margin-top:8px}
+    .card-title{font-size:1rem;font-weight:700;color:#333;margin-bottom:12px}
+    .card-text{font-size:.9rem;color:#555;line-height:1.7}
+    .pfc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .pfc-item{background:#f8f9fa;border-radius:8px;padding:12px;text-align:center}
+    .pfc-protein{border-top:3px solid #ff6b6b}
+    .pfc-fat{border-top:3px solid #fab005}
+    .pfc-carb{border-top:3px solid #339af0}
+    .pfc-label{display:block;font-size:.75rem;color:#888;margin-bottom:4px}
+    .pfc-value{display:block;font-size:.9rem;font-weight:700;color:#333}
+    .guideline-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+    .guideline-item{font-size:.9rem;color:#555;line-height:1.6}
+    .meal-plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+    .meal-item{background:#f8faf9;border-radius:8px;padding:14px;border:1px solid #e0e9e4}
+    .meal-label{display:block;font-size:.8rem;font-weight:700;color:#2d6a4f;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+    .meal-content{font-size:.875rem;color:#555;line-height:1.5}
+    .coach-comment-card{background:linear-gradient(135deg,#fff8e1,#fef9e7);border:1.5px solid #ffe08a}
+    .coach-comment{font-size:1rem;color:#444;font-style:italic;line-height:1.8;padding-left:16px;border-left:4px solid #fab005}
+    .notes-card{background:#f9f9f9;border:1px dashed #ccc}
+    /* Loading & Error */
+    .loading-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;gap:16px}
+    .spinner{width:40px;height:40px;border:4px solid #e0e0e0;border-top-color:#2d6a4f;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-message{color:#888;font-size:.9rem}
+    .error-message{display:flex;align-items:center;gap:8px;background:#fff5f5;border:1px solid #feb2b2;border-radius:8px;padding:12px 16px;color:#c53030;font-size:.9rem;margin-bottom:16px}
+    /* Setup */
+    .setup-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f7f8fa;padding:24px}
+    .setup-card{background:#fff;border-radius:12px;padding:40px;width:100%;max-width:540px;box-shadow:0 2px 16px rgba(0,0,0,.08)}
+    .setup-card h2{font-size:1.4rem;font-weight:700;margin-bottom:8px;color:#222}
+    .setup-card p{color:#666;font-size:.9rem;margin-bottom:24px;line-height:1.6}
+    .setup-info{background:#f0faf4;border:1px solid #b7e4c7;border-radius:8px;padding:14px;margin-bottom:20px;font-size:.85rem;color:#1b4332;line-height:1.6}
+    /* Responsive */
+    @media(max-width:600px){
+      .form-row{grid-template-columns:1fr}
+      .detail-card-row{grid-template-columns:1fr}
+      .pfc-grid{grid-template-columns:1fr}
+      .auth-card{padding:24px 20px}
+      .report-form{padding:20px}
+      .dashboard-hero{flex-direction:column;gap:16px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Firebase compat SDK (v9 compat layer) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
+
+<!-- React 18 -->
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+<!-- Babel Standalone (JSXコンパイル) -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useContext, createContext, useCallback } = React;
+
+// ===================================================================
+// Firebase 設定・初期化
+// ===================================================================
+const CONFIG_KEY = "nutrimind_firebase_config";
+
+function getStoredConfig() {
+  try {
+    const raw = localStorage.getItem(CONFIG_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function initFirebase(config) {
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(config);
+  }
+  return {
+    auth: firebase.auth(),
+    db: firebase.firestore(),
+    functions: firebase.app().functions("asia-northeast1"),
+  };
+}
+
+// ===================================================================
+// シンプルなハッシュルーター
+// ===================================================================
+function useRouter() {
+  const [path, setPath] = useState(() => window.location.hash.slice(1) || "/");
+
+  useEffect(() => {
+    const handler = () => setPath(window.location.hash.slice(1) || "/");
+    window.addEventListener("hashchange", handler);
+    return () => window.removeEventListener("hashchange", handler);
+  }, []);
+
+  const navigate = useCallback((to) => {
+    window.location.hash = to;
+  }, []);
+
+  return { path, navigate };
+}
+
+const RouterContext = createContext(null);
+
+// ===================================================================
+// 認証コンテキスト
+// ===================================================================
+const AuthContext = createContext(null);
+
+function AuthProvider({ children, fb }) {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsub = fb.auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+    return unsub;
+  }, [fb]);
+
+  const login = (email, password) =>
+    fb.auth.signInWithEmailAndPassword(email, password);
+  const register = (email, password) =>
+    fb.auth.createUserWithEmailAndPassword(email, password);
+  const logout = () => fb.auth.signOut();
+
+  return (
+    <AuthContext.Provider value={{ currentUser, loading, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+function useAuth() { return useContext(AuthContext); }
+
+// ===================================================================
+// UI コンポーネント
+// ===================================================================
+function LoadingSpinner({ message = "読み込み中..." }) {
+  return (
+    <div className="loading-container">
+      <div className="spinner" />
+      <p className="loading-message">{message}</p>
+    </div>
+  );
+}
+
+function ErrorMsg({ message }) {
+  return (
+    <div className="error-message" role="alert">
+      <span>⚠️</span><span>{message}</span>
+    </div>
+  );
+}
+
+// ===================================================================
+// Header
+// ===================================================================
+function Header() {
+  const { currentUser, logout } = useAuth();
+  const { navigate } = useContext(RouterContext);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
+  return (
+    <header className="header">
+      <div className="header-inner">
+        <span className="header-logo" onClick={() => navigate("/")}>🥗 NutriMind</span>
+        {currentUser && (
+          <nav className="header-nav">
+            <span className="nav-link" onClick={() => navigate("/reports")}>レポート履歴</span>
+            <span className="nav-link nav-link-primary" onClick={() => navigate("/reports/new")}>新規作成</span>
+            <button onClick={handleLogout} className="btn-logout">ログアウト</button>
+          </nav>
+        )}
+      </div>
+    </header>
+  );
+}
+
+function Layout({ children }) {
+  return (
+    <div className="app-container">
+      <Header />
+      <main className="main-content">{children}</main>
+      <footer className="footer">
+        <p>© 2025 NutriMind — パーソナルトレーナー向け栄養提案ツール</p>
+      </footer>
+    </div>
+  );
+}
+
+// ===================================================================
+// 認証ページ
+// ===================================================================
+function LoginPage() {
+  const { login } = useAuth();
+  const { navigate } = useContext(RouterContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    if (!email || !password) { setError("メールアドレスとパスワードを入力してください。"); return; }
+    setLoading(true);
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch {
+      setError("ログインに失敗しました。メールアドレスまたはパスワードが正しくありません。");
+    } finally { setLoading(false); }
+  };
+
+  return (
+    <div className="auth-page">
+      <div className="auth-logo">
+        <h1>🥗 NutriMind</h1>
+        <p>パーソナルトレーナー向け栄養提案ツール</p>
+      </div>
+      <div className="auth-card">
+        <h2 className="auth-title">ログイン</h2>
+        {error && <ErrorMsg message={error} />}
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label>メールアドレス</label>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+              placeholder="trainer@example.com" className="input" required />
+          </div>
+          <div className="form-group">
+            <label>パスワード</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+              placeholder="6文字以上" className="input" required />
+          </div>
+          <button type="submit" disabled={loading} className="btn btn-primary btn-full">
+            {loading ? "ログイン中..." : "ログイン"}
+          </button>
+        </form>
+        <p className="auth-footer">
+          アカウントをお持ちでない方は <a onClick={() => navigate("/register")}>新規登録</a>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function RegisterPage() {
+  const { register } = useAuth();
+  const { navigate } = useContext(RouterContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    if (!email || !password || !confirm) { setError("すべての項目を入力してください。"); return; }
+    if (password.length < 6) { setError("パスワードは6文字以上で入力してください。"); return; }
+    if (password !== confirm) { setError("パスワードが一致しません。"); return; }
+    setLoading(true);
+    try {
+      await register(email, password);
+      navigate("/");
+    } catch {
+      setError("登録に失敗しました。このメールアドレスは既に使用されている可能性があります。");
+    } finally { setLoading(false); }
+  };
+
+  return (
+    <div className="auth-page">
+      <div className="auth-logo">
+        <h1>🥗 NutriMind</h1>
+        <p>パーソナルトレーナー向け栄養提案ツール</p>
+      </div>
+      <div className="auth-card">
+        <h2 className="auth-title">新規登録</h2>
+        {error && <ErrorMsg message={error} />}
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label>メールアドレス</label>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+              placeholder="trainer@example.com" className="input" required />
+          </div>
+          <div className="form-group">
+            <label>パスワード</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+              placeholder="6文字以上" className="input" required />
+          </div>
+          <div className="form-group">
+            <label>パスワード（確認）</label>
+            <input type="password" value={confirm} onChange={e => setConfirm(e.target.value)}
+              placeholder="もう一度入力" className="input" required />
+          </div>
+          <button type="submit" disabled={loading} className="btn btn-primary btn-full">
+            {loading ? "登録中..." : "アカウントを作成"}
+          </button>
+        </form>
+        <p className="auth-footer">
+          既にアカウントをお持ちの方は <a onClick={() => navigate("/login")}>ログイン</a>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ===================================================================
+// レポートフォーム
+// ===================================================================
+const defaultInput = {
+  clientName: "", age: 30, gender: "男性",
+  height: 170, weight: 65, goal: "減量",
+  activityLevel: "普通", mealsPerDay: 3,
+  allergies: "", trainerPolicy: "バランス型", notes: "",
+};
+
+function ReportForm({ onSubmit, loading }) {
+  const [input, setInput] = useState({ ...defaultInput });
+  const [error, setError] = useState(null);
+
+  const update = (key, value) => setInput(prev => ({ ...prev, [key]: value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    if (!input.clientName.trim()) { setError("クライアント名を入力してください。"); return; }
+    if (input.age < 10 || input.age > 100) { setError("年齢は10〜100の範囲で入力してください。"); return; }
+    if (input.height < 100 || input.height > 250) { setError("身長は100〜250cmの範囲で入力してください。"); return; }
+    if (input.weight < 20 || input.weight > 300) { setError("体重は20〜300kgの範囲で入力してください。"); return; }
+    await onSubmit(input);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="report-form">
+      {error && <ErrorMsg message={error} />}
+
+      <section className="form-section">
+        <h3 className="section-title">クライアント基本情報</h3>
+        <div className="form-row">
+          <div className="form-group">
+            <label>クライアント名 <span className="required">*</span></label>
+            <input type="text" value={input.clientName}
+              onChange={e => update("clientName", e.target.value)}
+              placeholder="山田 太郎" className="input" required />
+          </div>
+          <div className="form-group">
+            <label>年齢 <span className="required">*</span></label>
+            <input type="number" value={input.age}
+              onChange={e => update("age", Number(e.target.value))}
+              min={10} max={100} className="input" required />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>性別</label>
+            <select value={input.gender} onChange={e => update("gender", e.target.value)} className="select">
+              <option value="男性">男性</option>
+              <option value="女性">女性</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>食事回数（1日）</label>
+            <input type="number" value={input.mealsPerDay}
+              onChange={e => update("mealsPerDay", Number(e.target.value))}
+              min={1} max={8} className="input" />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>身長 (cm) <span className="required">*</span></label>
+            <input type="number" value={input.height}
+              onChange={e => update("height", Number(e.target.value))}
+              min={100} max={250} step={0.1} className="input" required />
+          </div>
+          <div className="form-group">
+            <label>体重 (kg) <span className="required">*</span></label>
+            <input type="number" value={input.weight}
+              onChange={e => update("weight", Number(e.target.value))}
+              min={20} max={300} step={0.1} className="input" required />
+          </div>
+        </div>
+      </section>
+
+      <section className="form-section">
+        <h3 className="section-title">目標・活動量</h3>
+        <div className="form-row">
+          <div className="form-group">
+            <label>目標</label>
+            <select value={input.goal} onChange={e => update("goal", e.target.value)} className="select">
+              <option value="減量">減量</option>
+              <option value="増量">増量</option>
+              <option value="維持">維持</option>
+              <option value="健康改善">健康改善</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>活動レベル</label>
+            <select value={input.activityLevel} onChange={e => update("activityLevel", e.target.value)} className="select">
+              <option value="低い">低い（デスクワーク中心）</option>
+              <option value="普通">普通（週2〜3回運動）</option>
+              <option value="高い">高い（週4回以上・肉体労働）</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section className="form-section">
+        <h3 className="section-title">指導方針・制限事項</h3>
+        <div className="form-group" style={{marginBottom:"16px"}}>
+          <label>トレーナーの指導方針</label>
+          <select value={input.trainerPolicy} onChange={e => update("trainerPolicy", e.target.value)} className="select">
+            <option value="バランス型">バランス型（PFCをバランスよく）</option>
+            <option value="ハイカーボ型">ハイカーボ型（炭水化物多め）</option>
+            <option value="ローカーボ型">ローカーボ型（炭水化物控えめ）</option>
+            <option value="継続重視型">継続重視型（無理なく長く続ける）</option>
+          </select>
+        </div>
+        <div className="form-group" style={{marginBottom:"16px"}}>
+          <label>アレルギー / 食事制限</label>
+          <input type="text" value={input.allergies}
+            onChange={e => update("allergies", e.target.value)}
+            placeholder="例: 乳製品アレルギー、グルテンフリー" className="input" />
+        </div>
+        <div className="form-group">
+          <label>追加メモ</label>
+          <textarea value={input.notes}
+            onChange={e => update("notes", e.target.value)}
+            placeholder="特記事項があれば記入してください（例: 夜勤あり、外食が多い）"
+            className="textarea" rows={3} />
+        </div>
+      </section>
+
+      <div className="form-submit">
+        <button type="submit" disabled={loading} className="btn btn-primary btn-large">
+          {loading ? "AIレポートを生成中..." : "✨ レポートを生成する"}
+        </button>
+        {loading && (
+          <p className="generating-note">AIが栄養プランを作成しています（10〜30秒程度）</p>
+        )}
+      </div>
+    </form>
+  );
+}
+
+// ===================================================================
+// レポートカード
+// ===================================================================
+function ReportCard({ report, onClick }) {
+  const goalColors = { 減量:"#ff6b6b", 増量:"#51cf66", 維持:"#339af0", 健康改善:"#fab005" };
+  const formatDate = (d) => new Intl.DateTimeFormat("ja-JP",{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d);
+
+  return (
+    <div className="report-card" onClick={onClick} role="button" tabIndex={0}
+      onKeyDown={e => e.key === "Enter" && onClick()}>
+      <div className="report-card-header">
+        <h3 className="report-card-name">{report.clientName}</h3>
+        <span className="goal-badge" style={{backgroundColor: goalColors[report.input?.goal] || "#868e96"}}>
+          {report.input?.goal}
+        </span>
+      </div>
+      <p className="report-card-summary">{report.output?.summary}</p>
+      <div className="report-card-meta">
+        <span className="meta-item">📅 {formatDate(report.createdAt)}</span>
+        <span className="meta-item">🎯 {report.input?.trainerPolicy}</span>
+      </div>
+    </div>
+  );
+}
+
+// ===================================================================
+// ページ: ダッシュボード
+// ===================================================================
+function DashboardPage({ reports, loadingReports, errorReports }) {
+  const { currentUser } = useAuth();
+  const { navigate } = useContext(RouterContext);
+  const recent = reports.slice(0, 3);
+
+  return (
+    <div className="page">
+      <div className="dashboard-hero">
+        <div>
+          <h2 className="page-title">ダッシュボード</h2>
+          <p className="page-subtitle">ようこそ、{currentUser?.email} さん</p>
+        </div>
+        <button className="btn btn-primary" onClick={() => navigate("/reports/new")}>
+          ✨ 新規レポート作成
+        </button>
+      </div>
+      <div className="dashboard-stats">
+        <div className="stat-card">
+          <span className="stat-number">{reports.length}</span>
+          <span className="stat-label">作成済みレポート</span>
+        </div>
+      </div>
+      <section>
+        <div className="section-header">
+          <h3>最近のレポート</h3>
+          {reports.length > 3 && (
+            <span className="link-more" onClick={() => navigate("/reports")}>すべて見る →</span>
+          )}
+        </div>
+        {loadingReports && <LoadingSpinner />}
+        {errorReports && <ErrorMsg message={errorReports} />}
+        {!loadingReports && !errorReports && recent.length === 0 && (
+          <div className="empty-state">
+            <p>まだレポートがありません。</p>
+            <button className="btn btn-primary" onClick={() => navigate("/reports/new")}>
+              最初のレポートを作成する
+            </button>
+          </div>
+        )}
+        <div className="report-grid">
+          {recent.map(r => (
+            <ReportCard key={r.id} report={r} onClick={() => navigate(`/reports/${r.id}`)} />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ===================================================================
+// ページ: レポート一覧
+// ===================================================================
+function ReportListPage({ reports, loadingReports, errorReports }) {
+  const { navigate } = useContext(RouterContext);
+
+  return (
+    <div className="page">
+      <div className="page-header">
+        <h2 className="page-title">レポート履歴</h2>
+        <button className="btn btn-primary" onClick={() => navigate("/reports/new")}>
+          ✨ 新規作成
+        </button>
+      </div>
+      {loadingReports && <LoadingSpinner />}
+      {errorReports && <ErrorMsg message={errorReports} />}
+      {!loadingReports && !errorReports && reports.length === 0 && (
+        <div className="empty-state">
+          <p>まだレポートがありません。</p>
+          <button className="btn btn-primary" onClick={() => navigate("/reports/new")}>
+            最初のレポートを作成する
+          </button>
+        </div>
+      )}
+      <div className="report-grid">
+        {reports.map(r => (
+          <ReportCard key={r.id} report={r} onClick={() => navigate(`/reports/${r.id}`)} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ===================================================================
+// ページ: 新規レポート作成
+// ===================================================================
+function NewReportPage({ fb, onReportCreated }) {
+  const { currentUser } = useAuth();
+  const { navigate } = useContext(RouterContext);
+  const [generating, setGenerating] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (input) => {
+    setError(null);
+    setGenerating(true);
+    try {
+      const fn = fb.functions.httpsCallable("generateNutritionReport");
+      const result = await fn(input);
+      const data = result.data;
+      onReportCreated();
+      navigate(`/reports/${data.reportId}`);
+    } catch (e) {
+      console.error(e);
+      const msg = e?.message || "";
+      if (msg.includes("unauthenticated")) {
+        setError("ログインが必要です。");
+      } else if (msg.includes("invalid-argument")) {
+        setError("入力内容に問題があります: " + msg);
+      } else {
+        setError("レポートの生成に失敗しました。Firebase Functionsが正しくデプロイされているか確認してください。");
+      }
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  return (
+    <div className="page">
+      <h2 className="page-title">新規レポート作成</h2>
+      <p className="page-subtitle">クライアントの情報を入力して、AIが栄養提案レポートを生成します。</p>
+      {error && <ErrorMsg message={error} />}
+      <ReportForm onSubmit={handleSubmit} loading={generating} />
+    </div>
+  );
+}
+
+// ===================================================================
+// ページ: レポート詳細
+// ===================================================================
+function ReportDetailPage({ reportId, reports, fb }) {
+  const { navigate } = useContext(RouterContext);
+  const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // まずキャッシュから探す
+    const cached = reports.find(r => r.id === reportId);
+    if (cached) {
+      setReport(cached);
+      setLoading(false);
+      return;
+    }
+    // Firestoreから直接取得
+    fb.db.collection("reports").doc(reportId).get()
+      .then(snap => {
+        if (!snap.exists) { setError("レポートが見つかりませんでした。"); return; }
+        const raw = snap.data();
+        setReport({
+          id: snap.id, ...raw,
+          createdAt: raw.createdAt?.toDate ? raw.createdAt.toDate() : new Date(raw.createdAt),
+        });
+      })
+      .catch(() => setError("レポートの読み込みに失敗しました。"))
+      .finally(() => setLoading(false));
+  }, [reportId]);
+
+  const formatDate = (d) => new Intl.DateTimeFormat("ja-JP",{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d);
+
+  if (loading) return <Layout><LoadingSpinner message="レポートを読み込み中..." /></Layout>;
+  if (error) return <Layout><ErrorMsg message={error} /></Layout>;
+  if (!report) return null;
+
+  const { output, input } = report;
+
+  return (
+    <div className="page">
+      <div className="page-header">
+        <button onClick={() => navigate(-1) || navigate("/reports")} className="btn btn-secondary">
+          ← 戻る
+        </button>
+        <div>
+          <p className="report-meta-date">作成日: {formatDate(report.createdAt)}</p>
+          <p className="report-meta-model">使用モデル: {report.model}</p>
+        </div>
+      </div>
+
+      <div className="report-detail">
+        <div className="detail-card client-info-card">
+          <h2 className="detail-client-name">{report.clientName} さんの栄養提案レポート</h2>
+          <div className="client-tags">
+            <span className="tag">{input.age}歳 / {input.gender}</span>
+            <span className="tag">{input.height}cm / {input.weight}kg</span>
+            <span className="tag tag-goal">{input.goal}</span>
+            <span className="tag">活動量: {input.activityLevel}</span>
+            <span className="tag tag-policy">{input.trainerPolicy}</span>
+          </div>
+          {input.allergies && (
+            <p className="allergies-note">⚠️ アレルギー・制限: {input.allergies}</p>
+          )}
+        </div>
+
+        <div className="detail-card">
+          <h3 className="card-title">📋 サマリー</h3>
+          <p className="card-text">{output.summary}</p>
+        </div>
+
+        <div className="detail-card-row">
+          <div className="detail-card">
+            <h3 className="card-title">🔥 推定カロリー方針</h3>
+            <p className="card-text">{output.calorie_policy}</p>
+          </div>
+          <div className="detail-card">
+            <h3 className="card-title">⚖️ 推奨PFCバランス</h3>
+            <div className="pfc-grid">
+              <div className="pfc-item pfc-protein">
+                <span className="pfc-label">タンパク質 (P)</span>
+                <span className="pfc-value">{output.pfc_balance?.protein}</span>
+              </div>
+              <div className="pfc-item pfc-fat">
+                <span className="pfc-label">脂質 (F)</span>
+                <span className="pfc-value">{output.pfc_balance?.fat}</span>
+              </div>
+              <div className="pfc-item pfc-carb">
+                <span className="pfc-label">炭水化物 (C)</span>
+                <span className="pfc-value">{output.pfc_balance?.carb}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="detail-card">
+          <h3 className="card-title">🍽️ 食事方針</h3>
+          <ul className="guideline-list">
+            {(output.meal_guidelines || []).map((item, i) => (
+              <li key={i} className="guideline-item">✅ {item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="detail-card">
+          <h3 className="card-title">💪 継続のためのアドバイス</h3>
+          <ul className="guideline-list">
+            {(output.adherence_advice || []).map((item, i) => (
+              <li key={i} className="guideline-item">💡 {item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="detail-card">
+          <h3 className="card-title">📅 1日の食事例</h3>
+          <div className="meal-plan-grid">
+            {(output.sample_day_plan || []).map((meal, i) => (
+              <div key={i} className="meal-item">
+                <span className="meal-label">{meal.meal}</span>
+                <p className="meal-content">{meal.content}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="detail-card coach-comment-card">
+          <h3 className="card-title">💬 トレーナーコメント</h3>
+          <blockquote className="coach-comment">{output.coach_comment}</blockquote>
+        </div>
+
+        {input.notes && (
+          <div className="detail-card notes-card">
+            <h3 className="card-title">📝 指導メモ</h3>
+            <p className="card-text">{input.notes}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ===================================================================
+// Firebase 設定セットアップ画面
+// ===================================================================
+function SetupPage({ onSave }) {
+  const [config, setConfig] = useState({
+    apiKey: "", authDomain: "", projectId: "",
+    storageBucket: "", messagingSenderId: "", appId: "",
+  });
+  const [error, setError] = useState(null);
+
+  const update = (key, val) => setConfig(prev => ({ ...prev, [key]: val }));
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    if (Object.values(config).some(v => !v.trim())) {
+      setError("すべての項目を入力してください。");
+      return;
+    }
+    try {
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+      onSave(config);
+    } catch {
+      setError("設定の保存に失敗しました。");
+    }
+  };
+
+  const fields = [
+    ["apiKey", "API Key"],
+    ["authDomain", "Auth Domain (例: xxx.firebaseapp.com)"],
+    ["projectId", "Project ID"],
+    ["storageBucket", "Storage Bucket (例: xxx.appspot.com)"],
+    ["messagingSenderId", "Messaging Sender ID"],
+    ["appId", "App ID"],
+  ];
+
+  return (
+    <div className="setup-page">
+      <div className="setup-card">
+        <h2>🥗 NutriMind — 初期設定</h2>
+        <p>Firebaseプロジェクトの設定情報を入力してください。<br/>
+          Firebase Console → プロジェクト設定 → アプリ → Webアプリの設定から取得できます。</p>
+        <div className="setup-info">
+          ℹ️ 入力した設定は <strong>このブラウザのlocalStorage</strong> に保存されます。<br/>
+          設定はいつでもリセット（URL末尾に <code>#/setup</code> を入力）できます。
+        </div>
+        {error && <ErrorMsg message={error} />}
+        <form onSubmit={handleSave} style={{display:"flex",flexDirection:"column",gap:"12px"}}>
+          {fields.map(([key, label]) => (
+            <div className="form-group" key={key}>
+              <label style={{fontSize:".8rem"}}>{label}</label>
+              <input type="text" value={config[key]} onChange={e => update(key, e.target.value)}
+                className="input" style={{fontSize:".85rem"}} required />
+            </div>
+          ))}
+          <button type="submit" className="btn btn-primary btn-full" style={{marginTop:"8px"}}>
+            設定を保存してアプリを起動
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ===================================================================
+// メインアプリ
+// ===================================================================
+function AppContent({ fb }) {
+  const { currentUser, loading: authLoading } = useAuth();
+  const { path, navigate } = useContext(RouterContext);
+  const [reports, setReports] = useState([]);
+  const [loadingReports, setLoadingReports] = useState(false);
+  const [errorReports, setErrorReports] = useState(null);
+
+  // レポート一覧を取得
+  const fetchReports = useCallback(async () => {
+    if (!currentUser) return;
+    setLoadingReports(true);
+    setErrorReports(null);
+    try {
+      const snap = await fb.db.collection("reports")
+        .where("userId", "==", currentUser.uid)
+        .orderBy("createdAt", "desc")
+        .get();
+      setReports(snap.docs.map(d => {
+        const raw = d.data();
+        return {
+          id: d.id, ...raw,
+          createdAt: raw.createdAt?.toDate ? raw.createdAt.toDate() : new Date(),
+        };
+      }));
+    } catch (e) {
+      console.error(e);
+      setErrorReports("レポートの取得に失敗しました。Firestoreのインデックスが必要な場合はコンソールのリンクから作成してください。");
+    } finally {
+      setLoadingReports(false);
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) fetchReports();
+    else setReports([]);
+  }, [currentUser, fetchReports]);
+
+  if (authLoading) {
+    return <LoadingSpinner message="認証情報を確認中..." />;
+  }
+
+  // 未ログイン → ログイン/登録画面のみ許可
+  if (!currentUser) {
+    if (path === "/register") return <RegisterPage />;
+    return <LoginPage />;
+  }
+
+  // セットアップ
+  if (path === "/setup") {
+    return <SetupPage onSave={() => window.location.reload()} />;
+  }
+
+  // レポート詳細
+  const detailMatch = path.match(/^\/reports\/(.+)$/);
+  if (detailMatch && detailMatch[1] !== "new") {
+    return (
+      <Layout>
+        <ReportDetailPage reportId={detailMatch[1]} reports={reports} fb={fb} />
+      </Layout>
+    );
+  }
+
+  if (path === "/reports/new") {
+    return (
+      <Layout>
+        <NewReportPage fb={fb} onReportCreated={fetchReports} />
+      </Layout>
+    );
+  }
+
+  if (path === "/reports") {
+    return (
+      <Layout>
+        <ReportListPage reports={reports} loadingReports={loadingReports} errorReports={errorReports} />
+      </Layout>
+    );
+  }
+
+  // デフォルト: ダッシュボード
+  return (
+    <Layout>
+      <DashboardPage reports={reports} loadingReports={loadingReports} errorReports={errorReports} />
+    </Layout>
+  );
+}
+
+// ===================================================================
+// ルート
+// ===================================================================
+function Root() {
+  const router = useRouter();
+  const [fbInstance, setFbInstance] = useState(null);
+  const [showSetup, setShowSetup] = useState(false);
+
+  useEffect(() => {
+    if (router.path === "/setup") { setShowSetup(true); return; }
+    const stored = getStoredConfig();
+    if (!stored) { setShowSetup(true); return; }
+    try {
+      const fb = initFirebase(stored);
+      setFbInstance(fb);
+    } catch (e) {
+      console.error("Firebase init error:", e);
+      setShowSetup(true);
+    }
+  }, []);
+
+  const handleSetupSave = (config) => {
+    const fb = initFirebase(config);
+    setFbInstance(fb);
+    setShowSetup(false);
+    router.navigate("/");
+  };
+
+  if (showSetup) {
+    return <SetupPage onSave={handleSetupSave} />;
+  }
+
+  if (!fbInstance) {
+    return <LoadingSpinner message="初期化中..." />;
+  }
+
+  return (
+    <RouterContext.Provider value={router}>
+      <AuthProvider fb={fbInstance}>
+        <AppContent fb={fbInstance} />
+      </AuthProvider>
+    </RouterContext.Provider>
+  );
+}
+
+// ===================================================================
+// マウント
+// ===================================================================
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Root />);
+</script>
+</body>
+</html>

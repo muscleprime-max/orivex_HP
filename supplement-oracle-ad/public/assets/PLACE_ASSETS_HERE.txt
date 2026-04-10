@@ -1,0 +1,37 @@
+このフォルダに以下の素材ファイルを配置してください。
+Place the following asset files in this folder.
+
+--------------------------------------------------
+必要素材 / Required Assets
+--------------------------------------------------
+
+1. logo.png
+   - SUPPLEMENT-ORACLE- のロゴ画像
+   - 推奨: PNG 透過 / 400x400px 以上
+   - 使用箇所: Scene3 (ProductReveal), Scene5 (ClosingCTA)
+   - 設定: src/constants.ts の USE_LOGO_IMAGE = true
+
+2. lp-screenshot.png  (オプション)
+   - LP のスクリーンショット
+   - 推奨: 1920x1080px 以上
+   - 現在は未使用 (モック UI で代替)
+
+3. tool-screenshot.png  (オプション)
+   - ツール画面のスクリーンショット
+   - 推奨: 1920x1080px 以上
+   - 現在は未使用 (モック UI で代替)
+
+--------------------------------------------------
+素材をリアル画像に差し替える場合
+--------------------------------------------------
+
+Scene1 OpeningHook のツールカード:
+  src/scenes/OpeningHook.tsx の
+  「モックツール UI カード」コメントブロックを
+  以下の Img コンポーネントに置換:
+
+  import { Img, staticFile } from 'remotion';
+  <Img
+    src={staticFile('assets/tool-screenshot.png')}
+    style={{ width: '100%', borderRadius: 20 }}
+  />

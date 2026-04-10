@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplement Oracle | 料金プラン</title>
+    <meta name="description" content="Supplement Oracle 料金プラン。あなたに最適なプランをお選びください。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb; /* 信頼感のあるブルー */
+            --primary-dim: rgba(37, 99, 235, 0.1);
+            --secondary-color: #059669; /* エメラルドグリーン */
+            --gold-color: #d97706; /* 高級感のあるゴールド/アンバー */
+            --bg-body: #f8fafc; /* 清潔感のある極薄いグレー */
+            --bg-card: #ffffff; /* カード背景色 */
+            --text-main: #1e293b; /* メインテキスト（濃いグレー） */
+            --text-muted: #64748b; /* サブテキスト */
+            --border-color: #e2e8f0; /* ボーダー色 */
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Noto Sans JP', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* --- Clean Background --- */
+        .clean-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- Animations --- */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Typography --- */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .page-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+        .page-subtitle {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+        .section-description {
+            color: var(--text-muted);
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .section-title span {
+            background: var(--bg-body);
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 2px;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        /* --- Pricing Cards --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            align-items: stretch;
+            margin-bottom: 60px;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #cbd5e1;
+        }
+
+        /* Popular Card Special Styling */
+        .pricing-card.popular {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 10px 15px -3px var(--primary-dim);
+            transform: scale(1.02);
+            z-index: 5;
+        }
+        .pricing-card.popular:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-bottom-left-radius: 12px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .plan-header {
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(248, 250, 252, 0.5);
+        }
+
+        .plan-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .pricing-card.ume .plan-name { color: var(--text-muted); }
+        .pricing-card.take .plan-name { color: var(--primary-color); }
+        .pricing-card.matsu .plan-name { color: var(--gold-color); }
+
+        .plan-price {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        .plan-price .period {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .contract-term-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: bold;
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .plan-features {
+            padding: 30px;
+            list-style: none;
+            flex-grow: 1;
+        }
+        .plan-features li {
+            margin-bottom: 16px;
+            color: var(--text-main);
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .plan-features li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            line-height: 1;
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+        .plan-features li.disabled {
+            color: #94a3b8;
+        }
+        .plan-features li.disabled::before {
+            content: '×';
+            color: #94a3b8;
+        }
+
+        /* Buyout Option Styles */
+        .buyout-option {
+            margin: 0 20px 20px;
+            padding: 15px;
+            background: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .pricing-card.popular .buyout-option {
+            background: var(--primary-dim);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+        .pricing-card.matsu .buyout-option {
+            background: rgba(217, 119, 6, 0.05);
+            border-color: rgba(217, 119, 6, 0.3);
+        }
+        
+        .buyout-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+        .buyout-prices {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 10px;
+            margin: 8px 0;
+        }
+        .buyout-price-old {
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .buyout-price-campaign {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .badge {
+            display: inline-block;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        .buyout-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* --- Contract Terms Section --- */
+        .contract-terms {
+            margin-bottom: 60px;
+        }
+        .terms-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .terms-header h4 {
+            color: var(--text-main);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 12px;
+        }
+        .terms-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .terms-desc strong {
+            color: var(--text-main);
+        }
+        
+        .cycle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .cycle-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .cycle-item:hover {
+            border-color: #cbd5e1;
+        }
+        .cycle-item h5 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .cycle-item p {
+            color: var(--text-main);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .cycle-item strong {
+            display: block;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-family: var(--font-heading);
+        }
+        .cycle-item.highlight-cycle {
+            border: 2px solid var(--primary-color);
+            background: var(--primary-dim);
+            box-shadow: 0 4px 10px var(--primary-dim);
+        }
+        
+        .cycle-note {
+            background: rgba(37, 99, 235, 0.05);
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .cycle-note span {
+            font-size: 1.2rem;
+        }
+
+        /* --- Options Section --- */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .option-category-title {
+            color: var(--text-main);
+            margin: 40px 0 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 12px;
+        }
+        
+        .option-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .option-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            transform: translateY(-3px);
+        }
+        .option-content {
+            padding: 24px;
+        }
+        .option-header h5 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+        .option-price {
+            display: block;
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        .option-price .small {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .option-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .highlight-option {
+            border-color: rgba(217, 119, 6, 0.3);
+            background: rgba(217, 119, 6, 0.02);
+        }
+        .highlight-option .option-price {
+            color: var(--gold-color);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            .pricing-card.popular:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="clean-bg"></div>
+    <main class="main-content">
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <header class="page-header fade-in-up">
+                    <h1 class="page-title">SUPPLEMENT ORACLE</h1>
+                    <h2 class="page-subtitle">PRICING PLANS</h2>
+                    <p class="section-description">ビジネスを加速させる、最適なプランを。</p>
+                </header>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-card ume fade-in-up delay-1">
+                        <div class="plan-header">
+                            <h4 class="plan-name">梅 (Lite)</h4>
+                            <p class="plan-price">¥1,980<span class="period">/月</span></p>
+                            <span class="contract-term-note">※最低契約期間 6ヶ月</span>
+                        </div>
+                        <ul class="plan-features">
+                            <li>提案可能サプリ: 15種類限定</li>
+                            <li>診断・レポート無制限</li>
+                            <li class="disabled">屋号の変更不可</li>
+                            <li class="disabled">アフィリエイト設定不可</li>
+                            <li class="disabled">印刷・PDF出力不可</li>
+                        </ul>
+                    </div>
+
+                    <div class="pricing-card take popular fade-in-up delay-2">
+                        <div class="popular-tag">RECOMMENDED</div>
+                        <div class="plan-header">
+                            <h4 class="plan-name">竹 (Standard)</h4>
+                            <p class="plan-price">¥3,980<span class="period">/月</span></p>
+                            <span class="contract-term-note">※最低契約期間 6ヶ月</span>
+                        </div>
+                        <ul class="plan-features">
+                            <li>全サプリDB利用可能</li>
+                            <li>診断・レポート無制限</li>
+                            <li>処方箋風レポート発行</li>
+                            <li>屋号・トレーナー名表示</li>
+                            <li>アフィリエイトリンク設定</li>
+                        </ul>
+                        <div class="buyout-option">
+                            <p class="buyout-label">買い切り (15ヶ月分)</p>
+                            <div class="buyout-prices">
+                                <span class="buyout-price-old">¥59,700</span>
+                                <span>➔</span>
+                                <span class="buyout-price-campaign">¥47,760</span>
+                            </div>
+                            <span class="badge">3月限定! 12ヶ月分料金</span>
+                            <p style="color: #ef4444; font-weight: bold; margin-top: 8px;">約12,000円 OFF!!</p>
+                            <p class="buyout-note">※バージョンアップ権なし (OP追加可)</p>
+                        </div>
+                    </div>
+
+                    <div class="pricing-card matsu fade-in-up delay-3">
+                        <div class="plan-header">
+                            <h4 class="plan-name">松 (Pro)</h4>
+                            <p class="plan-price">¥9,800<span class="period">/月</span></p>
+                            <span class="contract-term-note">※最低契約期間 6ヶ月</span>
+                        </div>
+                        <ul class="plan-features">
+                            <li>完全ホワイトラベル</li>
+                            <li>ロゴ・配色カスタマイズ</li>
+                            <li>こだわりの除外リスト設定</li>
+                            <li>設定代行コンシェルジュ</li>
+                            <li>毎月のカスタマイズ: <strong>月3回まで無料</strong></li>
+                        </ul>
+                        <div class="buyout-option">
+                            <p class="buyout-label">買い切り (15ヶ月分)</p>
+                            <div class="buyout-prices">
+                                <span class="buyout-price-old">¥147,000</span>
+                                <span>➔</span>
+                                <span class="buyout-price-campaign">¥117,600</span>
+                            </div>
+                            <span class="badge">3月限定! 12ヶ月分料金</span>
+                            <p style="color: #ef4444; font-weight: bold; margin-top: 8px;">約30,000円 OFF!!</p>
+                            <p class="buyout-note">※バージョンアップ権なし (OP追加可)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <section id="contract-terms" class="contract-terms fade-in-up delay-4">
+                    <h3 class="section-title"><span>契約・更新サイクルについて</span></h3>
+                    <div class="terms-card">
+                        <div class="terms-header">
+                            <h4>最低契約期間について</h4>
+                        </div>
+                        <p class="terms-desc">
+                            本サービスは、初期の導入サポートと確実な効果実感のため、全プラン共通で<strong>最低契約期間を6ヶ月</strong>とさせていただいております。
+                        </p>
+                        
+                        <div class="terms-header" style="margin-top: 30px;">
+                            <h4>6ヶ月満了後の更新オプション</h4>
+                        </div>
+                        <p class="terms-desc">
+                            満了後は、ジムの状況に合わせて以下の3つの更新サイクルを選択いただけます。長期契約ほど、経営上の固定費を削減できる仕組みとなっております。
+                        </p>
+                        
+                        <div class="cycle-grid">
+                            <div class="cycle-item">
+                                <h5>毎月更新<br><span style="font-size: 0.9rem; color: #64748b;">(マンスリー)</span></h5>
+                                <p style="margin-top: 15px;">標準月額料金を適用</p>
+                            </div>
+                            <div class="cycle-item">
+                                <h5>半年一括更新</h5>
+                                <strong>5% OFF</strong>
+                                <p style="color: #64748b;">まとまった投資で<br>コストを抑制</p>
+                            </div>
+                            <div class="cycle-item highlight-cycle">
+                                <h5>1年一括更新</h5>
+                                <strong>約16% OFF</strong>
+                                <p style="color: #2563eb; font-weight: bold;">2ヶ月分無料！</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cycle-note">
+                            💡 例：竹プラン（¥3,980）を1年一括更新でご契約いただくと、年間 <span>約8,000円</span> のコストカットが可能です。
+                        </div>
+                    </div>
+                </section>
+
+                <section id="options" class="options fade-in-up delay-5">
+                    <h3 class="section-title"><span>CUSTOM OPTIONS</span></h3>
+                    
+                    <h4 class="option-category-title">共通オプション (全プラン対応)</h4>
+                    <div class="options-grid">
+                        <div class="option-card">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>サプリの追加</h5>
+                                    <span class="option-price">¥500<span class="small"> / 単発</span></span>
+                                </div>
+                                <p>データベースにないサプリメントを追加。<br><span style="font-size: 0.8rem;">※1成分につき</span></p>
+                            </div>
+                        </div>
+                        <div class="option-card">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>ジム設置用ポップ作成</h5>
+                                    <span class="option-price">¥4,980<span class="small"> / 単発</span></span>
+                                </div>
+                                <p>営業用QRコード付きのポップを作成。</p>
+                            </div>
+                        </div>
+                        <div class="option-card">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>ジム専用・公式ロゴ制作</h5>
+                                    <span class="option-price">¥9,800〜<span class="small"> / 単発</span></span>
+                                </div>
+                                <p>ツール表示用の簡易ロゴを制作。<br><span style="font-size:0.8rem;">※ロゴをお持ちでない個人トレーナー向け</span></p>
+                            </div>
+                        </div>
+                        <div class="option-card">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>SNS導入報告バナー制作</h5>
+                                    <span class="option-price">¥2,980<span class="small"> / 単発</span></span>
+                                </div>
+                                <p>Instagram投稿用の高品質な画像を提供。<br><span style="font-size:0.8rem;">※ツール画面＋ジムロゴ合成</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="option-category-title" style="border-left-color: var(--primary-color);">竹プラン専用オプション</h4>
+                    <div class="options-grid">
+                        <div class="option-card">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>カスタマイズ (単発)</h5>
+                                    <span class="option-price">¥4,980<span class="small"> (単発)</span></span>
+                                </div>
+                                <p>竹プランでも一度だけ自分好みにカスタマイズ可能。</p>
+                            </div>
+                        </div>
+                        <div class="option-card">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>一言コメント機能追加</h5>
+                                    <span class="option-price">+¥500<span class="small"> / 月</span></span>
+                                </div>
+                                <p>診断結果にトレーナーからの個別メッセージを追加。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="option-category-title" style="border-left-color: var(--gold-color);">松プラン専用オプション</h4>
+                    <div class="options-grid">
+                        <div class="option-card highlight-option">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>カスタマイズ無制限</h5>
+                                    <span class="option-price">+¥2,000<span class="small"> / 月</span></span>
+                                </div>
+                                <p>通常月3回のカスタマイズ上限を開放し、無制限に変更可能！</p>
+                            </div>
+                        </div>
+                        <div class="option-card highlight-option">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>特定成分の解説文カスタム</h5>
+                                    <span class="option-price">¥1,000<span class="small"> / 1成分</span></span>
+                                </div>
+                                <p>標準解説文をトレーナー独自の理論や経験に基づいた文章に書き換え。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="option-category-title" style="border-left-color: var(--secondary-color);">買い切り購入者限定</h4>
+                    <div class="options-grid">
+                        <div class="option-card" style="border-color: rgba(5, 150, 105, 0.3); background: rgba(5, 150, 105, 0.02);">
+                            <div class="option-content">
+                                <div class="option-header">
+                                    <h5>カスタム保障</h5>
+                                    <span class="option-price" style="color: var(--secondary-color);">¥1,280<span class="small"> / 月</span></span>
+                                </div>
+                                <p>バージョン更新対応 & 毎月1回のカスタマイズが可能に。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

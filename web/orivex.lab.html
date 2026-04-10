@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORIVEX LAB. | トレーナーのためのオーダーメイドシステム開発</title>
+    <meta name="description" content="パーソナルトレーナー・ジムオーナー向けオーダーメイドシステム開発。あなたの指導ロジックをアプリ化・資産化します。現場を知るエンジニアによる高品質なシステム設計。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           CSS Custom Properties
+        ========================================= */
+        :root {
+            --bg-base: #06060a;
+            --bg-surface: #0c0c12;
+            --bg-card: #111118;
+            --bg-card-hover: #17171f;
+            --text-primary: #ededf0;
+            --text-secondary: #b4b4bc;
+            --text-muted: #838390;
+            --accent: #00e5ff;
+            --accent-soft: #40edff;
+            --accent-dim: rgba(0, 229, 255, 0.10);
+            --accent-mid: rgba(0, 229, 255, 0.18);
+            --accent-border: rgba(0, 229, 255, 0.35);
+            --accent-glow: rgba(0, 229, 255, 0.06);
+            --neon-glow-1: rgba(0, 229, 255, 0.08);
+            --neon-glow-2: rgba(0, 180, 255, 0.05);
+            --neon-glow-3: rgba(100, 0, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.07);
+            --border-hover: rgba(255, 255, 255, 0.14);
+            --border-neon: rgba(0, 229, 255, 0.12);
+            --line-green: #06C755;
+            --font-jp: 'Noto Sans JP', sans-serif;
+            --font-en: 'Montserrat', sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+            --max-w: 1040px;
+            --max-w-narrow: 720px;
+        }
+
+        /* =========================================
+           Reset & Base
+        ========================================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-jp);
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 1.95;
+            letter-spacing: 0.04em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        ::selection {
+            background: rgba(0, 229, 255, 0.25);
+            color: #fff;
+        }
+
+        /* =========================================
+           Reduced Motion
+        ========================================= */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .fade-up { opacity: 1; transform: none; }
+            .hero__bg::before, .hero__bg::after { animation: none; }
+        }
+
+        /* =========================================
+           Neon Ambient Backgrounds
+        ========================================= */
+        .neon-ambient {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neon-ambient::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -20%;
+            width: 60%;
+            height: 80%;
+            background: radial-gradient(ellipse, var(--neon-glow-1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .neon-ambient::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -15%;
+            width: 50%;
+            height: 70%;
+            background: radial-gradient(ellipse, var(--neon-glow-3) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .neon-ambient > .container,
+        .neon-ambient > .container--narrow {
+            position: relative;
+            z-index: 1;
+        }
+
+        .neon-ambient--alt::before {
+            top: auto;
+            bottom: -30%;
+            left: auto;
+            right: -20%;
+            background: radial-gradient(ellipse, var(--neon-glow-2) 0%, transparent 70%);
+        }
+
+        .neon-ambient--alt::after {
+            bottom: auto;
+            top: -20%;
+            right: auto;
+            left: -15%;
+            background: radial-gradient(ellipse, var(--neon-glow-1) 0%, transparent 70%);
+        }
+
+        /* =========================================
+           Layout
+        ========================================= */
+        .container {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        .container--narrow {
+            max-width: var(--max-w-narrow);
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        .section {
+            padding: 120px 0;
+        }
+
+        .section--surface {
+            background: var(--bg-surface);
+        }
+
+        /* =========================================
+           Typography & Section Headers
+        ========================================= */
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .section-header--center {
+            text-align: center;
+        }
+
+        .section-label {
+            font-family: var(--font-en);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 14px;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.06em;
+            line-height: 1.55;
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 20px;
+            line-height: 2;
+            max-width: 580px;
+        }
+
+        .section-header--center .section-subtitle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-header--compact {
+            margin-bottom: 32px;
+        }
+
+        /* =========================================
+           Buttons
+        ========================================= */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: var(--font-jp);
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.06em;
+            border-radius: 6px;
+            transition: all 0.35s var(--ease-out);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn--primary {
+            padding: 16px 44px;
+            background: rgba(0, 229, 255, 0.06);
+            color: #fff;
+            border: 1px solid var(--accent-border);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.08), inset 0 0 20px rgba(0, 229, 255, 0.03);
+        }
+
+        .btn--primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.12), rgba(0, 229, 255, 0.06));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.45s var(--ease-out);
+            z-index: 0;
+        }
+
+        .btn--primary:hover {
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.15), inset 0 0 30px rgba(0, 229, 255, 0.05);
+            border-color: rgba(0, 229, 255, 0.5);
+        }
+
+        .btn--primary:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn--primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn--line {
+            width: 100%;
+            padding: 17px 24px;
+            background: rgba(6, 199, 85, 0.05);
+            color: var(--line-green);
+            border: 1px solid var(--line-green);
+            font-size: 0.95rem;
+            box-shadow: 0 0 16px rgba(6, 199, 85, 0.06);
+        }
+
+        .btn--line:hover {
+            background: rgba(6, 199, 85, 0.1);
+            box-shadow: 0 0 24px rgba(6, 199, 85, 0.12);
+        }
+
+        .btn--line-icon {
+            font-size: 1.3rem;
+        }
+
+        .btn--ghost {
+            flex: 1;
+            padding: 14px 16px;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .btn--ghost:hover {
+            border-color: var(--border-hover);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .btn--sm {
+            padding: 13px 36px;
+            font-size: 0.88rem;
+        }
+
+        /* =========================================
+           Animations
+        ========================================= */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-up-d1 { transition-delay: 0.1s; }
+        .fade-up-d2 { transition-delay: 0.2s; }
+        .fade-up-d3 { transition-delay: 0.3s; }
+
+        /* =========================================
+           Header
+        ========================================= */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 72px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 36px;
+            background: rgba(6, 6, 10, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            transition: height 0.3s ease;
+        }
+
+        .logo {
+            font-family: var(--font-en);
+            font-weight: 300;
+            font-size: 1.25rem;
+            letter-spacing: 0.14em;
+            color: #fff;
+        }
+
+        .logo strong { font-weight: 700; }
+        .logo-dot {
+            color: var(--accent);
+            font-weight: 400;
+            font-size: 0.85em;
+            margin-left: 2px;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .header-nav__link {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+            transition: color 0.3s ease;
+        }
+
+        .header-nav__link:hover { color: var(--text-primary); }
+
+        .header-nav__cta {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+            padding: 7px 18px;
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+        }
+
+        .header-nav__cta:hover {
+            background: var(--accent-dim);
+            box-shadow: 0 0 16px rgba(0, 229, 255, 0.1);
+        }
+
+        /* =========================================
+           Hero
+        ========================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 28px 80px;
+            overflow: hidden;
+        }
+
+        .hero__bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 55% at 50% 35%, rgba(0, 229, 255, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 25% 70%, rgba(80, 0, 200, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 35% 35% at 80% 60%, rgba(0, 180, 255, 0.035) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, #0a0a14 0%, var(--bg-base) 70%);
+            z-index: -2;
+        }
+
+        .hero__bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(0, 229, 255, 0.015) 3px,
+                    rgba(0, 229, 255, 0.015) 4px
+                );
+            animation: scanline 20s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Floating neon orbs */
+        .hero__bg::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.04) 0%, transparent 70%);
+            transform: translateX(-50%);
+            animation: pulse-glow 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50%); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+        }
+
+        .hero__content {
+            text-align: center;
+            max-width: 740px;
+            z-index: 1;
+        }
+
+        .hero__tag {
+            font-family: var(--font-en);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.22em;
+            margin-bottom: 32px;
+            display: block;
+            text-shadow: 0 0 24px rgba(0, 229, 255, 0.4);
+        }
+
+        .hero__title {
+            font-size: clamp(1.9rem, 4.5vw, 3.1rem);
+            font-weight: 700;
+            line-height: 1.5;
+            color: #fff;
+            letter-spacing: 0.04em;
+            margin-bottom: 34px;
+        }
+
+        .hero__desc {
+            font-size: clamp(0.92rem, 1.8vw, 1.05rem);
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 2.05;
+        }
+
+        .hero__cta-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .hero__cta-note {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* =========================================
+           Card Base (shared neon hover)
+        ========================================= */
+        .neon-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .neon-card:hover {
+            border-color: var(--border-neon);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 229, 255, 0.06), 0 0 0 1px rgba(0, 229, 255, 0.05);
+        }
+
+        /* =========================================
+           Issues Section
+        ========================================= */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .issue-card {
+            padding: 44px 30px;
+        }
+
+        .issue-card__icon {
+            font-size: 1.6rem;
+            color: var(--accent);
+            margin-bottom: 22px;
+            opacity: 0.85;
+            filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.3));
+        }
+
+        .issue-card__title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .issue-card__text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* =========================================
+           Solution Section
+        ========================================= */
+        .solution-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center;
+        }
+
+        .solution__text p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+            line-height: 2.05;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 26px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 1.75;
+        }
+
+        .feature-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 12px;
+            height: 1px;
+            background: var(--accent);
+            box-shadow: 0 0 6px rgba(0, 229, 255, 0.4);
+        }
+
+        /* Code visual */
+        .code-visual {
+            background: #0b0b14;
+            border: 1px solid var(--border-neon);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow:
+                0 24px 48px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(0, 229, 255, 0.04);
+        }
+
+        .code-visual__bar {
+            background: #141420;
+            padding: 13px 16px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-visual__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .code-visual__dot--red { background: #ff5f56; box-shadow: 0 0 6px rgba(255, 95, 86, 0.3); }
+        .code-visual__dot--yellow { background: #ffbd2e; box-shadow: 0 0 6px rgba(255, 189, 46, 0.3); }
+        .code-visual__dot--green { background: #27c93f; box-shadow: 0 0 6px rgba(39, 201, 63, 0.3); }
+
+        .code-visual__body {
+            padding: 30px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: #7a7a8a;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .ck { color: #ff7b72; text-shadow: 0 0 10px rgba(255, 123, 114, 0.15); }
+        .cf { color: #d2a8ff; text-shadow: 0 0 10px rgba(210, 168, 255, 0.15); }
+        .cs { color: #a5d6ff; text-shadow: 0 0 10px rgba(165, 214, 255, 0.15); }
+
+        /* =========================================
+           Ideas Section
+        ========================================= */
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .idea-card {
+            padding: 38px 28px;
+        }
+
+        .idea-card__badge {
+            font-family: var(--font-en);
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--accent);
+            border: 1px solid rgba(0, 229, 255, 0.22);
+            padding: 4px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 16px;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        }
+
+        .idea-card__title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .idea-card__text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* =========================================
+           Flow Section
+        ========================================= */
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            position: relative;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 38px 18px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .flow-step:hover {
+            border-color: var(--border-neon);
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.05);
+        }
+
+        .flow-step__num {
+            font-family: var(--font-en);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.12em;
+            margin-bottom: 16px;
+            display: block;
+            text-shadow: 0 0 14px rgba(0, 229, 255, 0.35);
+        }
+
+        .flow-step__title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .flow-step__text {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            border-top: 1px solid var(--accent);
+            border-right: 1px solid var(--accent);
+            transform: rotate(45deg) translateY(-50%);
+            opacity: 0.3;
+            z-index: 2;
+        }
+
+        /* =========================================
+           Pricing Section
+        ========================================= */
+        .pricing-card {
+            max-width: 660px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 60px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .pricing-card__header {
+            text-align: center;
+            margin-bottom: 36px;
+            position: relative;
+        }
+
+        .pricing-card__label {
+            display: inline-block;
+            padding: 5px 18px;
+            border: 1px solid var(--border-neon);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 22px;
+        }
+
+        .pricing-card__amount {
+            font-family: var(--font-en);
+            font-size: clamp(2.4rem, 5vw, 3.2rem);
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 0.02em;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.1);
+        }
+
+        .pricing-card__amount small {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            text-shadow: none;
+        }
+
+        .pricing-card__desc {
+            font-size: 0.93rem;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 2.05;
+            margin-bottom: 34px;
+            position: relative;
+        }
+
+        .pricing-card__cta {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .pricing-card__notes {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 2;
+            position: relative;
+        }
+
+        /* =========================================
+           Commitment Section
+        ========================================= */
+        .commitment-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .commitment-item {
+            padding: 34px 26px;
+            border-left: 2px solid rgba(0, 229, 255, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .commitment-item:hover {
+            border-left-color: rgba(0, 229, 255, 0.45);
+        }
+
+        .commitment-item__title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .commitment-item__text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* =========================================
+           FAQ Section
+        ========================================= */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 30px 0;
+        }
+
+        .faq-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-q {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 14px;
+            line-height: 1.65;
+        }
+
+        .faq-q__marker {
+            font-family: var(--font-en);
+            font-weight: 600;
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 0.88rem;
+            line-height: 1.75;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        }
+
+        .faq-a {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            padding-left: 32px;
+            line-height: 2;
+        }
+
+        /* =========================================
+           Contact Section
+        ========================================= */
+        .contact-section {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            padding: 110px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            width: 500px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(0, 229, 255, 0.04) 0%, transparent 70%);
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .contact-section > .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-section .section-label {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .contact__desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            line-height: 2.05;
+        }
+
+        .contact__reassure {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+        }
+
+        .contact__actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .contact__sub {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+        }
+
+        /* =========================================
+           Footer
+        ========================================= */
+        .footer {
+            padding: 56px 28px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer__links {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer__link {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: color 0.3s ease;
+        }
+
+        .footer__link:hover { color: var(--accent); }
+
+        .footer__copy {
+            font-family: var(--font-en);
+            font-size: 0.72rem;
+            color: #3d3d48;
+            letter-spacing: 0.1em;
+        }
+
+        /* =========================================
+           Divider
+        ========================================= */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 5%, var(--border) 30%, rgba(0, 229, 255, 0.08) 50%, var(--border) 70%, transparent 95%);
+        }
+
+        /* =========================================
+           Responsive Utility — hide <br> on small screens
+        ========================================= */
+        .br-sp-hide {
+            display: inline;
+        }
+
+        /* =========================================
+           Responsive — Tablet (960px)
+        ========================================= */
+        @media (max-width: 960px) {
+            .flow-grid {
+                grid-template-columns: repeat(3, 1fr);
+                justify-items: center;
+            }
+            .flow-step:nth-child(3)::after {
+                display: none;
+            }
+            .flow-step {
+                width: 100%;
+            }
+            .commitment-list {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .issues-grid,
+            .ideas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            /* Let 3rd card span full width and center on 2-col */
+            .issues-grid > :nth-child(3),
+            .ideas-grid > :nth-child(3) {
+                grid-column: 1 / -1;
+                max-width: 480px;
+                justify-self: center;
+            }
+            .solution-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .solution-layout .code-visual {
+                order: -1;
+                max-width: 560px;
+                margin: 0 auto;
+            }
+        }
+
+        /* =========================================
+           Responsive — Mobile (768px)
+        ========================================= */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 16px;
+                height: 60px;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .header-nav {
+                gap: 12px;
+            }
+
+            .header-nav__link {
+                display: none;
+            }
+
+            .header-nav__cta {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+            }
+
+            .section {
+                padding: 72px 0;
+            }
+
+            .section-header {
+                margin-bottom: 40px;
+            }
+
+            .section-title {
+                font-size: clamp(1.25rem, 5.5vw, 1.7rem);
+            }
+
+            .section-subtitle {
+                font-size: 0.88rem;
+            }
+
+            /* Hide decorative <br> on mobile */
+            .br-sp-hide {
+                display: none;
+            }
+
+            .hero {
+                padding: 90px 20px 56px;
+                min-height: 100vh;
+                min-height: 100svh;
+            }
+
+            .hero__tag {
+                font-size: 0.6rem;
+                letter-spacing: 0.15em;
+                margin-bottom: 24px;
+                word-break: break-word;
+            }
+
+            .hero__title {
+                font-size: clamp(1.5rem, 6.5vw, 2rem);
+                line-height: 1.55;
+                margin-bottom: 24px;
+            }
+
+            .hero__desc {
+                font-size: 0.88rem;
+                margin-bottom: 36px;
+                line-height: 1.95;
+            }
+
+            .btn--primary {
+                padding: 14px 36px;
+                font-size: 0.88rem;
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .issues-grid,
+            .ideas-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .issues-grid > :nth-child(3),
+            .ideas-grid > :nth-child(3) {
+                grid-column: auto;
+                max-width: none;
+            }
+
+            .issue-card {
+                padding: 32px 24px;
+            }
+
+            .idea-card {
+                padding: 30px 24px;
+            }
+
+            .solution-layout {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .solution-layout .code-visual {
+                order: -1;
+                max-width: none;
+            }
+
+            .code-visual__body {
+                padding: 20px 16px;
+                font-size: 0.72rem;
+                line-height: 1.7;
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .feature-list li {
+                font-size: 0.88rem;
+            }
+
+            .flow-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .flow-step::after {
+                display: none !important;
+            }
+
+            .flow-step {
+                display: grid;
+                grid-template-columns: 48px 1fr;
+                grid-template-rows: auto auto;
+                gap: 0 12px;
+                text-align: left;
+                padding: 18px 20px;
+                width: 100%;
+            }
+
+            .flow-step__num {
+                grid-row: 1 / 3;
+                align-self: center;
+                margin-bottom: 0;
+                font-size: 0.75rem;
+            }
+
+            .flow-step__title {
+                margin-bottom: 2px;
+                font-size: 0.9rem;
+            }
+
+            .flow-step__text {
+                font-size: 0.78rem;
+            }
+
+            .pricing-card {
+                padding: 36px 20px;
+                border-radius: 10px;
+            }
+
+            .pricing-card__desc {
+                font-size: 0.88rem;
+                text-align: left;
+            }
+
+            .pricing-card__notes {
+                font-size: 0.75rem;
+                text-align: left;
+                line-height: 1.9;
+            }
+
+            .pricing-card__cta .btn--primary {
+                width: auto;
+                max-width: none;
+            }
+
+            .commitment-list {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .commitment-item {
+                padding: 24px 20px;
+            }
+
+            .commitment-item__title {
+                font-size: 0.92rem;
+            }
+
+            .commitment-item__text {
+                font-size: 0.84rem;
+            }
+
+            .faq-q {
+                font-size: 0.92rem;
+                gap: 10px;
+            }
+
+            .faq-a {
+                font-size: 0.85rem;
+                padding-left: 26px;
+            }
+
+            .contact-section {
+                padding: 72px 0;
+            }
+
+            .contact__desc {
+                font-size: 0.88rem;
+            }
+
+            .contact__actions {
+                max-width: 100%;
+            }
+
+            .contact__sub {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn--line {
+                font-size: 0.9rem;
+                padding: 15px 20px;
+            }
+
+            .btn--ghost {
+                padding: 13px 16px;
+                font-size: 0.82rem;
+                justify-content: center;
+            }
+
+            .footer {
+                padding: 44px 20px;
+            }
+
+            .footer__links {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .neon-ambient::before,
+            .neon-ambient::after {
+                width: 100%;
+                height: 50%;
+                opacity: 0.7;
+            }
+        }
+
+        /* =========================================
+           Responsive — Small phone (480px)
+        ========================================= */
+        @media (max-width: 480px) {
+            .container,
+            .container--narrow {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 80px 16px 48px;
+            }
+
+            .hero__tag {
+                font-size: 0.55rem;
+            }
+
+            .hero__title {
+                font-size: clamp(1.35rem, 6vw, 1.7rem);
+            }
+
+            .hero__desc {
+                font-size: 0.84rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                font-size: clamp(1.15rem, 5vw, 1.4rem);
+            }
+
+            .issue-card,
+            .idea-card {
+                padding: 26px 20px;
+            }
+
+            .issue-card__title,
+            .idea-card__title {
+                font-size: 0.95rem;
+            }
+
+            .issue-card__text,
+            .idea-card__text {
+                font-size: 0.84rem;
+            }
+
+            .pricing-card {
+                padding: 30px 16px;
+            }
+
+            .pricing-card__amount {
+                font-size: clamp(1.8rem, 8vw, 2.4rem);
+            }
+
+            .code-visual__body {
+                padding: 16px 12px;
+                font-size: 0.65rem;
+            }
+        }
+
+        /* =========================================
+           Responsive — Very small phone (360px)
+        ========================================= */
+        @media (max-width: 360px) {
+            .header {
+                padding: 0 12px;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .header-nav__cta {
+                font-size: 0.7rem;
+                padding: 5px 10px;
+            }
+
+            .hero__title {
+                font-size: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .btn--primary {
+                padding: 13px 24px;
+                font-size: 0.84rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ Header ============ -->
+    <header class="header" role="banner">
+        <a href="#" class="logo" aria-label="ORIVEX LAB ホーム">ORIVEX<strong>LAB</strong><span class="logo-dot">.</span></a>
+        <nav class="header-nav" aria-label="メインナビゲーション">
+            <a href="#service" class="header-nav__link">Service</a>
+            <a href="#flow" class="header-nav__link">Flow</a>
+            <a href="#faq" class="header-nav__link">FAQ</a>
+            <a href="#contact" class="header-nav__cta">お問い合わせ</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ============ Hero ============ -->
+        <section class="hero" aria-label="メインビジュアル">
+            <div class="hero__bg" aria-hidden="true"></div>
+            <div class="hero__content">
+                <span class="hero__tag fade-up">CUSTOM SYSTEM DEVELOPMENT FOR TRAINERS</span>
+                <h1 class="hero__title fade-up fade-up-d1">あなたの指導ロジックを、<br class="br-sp-hide">専用のWebシステムに。</h1>
+                <p class="hero__desc fade-up fade-up-d2">
+                    パーソナルトレーナー・ジムオーナーの独自メソッドを、<br class="br-sp-hide">スマホで使えるオーダーメイドのWebアプリとして開発します。
+                </p>
+                <div class="hero__cta-area fade-up fade-up-d3">
+                    <a href="#contact" class="btn btn--primary"><span>まずは無料で相談する</span></a>
+                    <span class="hero__cta-note">※ 強引な営業は一切ありません</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ Issues ============ -->
+        <section class="section neon-ambient" aria-labelledby="issues-title">
+            <div class="container">
+                <div class="section-header section-header--center fade-up">
+                    <span class="section-label">Issues</span>
+                    <h2 class="section-title" id="issues-title">こんなお悩みはありませんか？</h2>
+                </div>
+                <div class="issues-grid">
+                    <div class="issue-card neon-card fade-up">
+                        <i class="fa-solid fa-file-excel issue-card__icon" aria-hidden="true"></i>
+                        <h3 class="issue-card__title">スプレッドシートの限界</h3>
+                        <p class="issue-card__text">顧客ごとの栄養計算や進捗管理をExcelで行うと、入力ミスや更新漏れが起きやすく、スマホからの操作にも不便を感じていませんか。</p>
+                    </div>
+                    <div class="issue-card neon-card fade-up fade-up-d1">
+                        <i class="fa-solid fa-layer-group issue-card__icon" aria-hidden="true"></i>
+                        <h3 class="issue-card__title">既存アプリとのミスマッチ</h3>
+                        <p class="issue-card__text">「あと少しだけ違えば理想なのに」——汎用サービスでは、あなた独自の指導フローや計算ロジックを完全に再現することが難しい場合があります。</p>
+                    </div>
+                    <div class="issue-card neon-card fade-up fade-up-d2">
+                        <i class="fa-solid fa-gem issue-card__icon" aria-hidden="true"></i>
+                        <h3 class="issue-card__title">独自性の可視化</h3>
+                        <p class="issue-card__text">他社と同じツールではなく、自社専用のシステムを持つことで、クライアントへの説得力やブランドとしての信頼感を高めることができます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true"></div>
+
+        <!-- ============ Solution ============ -->
+        <section id="service" class="section neon-ambient--alt neon-ambient" aria-labelledby="solution-title">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <span class="section-label">Our Solution</span>
+                    <h2 class="section-title" id="solution-title">現場を知るエンジニアが、<br class="br-sp-hide">あなたの暗黙知をコードに変換します。</h2>
+                    <p class="section-subtitle">フィットネス業界のリアルな課題を理解しているからこそ、「現場で本当に使える」システム設計が可能です。漠然としたアイデアでも構いません。ヒアリングを通じて、実現可能な要件へ整理します。</p>
+                </div>
+
+                <div class="solution-layout fade-up">
+                    <div class="code-visual" aria-hidden="true">
+                        <div class="code-visual__bar">
+                            <div class="code-visual__dot code-visual__dot--red"></div>
+                            <div class="code-visual__dot code-visual__dot--yellow"></div>
+                            <div class="code-visual__dot code-visual__dot--green"></div>
+                        </div>
+                        <div class="code-visual__body">
+                            <span class="ck">const</span> <span class="cf">generateProgram</span> = (clientData) =&gt; {<br>
+                            &nbsp;&nbsp;<span class="ck">if</span> (clientData.goal === <span class="cs">'fat_loss'</span>) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">return</span> optimizePFC(clientData.lbm);<br>
+                            &nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;<span class="ck">if</span> (clientData.isContestPrep) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">return</span> calculatePeakWeek(clientData.date);<br>
+                            &nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;<span class="ck">return</span> buildMuscleBase(clientData);<br>
+                            };
+                        </div>
+                    </div>
+                    <div class="solution__text">
+                        <ul class="feature-list">
+                            <li>独自のPFC計算・サプリメント提案ロジックの実装</li>
+                            <li>オンラインコーチングの進捗・画像一元管理</li>
+                            <li>自社ロゴやブランドカラーを反映したUI設計</li>
+                            <li>小規模から始められるスモールスタート対応</li>
+                            <li>納品後の改修・機能拡張にも継続対応</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true"></div>
+
+        <!-- ============ Possibilities ============ -->
+        <section class="section neon-ambient" aria-labelledby="ideas-title">
+            <div class="container">
+                <div class="section-header section-header--center fade-up">
+                    <span class="section-label">Possibilities</span>
+                    <h2 class="section-title" id="ideas-title">開発アイデアの例</h2>
+                    <p class="section-subtitle">以下は一例です。「こんなものは作れる？」というご相談も歓迎します。</p>
+                </div>
+                <div class="ideas-grid">
+                    <div class="idea-card neon-card fade-up">
+                        <span class="idea-card__badge">WEB APP</span>
+                        <h3 class="idea-card__title">PFC &amp; 食材自動提案ツール</h3>
+                        <p class="idea-card__text">クライアントの身体情報を入力するだけで、独自係数に基づいたPFCバランスと推奨食材を自動出力するWebアプリ。</p>
+                    </div>
+                    <div class="idea-card neon-card fade-up fade-up-d1">
+                        <span class="idea-card__badge">MANAGEMENT</span>
+                        <h3 class="idea-card__title">コーチング一元管理システム</h3>
+                        <p class="idea-card__text">LINEやDMに散らばる週報・フィードバック・体型変化の画像比較を、専用ページに集約して履歴を可視化。</p>
+                    </div>
+                    <div class="idea-card neon-card fade-up fade-up-d2">
+                        <span class="idea-card__badge">SIMULATOR</span>
+                        <h3 class="idea-card__title">大会向け減量スケジューラー</h3>
+                        <p class="idea-card__text">大会当日から逆算し、目標体重やカーボアップ・ディプリートの開始時期を自動でスケジューリング。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ Flow ============ -->
+        <section id="flow" class="section section--surface" aria-labelledby="flow-title">
+            <div class="container">
+                <div class="section-header section-header--center fade-up">
+                    <span class="section-label">Flow</span>
+                    <h2 class="section-title" id="flow-title">ご相談から納品までの流れ</h2>
+                    <p class="section-subtitle">初回のご相談は無料です。まずはお気軽にお話をお聞かせください。</p>
+                </div>
+                <div class="flow-grid fade-up">
+                    <div class="flow-step">
+                        <span class="flow-step__num">01</span>
+                        <h3 class="flow-step__title">ご相談</h3>
+                        <p class="flow-step__text">課題やアイデアを自由にお聞かせください。</p>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-step__num">02</span>
+                        <h3 class="flow-step__title">要件整理</h3>
+                        <p class="flow-step__text">必要な機能を整理し仕様に落とし込みます。</p>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-step__num">03</span>
+                        <h3 class="flow-step__title">お見積り</h3>
+                        <p class="flow-step__text">開発プランと費用をご提案します。</p>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-step__num">04</span>
+                        <h3 class="flow-step__title">開発・テスト</h3>
+                        <p class="flow-step__text">途中でプロトタイプを確認いただきながら実装。</p>
+                    </div>
+                    <div class="flow-step">
+                        <span class="flow-step__num">05</span>
+                        <h3 class="flow-step__title">納品・運用</h3>
+                        <p class="flow-step__text">納品後も改修・拡張を継続サポート。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ Pricing ============ -->
+        <section class="section neon-ambient--alt neon-ambient" aria-labelledby="price-title">
+            <div class="container">
+                <div class="section-header section-header--center fade-up">
+                    <span class="section-label">Price</span>
+                    <h2 class="section-title" id="price-title">開発費用について</h2>
+                </div>
+                <div class="pricing-card fade-up">
+                    <div class="pricing-card__header">
+                        <span class="pricing-card__label">スモールスタート開発</span>
+                        <div class="pricing-card__amount">¥48,000<small>〜（税別）</small></div>
+                    </div>
+                    <p class="pricing-card__desc">
+                        「まずは特定の計算ツールだけ」「シンプルな診断機能がほしい」といったご要望に対応。<br class="br-sp-hide">
+                        初期費用を抑え、最小限の機能からスタートし、段階的に拡張していくプランです。
+                    </p>
+                    <div class="pricing-card__cta">
+                        <a href="#contact" class="btn btn--primary btn--sm"><span>無料でお見積り</span></a>
+                    </div>
+                    <p class="pricing-card__notes">
+                        ※ ログイン機能やデータベース連携を含む標準的なWebアプリ開発は ¥200,000〜 が目安です。<br>
+                        ※ サーバー維持費等は要件に応じて別途ご相談となります。<br>
+                        ※ 正式な費用はヒアリング後にお見積りいたします。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true"></div>
+
+        <!-- ============ Commitment ============ -->
+        <section class="section" aria-labelledby="commitment-title">
+            <div class="container">
+                <div class="section-header section-header--center fade-up">
+                    <span class="section-label">Commitment</span>
+                    <h2 class="section-title" id="commitment-title">お約束していること</h2>
+                </div>
+                <div class="commitment-list fade-up">
+                    <div class="commitment-item">
+                        <h3 class="commitment-item__title">ヒアリング重視の開発</h3>
+                        <p class="commitment-item__text">現場で本当に使えるシステムを作るために、「何を実現したいか」を丁寧にお伺いしてから開発に入ります。</p>
+                    </div>
+                    <div class="commitment-item">
+                        <h3 class="commitment-item__title">途中経過の共有</h3>
+                        <p class="commitment-item__text">開発中もプロトタイプをお見せしながら進行します。「完成してから違った」というリスクを最小限に抑えます。</p>
+                    </div>
+                    <div class="commitment-item">
+                        <h3 class="commitment-item__title">納品後も継続サポート</h3>
+                        <p class="commitment-item__text">運用を始めてから気づく改善点にも、柔軟に対応します。作って終わりではなく、育てていくシステムを目指します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true"></div>
+
+        <!-- ============ FAQ ============ -->
+        <section id="faq" class="section neon-ambient--alt neon-ambient" aria-labelledby="faq-title">
+            <div class="container--narrow">
+                <div class="section-header section-header--center fade-up">
+                    <span class="section-label">FAQ</span>
+                    <h2 class="section-title" id="faq-title">よくある質問</h2>
+                </div>
+                <div class="faq-list fade-up">
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <span class="faq-q__marker">Q.</span>
+                            <span>何を作ればいいかまだ決まっていませんが、相談できますか？</span>
+                        </div>
+                        <div class="faq-a">もちろんです。「こんなことで困っている」「こういうものがあったら便利かも」という段階でご相談いただければ、こちらで要件を一緒に整理いたします。</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <span class="faq-q__marker">Q.</span>
+                            <span>ITの知識が全くないのですが、依頼できますか？</span>
+                        </div>
+                        <div class="faq-a">問題ありません。「普段Excelで行っていること」や「指導で大切にしているロジック」をそのまま教えていただければ、最適なシステム仕様に翻訳いたします。</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <span class="faq-q__marker">Q.</span>
+                            <span>開発期間はどのくらいですか？</span>
+                        </div>
+                        <div class="faq-a">内容によりますが、シンプルな計算ツールであれば2〜4週間程度、データベースを伴うシステムであれば1〜3ヶ月程度が目安です。正確な期間はヒアリング後にお伝えします。</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <span class="faq-q__marker">Q.</span>
+                            <span>スマホアプリ（iOS / Android）としてストアに並びますか？</span>
+                        </div>
+                        <div class="faq-a">基本的には、ストア審査が不要でコストを抑えられる「Webアプリ（ブラウザで動くシステム）」を推奨しています。URLを開くだけで使用でき、多くの場合これで十分な利便性を確保できます。</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">
+                            <span class="faq-q__marker">Q.</span>
+                            <span>完成後の修正やアップデートは可能ですか？</span>
+                        </div>
+                        <div class="faq-a">可能です。むしろ、運用しながらフィードバックを反映して改善していくことを推奨しています。保守・改修費用についてはその都度ご相談ください。</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ Contact ============ -->
+        <section id="contact" class="contact-section" aria-labelledby="contact-title">
+            <div class="container">
+                <div class="section-header section-header--center section-header--compact fade-up">
+                    <span class="section-label">Contact</span>
+                    <h2 class="section-title" id="contact-title">まずは、お気軽にご相談ください。</h2>
+                </div>
+                <p class="contact__desc fade-up">
+                    「こんなツールがあったら便利かも」「今の管理方法に限界を感じている」——<br class="br-sp-hide">小さなアイデア段階でも歓迎です。
+                </p>
+                <p class="contact__reassure fade-up">相談は無料です。お見積り後のキャンセルも問題ありません。</p>
+
+                <div class="contact__actions fade-up">
+                    <a href="https://lin.ee/3ClYbhu" target="_blank" rel="noopener noreferrer" class="btn btn--line" aria-label="LINEでお問い合わせ">
+                        <i class="fa-brands fa-line btn--line-icon" aria-hidden="true"></i>
+                        LINEで相談する
+                    </a>
+                    <div class="contact__sub">
+                        <a href="mailto:muscleprime17@gmail.com" class="btn btn--ghost" aria-label="メールでお問い合わせ">
+                            <i class="fa-regular fa-envelope" aria-hidden="true"></i> メール
+                        </a>
+                        <a href="https://www.instagram.com/orivex_official/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" aria-label="Instagramを見る">
+                            <i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ Footer ============ -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__links">
+                <a href="https://muscleprime-max.github.io/orivex_HP/" target="_blank" rel="noopener noreferrer" class="footer__link">
+                    <i class="fa-solid fa-globe" aria-hidden="true"></i> ORIVEX 公式HP
+                </a>
+                <a href="https://muscleprime-max.github.io/SUPPLEMENT-ORACLE-/" target="_blank" rel="noopener noreferrer" class="footer__link">
+                    <i class="fa-solid fa-pills" aria-hidden="true"></i> SUPPLEMENT ORACLE
+                </a>
+            </div>
+            <p class="footer__copy">&copy; 2026 ORIVEX LAB. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const targets = document.querySelectorAll('.fade-up');
+
+            if (prefersReducedMotion) {
+                targets.forEach(el => el.classList.add('visible'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px 0px -40px 0px',
+                threshold: 0.12
+            });
+
+            targets.forEach(el => observer.observe(el));
+
+            /* Header shrink on scroll */
+            const header = document.querySelector('.header');
+            window.addEventListener('scroll', () => {
+                header.style.height = window.scrollY > 60 ? '56px' : '';
+            }, { passive: true });
+        });
+    </script>
+</body>
+</html>

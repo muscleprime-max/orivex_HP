@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ユーザー情報（将来の拡張用）
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // レポート
+    match /reports/{reportId} {
+      // 自分のレポートのみ読み取り可能
+      allow read: if request.auth != null
+                  && resource.data.userId == request.auth.uid;
+
+      // 書き込みは Firebase Functions (Admin SDK) のみ
+      // フロントから直接書き込み不可
+      allow create, update, delete: if false;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+# 環境変数（絶対にコミットしない）
+frontend/.env
+frontend/.env.local
+functions/.env
+*.local
+
+# ビルド成果物
+frontend/dist/
+functions/lib/
+
+# 依存パッケージ
+node_modules/
+frontend/node_modules/
+functions/node_modules/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+firestore-debug.log
+ui-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
