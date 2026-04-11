@@ -116,8 +116,9 @@
         }
 
         .article-hero h1 {
-            font-family: var(--font-main); font-size: clamp(1.5rem, 4vw, 2rem);
-            font-weight: 800; line-height: 1.4; margin-bottom: 20px;
+            font-family: var(--font-main); font-size: clamp(1.3rem, 4vw, 2rem);
+            font-weight: 800; line-height: 1.45; margin-bottom: 20px;
+            word-break: keep-all; overflow-wrap: break-word;
         }
 
         .article-meta { display: flex; align-items: center; gap: 20px; font-size: 0.82rem; color: var(--text-sub); flex-wrap: wrap; }
@@ -244,6 +245,7 @@
             .article-hero { padding: 48px 0 32px; }
             .article-cta { padding: 28px 20px; }
             .template-box { padding: 18px 16px; }
+            .article-hero h1 br { display: none; }
         }
     </style>
 </head>
