@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブログ | ORIVEX.</title>
+  <meta name="description" content="ORIVEX.の代表・田舞弘徳が現場の課題や事業の想いを綴るブログです。パーソナルトレーナーの業務改善、テクノロジー活用、ORIVEX.の開発裏話などを発信します。">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:    #10b981;
+      --green-dk: #059669;
+      --green-lt: #d1fae5;
+      --bg:       #ffffff;
+      --bg-warm:  #f9fafb;
+      --bg-dark:  #0f1117;
+      --ink:      #111827;
+      --ink-mid:  #374151;
+      --ink-light:#6b7280;
+      --border:   #e5e7eb;
+      --radius:   10px;
+      --font-sans:'Noto Sans JP', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --max:      1080px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+      --shadow-md:0 4px 20px rgba(0,0,0,.08);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== HEADER ===== */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; transition: box-shadow .2s;
+    }
+    #site-header.scrolled { box-shadow: var(--shadow-sm); }
+    .header-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: .04em; }
+    .header-logo em { font-style: normal; color: var(--green); }
+    .header-nav ul { display: flex; gap: 24px; list-style: none; }
+    .header-nav a { font-size: .83rem; font-weight: 500; color: var(--ink-light); transition: color .2s; }
+    .header-nav a:hover { color: var(--ink); }
+    .header-nav a.active { color: var(--green); font-weight: 700; }
+    .header-cta { font-size: .82rem; font-weight: 700; color: #fff; background: var(--green); padding: 8px 18px; border-radius: 8px; transition: background .2s; }
+    .header-cta:hover { background: var(--green-dk); }
+
+    /* ===== HERO ===== */
+    .blog-hero {
+      margin-top: 64px;
+      background: var(--bg-dark);
+      padding: 72px 32px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .blog-hero-inner { position: relative; z-index: 1; }
+    .blog-hero .tag {
+      display: inline-block; font-size: .7rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--green); background: rgba(16,185,129,.15);
+      padding: 4px 14px; border-radius: 100px; margin-bottom: 20px;
+    }
+    .blog-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700;
+      color: #fff; margin-bottom: 14px; line-height: 1.4;
+    }
+    .blog-hero p {
+      font-size: .93rem; color: rgba(255,255,255,.55); max-width: 520px; margin: 0 auto; line-height: 1.9;
+    }
+
+    /* ===== CONTENT AREA ===== */
+    .blog-content {
+      max-width: var(--max); margin: 0 auto; padding: 72px 32px 100px;
+    }
+
+    /* ===== POST GRID ===== */
+    .post-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .post-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+    }
+    .post-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+      border-color: var(--green);
+    }
+    .post-card-thumb {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--green-lt) 0%, #fff 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .post-card-thumb::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(16,185,129,.06));
+    }
+    .post-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .post-card-meta {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
+    }
+    .post-card-cat {
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+      color: var(--green-dk); background: var(--green-lt);
+      padding: 3px 10px; border-radius: 100px;
+    }
+    .post-card-date {
+      font-size: .74rem; color: var(--ink-light); font-family: var(--font-mono);
+    }
+    .post-card h2 {
+      font-size: .95rem; font-weight: 700; color: var(--ink);
+      line-height: 1.6; margin-bottom: 10px;
+    }
+    .post-card p {
+      font-size: .82rem; color: var(--ink-light); line-height: 1.85; flex: 1;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .post-card-footer {
+      margin-top: 18px; padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .post-card-author {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .75rem; color: var(--ink-light);
+    }
+    .post-card-author-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--green-lt);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700; color: var(--green-dk);
+    }
+    .post-card-read {
+      font-size: .74rem; font-weight: 700; color: var(--green);
+      display: flex; align-items: center; gap: 5px; transition: gap .2s;
+    }
+    .post-card:hover .post-card-read { gap: 8px; }
+
+    /* ===== EMPTY STATE ===== */
+    .more-soon {
+      margin-top: 48px; text-align: center; padding: 48px;
+      background: var(--bg-warm); border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+    .more-soon p { font-size: .88rem; color: var(--ink-light); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-dark); color: rgba(255,255,255,.65);
+      padding: 48px 0 32px; font-size: .82rem;
+    }
+    .footer-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+    .footer-logo em { font-style: normal; color: var(--green); }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.9); }
+    .footer-copy { font-size: .74rem; color: rgba(255,255,255,.3); width: 100%; text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .post-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      #site-header { padding: 0 18px; }
+      .header-nav { display: none; }
+      .header-cta { display: none; }
+      .blog-hero { padding: 56px 18px 48px; }
+      .blog-content { padding: 48px 18px 72px; }
+      .post-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="site-header">
+  <a href="../index.html" class="header-logo">ORIVEX<em>.</em></a>
+  <nav class="header-nav">
+    <ul>
+      <li><a href="../index.html#about">ORIVEX.について</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="index.html" class="active">ブログ</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <a href="../index.html#contact" class="header-cta">お問い合わせ</a>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="blog-hero">
+  <div class="blog-hero-inner">
+    <span class="tag">ORIVEX. Blog</span>
+    <h1>代表ブログ</h1>
+    <p>現場の課題、テクノロジーの可能性、ORIVEX.の歩み——代表・田舞弘徳が想いとともに綴ります。</p>
+  </div>
+</div>
+
+<!-- ===== POSTS ===== -->
+<div class="blog-content">
+  <div class="post-grid">
+
+    <a href="post-001.html" class="post-card">
+      <div class="post-card-thumb">🏥</div>
+      <div class="post-card-body">
+        <div class="post-card-meta">
+          <span class="post-card-cat">代表ブログ</span>
+          <span class="post-card-date">2026.04.14</span>
+        </div>
+        <h2>事業の拡張性を探る——医療・介護グループCEOへのヒアリングから得た気づきと、ORIVEX.の現在地</h2>
+        <p>数十店舗を展開する医療・介護グループCEOへのヒアリングを通じて、介護領域への参入の壁と、ORIVEX.が今本当に向き合うべき使命を再確認した記録。</p>
+        <div class="post-card-footer">
+          <div class="post-card-author">
+            <div class="post-card-author-avatar">田</div>
+            <span>田舞 弘徳</span>
+          </div>
+          <span class="post-card-read">続きを読む <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="more-soon">
+    <p>今後も定期的に記事を更新していきます。</p>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ORIVEX<em>.</em></div>
+    <ul class="footer-links">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="index.html">ブログ</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+      <li><a href="http://policy.orivex.jp/" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>
