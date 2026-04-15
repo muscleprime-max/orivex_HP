@@ -646,6 +646,103 @@
     .ch-arrow { margin-left: auto; color: var(--ink-light); font-size: .78rem; }
     .contact-note { padding: 12px 18px; background: var(--bg-warm); border-radius: 8px; border: 1px solid var(--border); font-size: .8rem; color: var(--ink-light); text-align: center; }
 
+    /* MAIL FORM MODAL */
+    #mail-modal {
+      display: none;
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .mail-modal-wrap {
+      max-width: 520px; width: 100%;
+      background: #fff; border-radius: 16px;
+      overflow: hidden; position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,.25);
+    }
+    .mail-modal-head {
+      background: var(--bg-dark);
+      padding: 28px 32px 24px; position: relative;
+    }
+    .mail-modal-head::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .mail-modal-head-inner { position: relative; z-index: 1; }
+    .mail-modal-kicker {
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+      color: var(--green); text-transform: uppercase; margin-bottom: 8px;
+    }
+    .mail-modal-head h3 { font-size: 1.25rem; font-weight: 700; color: #fff; line-height: 1.4; }
+    .mail-modal-close {
+      position: absolute; top: 14px; right: 14px; z-index: 2;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,.12); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.7); font-size: .95rem; transition: background .2s;
+    }
+    .mail-modal-close:hover { background: rgba(255,255,255,.22); }
+    .mail-modal-body { padding: 28px 32px 32px; }
+    .mail-form-group { margin-bottom: 18px; }
+    .mail-form-group label {
+      display: block; font-size: .79rem; font-weight: 700;
+      color: var(--ink-mid); margin-bottom: 7px; letter-spacing: .04em;
+    }
+    .mail-form-group label span { color: var(--green); margin-left: 3px; }
+    .mail-form-group input,
+    .mail-form-group textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-family: var(--font-sans); font-size: .9rem; color: var(--ink);
+      background: var(--bg-warm); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .mail-form-group input:focus,
+    .mail-form-group textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(16,185,129,.12);
+      background: #fff;
+    }
+    .mail-form-group textarea { resize: vertical; min-height: 110px; }
+    .mail-submit-btn {
+      width: 100%; padding: 13px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: var(--font-sans); font-size: .95rem; font-weight: 700;
+      cursor: pointer; transition: background .2s, transform .1s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .mail-submit-btn:hover { background: var(--green-dk); }
+    .mail-submit-btn:active { transform: scale(.98); }
+    .mail-submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .mail-form-note { font-size: .75rem; color: var(--ink-light); margin-top: 13px; text-align: center; }
+    .mail-success {
+      display: none; text-align: center; padding: 44px 32px 36px;
+    }
+    .mail-success-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--green-lt); color: var(--green);
+      font-size: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .mail-success h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .mail-success p { font-size: .87rem; color: var(--ink-mid); line-height: 1.85; }
+    .mail-error-msg {
+      display: none; margin-top: 12px;
+      padding: 10px 14px; background: #fef2f2;
+      border: 1px solid #fca5a5; border-radius: 8px;
+      font-size: .8rem; color: #dc2626;
+    }
+    .channel-btn {
+      width: 100%; text-align: left; background: none;
+      font-family: var(--font-sans); cursor: pointer;
+    }
+
     /* REASON */
     .reason-grid {
       display: grid;
@@ -1810,14 +1907,14 @@
           <div class="ch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </a>
 
-        <a href="mailto:muscleprime17@gmail.com" class="channel-item">
+        <button onclick="openMailModal()" class="channel-item channel-btn">
           <div class="channel-icon"><i class="fa-regular fa-envelope"></i></div>
           <div>
             <div class="ch-label">EMAIL</div>
             <div class="ch-value">メールで問い合わせる</div>
           </div>
           <div class="ch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-        </a>
+        </button>
 
         <a href="https://www.instagram.com/orivex_official/" target="_blank" class="channel-item insta-ch">
           <div class="channel-icon"><i class="fa-brands fa-instagram"></i></div>
@@ -2297,6 +2394,101 @@
     });
   }
 
+  // Mail modal
+  function openMailModal() {
+    document.getElementById('mail-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMailModal() {
+    document.getElementById('mail-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('mail-contact-form').reset();
+    document.getElementById('mail-form-wrap').style.display = 'block';
+    document.getElementById('mail-success').style.display = 'none';
+    document.getElementById('mail-error-msg').style.display = 'none';
+    const btn = document.getElementById('mail-submit-btn');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 送信する';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const mailForm = document.getElementById('mail-contact-form');
+    if (mailForm) {
+      mailForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('mail-submit-btn');
+        const errorMsg = document.getElementById('mail-error-msg');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 送信中...';
+        errorMsg.style.display = 'none';
+        const formData = new FormData(this);
+        try {
+          const res = await fetch('https://formspree.io/f/xojyvgvr', {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            document.getElementById('mail-form-wrap').style.display = 'none';
+            document.getElementById('mail-success').style.display = 'block';
+          } else {
+            throw new Error();
+          }
+        } catch {
+          errorMsg.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 送信する';
+        }
+      });
+    }
+  });
 </script>
+
+<!-- MAIL FORM MODAL -->
+<div id="mail-modal" onclick="if(event.target===this)closeMailModal()">
+  <div class="mail-modal-wrap">
+    <div class="mail-modal-head">
+      <div class="mail-modal-head-inner">
+        <div class="mail-modal-kicker">EMAIL</div>
+        <h3>メールでお問い合わせ</h3>
+      </div>
+      <button class="mail-modal-close" onclick="closeMailModal()" aria-label="閉じる">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div id="mail-form-wrap">
+      <div class="mail-modal-body">
+        <form id="mail-contact-form">
+          <div class="mail-form-group">
+            <label>お名前<span>*</span></label>
+            <input type="text" name="name" placeholder="田舞 弘徳" required>
+          </div>
+          <div class="mail-form-group">
+            <label>メールアドレス<span>*</span></label>
+            <input type="email" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="mail-form-group">
+            <label>お問い合わせ内容<span>*</span></label>
+            <textarea name="message" placeholder="ご質問・ご相談内容をご記入ください。" required></textarea>
+          </div>
+          <button type="submit" class="mail-submit-btn" id="mail-submit-btn">
+            <i class="fa-solid fa-paper-plane"></i> 送信する
+          </button>
+          <div class="mail-error-msg" id="mail-error-msg">送信に失敗しました。しばらく経ってから再度お試しください。</div>
+          <p class="mail-form-note">通常1〜2営業日以内にご返信いたします</p>
+        </form>
+      </div>
+    </div>
+    <div class="mail-success" id="mail-success">
+      <div class="mail-success-icon"><i class="fa-solid fa-check"></i></div>
+      <h4>送信完了しました</h4>
+      <p>お問い合わせありがとうございます。<br>通常1〜2営業日以内にご返信いたします。</p>
+      <button onclick="closeMailModal()" style="margin-top:24px;max-width:200px;margin-left:auto;margin-right:auto;" class="mail-submit-btn">
+        <i class="fa-solid fa-xmark"></i> 閉じる
+      </button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
