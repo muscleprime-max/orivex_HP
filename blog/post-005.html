@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【完全保存版】脱・感覚指導！パーソナルトレーナーが「エビデンスベース」のサプリ提案で信頼と単価を上げる具体策 | ORIVEX. ブログ</title>
+  <meta name="description" content="感覚だけのサプリ指導から脱却。PubMedエビデンス×安全性スクリーニング×アフィリエイト収益化で、パーソナルトレーナーの信頼と単価を同時に上げる具体策を完全解説。">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:    #10b981;
+      --green-dk: #059669;
+      --green-lt: #d1fae5;
+      --bg:       #ffffff;
+      --bg-warm:  #f9fafb;
+      --bg-dark:  #0f1117;
+      --ink:      #111827;
+      --ink-mid:  #374151;
+      --ink-light:#6b7280;
+      --border:   #e5e7eb;
+      --radius:   10px;
+      --font-sans:'Noto Sans JP', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --max:      1080px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== HEADER ===== */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; transition: box-shadow .2s;
+    }
+    #site-header.scrolled { box-shadow: var(--shadow-sm); }
+    .header-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: .04em; }
+    .header-logo em { font-style: normal; color: var(--green); }
+    .header-nav ul { display: flex; gap: 24px; list-style: none; }
+    .header-nav a { font-size: .83rem; font-weight: 500; color: var(--ink-light); transition: color .2s; }
+    .header-nav a:hover { color: var(--ink); }
+    .header-nav a.active { color: var(--green); font-weight: 700; }
+    .header-cta { font-size: .82rem; font-weight: 700; color: #fff; background: var(--green); padding: 8px 18px; border-radius: 8px; transition: background .2s; }
+    .header-cta:hover { background: var(--green-dk); }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb { margin-top: 64px; padding: 14px 0; background: var(--bg-warm); border-bottom: 1px solid var(--border); }
+    .breadcrumb-inner { max-width: var(--max); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--ink-light); }
+    .breadcrumb-inner a { color: var(--ink-light); transition: color .2s; }
+    .breadcrumb-inner a:hover { color: var(--green); }
+    .breadcrumb-inner i { font-size: .6rem; }
+
+    /* ===== LAYOUT ===== */
+    .article-wrap { max-width: 780px; margin: 0 auto; padding: 64px 32px 100px; }
+
+    /* ===== POST HEADER ===== */
+    .post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .post-category { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--green-dk); background: var(--green-lt); padding: 4px 12px; border-radius: 100px; }
+    .post-date { font-size: .78rem; color: var(--ink-light); font-family: var(--font-mono); }
+    .post-readtime { font-size: .78rem; color: var(--ink-light); display: flex; align-items: center; gap: 5px; }
+    .post-title { font-size: clamp(1.4rem, 3.5vw, 1.95rem); font-weight: 700; line-height: 1.5; color: var(--ink); margin-bottom: 16px; }
+    .post-subtitle { font-size: .93rem; color: var(--ink-light); line-height: 1.9; border-left: 3px solid var(--green); padding-left: 16px; margin-bottom: 36px; }
+    .post-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 44px; }
+    .author-strip { display: flex; align-items: center; gap: 14px; margin-bottom: 44px; }
+    .author-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--green-lt); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; color: var(--green-dk); flex-shrink: 0; }
+    .author-name { font-size: .88rem; font-weight: 700; }
+    .author-role { font-size: .75rem; color: var(--ink-light); }
+
+    /* ===== BODY ===== */
+    .post-body { font-size: .95rem; line-height: 2; color: var(--ink-mid); }
+    .post-body p { margin-bottom: 1.5em; }
+    .post-body h2 {
+      font-size: 1.18rem; font-weight: 700; color: var(--ink);
+      margin: 2.8em 0 .9em; padding: 14px 18px;
+      background: var(--bg-warm); border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .post-body h3 {
+      font-size: 1rem; font-weight: 700; color: var(--ink);
+      margin: 2em 0 .7em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .post-body h3::before {
+      content: ''; display: inline-block; width: 8px; height: 8px;
+      background: var(--green); border-radius: 50%; flex-shrink: 0;
+    }
+    .post-body .lead {
+      font-size: 1rem; line-height: 2;
+      background: var(--bg-warm); border-radius: var(--radius);
+      padding: 24px 28px; margin-bottom: 2em;
+    }
+    .post-body blockquote {
+      border-left: 3px solid var(--green);
+      background: var(--green-lt); border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 18px 22px; margin: 1.6em 0;
+      font-size: .92rem; color: var(--ink); line-height: 1.9;
+    }
+
+    /* 目次 */
+    .toc {
+      background: var(--bg-warm); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 28px; margin: 2em 0;
+    }
+    .toc-title { font-size: .8rem; font-weight: 700; letter-spacing: .1em; color: var(--green-dk); text-transform: uppercase; margin-bottom: 14px; }
+    .toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+    .toc li { font-size: .86rem; color: var(--ink-light); }
+    .toc a { color: var(--ink-mid); transition: color .2s; }
+    .toc a:hover { color: var(--green); }
+
+    /* 鉄則カード */
+    .rule-cards { display: flex; flex-direction: column; gap: 20px; margin: 2em 0; }
+    .rule-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .rule-card:hover { box-shadow: 0 6px 24px rgba(16,185,129,.09); border-color: var(--green); }
+    .rule-card-head {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 22px; background: var(--bg-warm);
+      border-bottom: 1px solid var(--border);
+    }
+    .rule-badge {
+      font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+      color: #fff; background: var(--green);
+      padding: 4px 12px; border-radius: 100px; white-space: nowrap;
+    }
+    .rule-title { font-size: .97rem; font-weight: 700; color: var(--ink); }
+    .rule-body { padding: 18px 22px; font-size: .87rem; color: var(--ink-light); line-height: 1.9; }
+    .rule-checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .rule-checklist li { display: flex; gap: 8px; align-items: flex-start; font-size: .84rem; }
+    .rule-checklist li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* Win-Winスキーム図 */
+    .scheme-diagram {
+      background: var(--bg-warm); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px; margin: 1.8em 0;
+    }
+    .scheme-diagram-title { font-size: .78rem; font-weight: 700; letter-spacing: .12em; color: var(--green-dk); text-transform: uppercase; text-align: center; margin-bottom: 20px; }
+    .scheme-flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
+    .scheme-node {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 18px;
+      text-align: center; min-width: 130px;
+    }
+    .scheme-node .node-icon { font-size: 1.4rem; margin-bottom: 6px; }
+    .scheme-node .node-label { font-size: .78rem; font-weight: 700; color: var(--ink); }
+    .scheme-node .node-sub { font-size: .7rem; color: var(--ink-light); margin-top: 2px; }
+    .scheme-arrow {
+      font-size: .9rem; color: var(--green); padding: 0 10px;
+      font-weight: 700;
+    }
+    .scheme-result {
+      margin-top: 16px; text-align: center;
+      font-size: .84rem; font-weight: 700; color: var(--green-dk);
+      background: var(--green-lt); padding: 10px 18px; border-radius: 100px;
+      display: inline-block; width: 100%;
+    }
+
+    /* 機能まとめ */
+    .feature-summary {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 14px; margin: 1.8em 0;
+    }
+    .feature-summary-item {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 16px;
+      display: flex; gap: 12px; align-items: flex-start;
+      transition: border-color .2s;
+    }
+    .feature-summary-item:hover { border-color: var(--green); }
+    .fs-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .fs-title { font-size: .87rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .fs-body { font-size: .8rem; color: var(--ink-light); line-height: 1.8; }
+
+    /* CTA */
+    .cta-block { background: var(--bg-dark); border-radius: var(--radius); padding: 40px 36px; text-align: center; margin: 2.5em 0; }
+    .cta-block .cta-tag { font-size: .7rem; font-weight: 700; letter-spacing: .14em; color: var(--green); background: rgba(16,185,129,.15); padding: 4px 14px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
+    .cta-block h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.5; }
+    .cta-block p { font-size: .86rem; color: rgba(255,255,255,.6); line-height: 1.9; margin-bottom: 24px; max-width: 460px; margin-left: auto; margin-right: auto; }
+    .cta-block a { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: #fff; font-size: .9rem; font-weight: 700; padding: 14px 32px; border-radius: 8px; transition: background .2s, transform .2s; }
+    .cta-block a:hover { background: var(--green-dk); transform: translateY(-1px); }
+    .cta-block .cta-note { font-size: .74rem; color: rgba(255,255,255,.35); margin-top: 12px; margin-bottom: 0; }
+
+    /* ===== POST FOOTER ===== */
+    .post-footer { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .author-card { background: var(--bg-warm); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; display: flex; gap: 20px; align-items: flex-start; margin-bottom: 40px; }
+    .author-card-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--green-lt); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; color: var(--green-dk); flex-shrink: 0; }
+    .author-card-name { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .author-card-role { font-size: .78rem; color: var(--green-dk); font-weight: 600; margin-bottom: 10px; }
+    .author-card-bio { font-size: .84rem; color: var(--ink-light); line-height: 1.85; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-size: .86rem; font-weight: 700; color: var(--green); border: 1.5px solid var(--green); padding: 10px 22px; border-radius: 8px; transition: background .2s, color .2s; }
+    .back-btn:hover { background: var(--green); color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--bg-dark); color: rgba(255,255,255,.65); padding: 48px 0 32px; font-size: .82rem; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+    .footer-logo em { font-style: normal; color: var(--green); }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.9); }
+    .footer-copy { font-size: .74rem; color: rgba(255,255,255,.3); width: 100%; text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      #site-header { padding: 0 18px; }
+      .header-nav { display: none; }
+      .header-cta { display: none; }
+      .breadcrumb-inner { padding: 0 18px; }
+      .article-wrap { padding: 48px 18px 72px; }
+      .post-body h2 { font-size: 1rem; padding: 12px 14px; }
+      .scheme-flow { flex-direction: column; gap: 4px; }
+      .scheme-arrow { transform: rotate(90deg); }
+      .feature-summary { grid-template-columns: 1fr; }
+      .cta-block { padding: 28px 20px; }
+      .author-card { flex-direction: column; gap: 14px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="site-header">
+  <a href="../index.html" class="header-logo">ORIVEX<em>.</em></a>
+  <nav class="header-nav">
+    <ul>
+      <li><a href="../index.html#about">ORIVEX.について</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="index.html" class="active">ブログ</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <a href="https://app.orivex.jp" target="_blank" rel="noopener" class="header-cta">無料で試す</a>
+</header>
+
+<!-- ===== BREADCRUMB ===== -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">ホーム</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <a href="index.html">ブログ</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>エビデンスベースのサプリ提案術</span>
+  </div>
+</div>
+
+<!-- ===== ARTICLE ===== -->
+<main>
+  <article class="article-wrap">
+
+    <div class="post-meta">
+      <span class="post-category">完全保存版</span>
+      <span class="post-date">2026.04.16</span>
+      <span class="post-readtime"><i class="fa-regular fa-clock"></i> 約8分</span>
+    </div>
+
+    <h1 class="post-title">【完全保存版】脱・感覚指導！<br>パーソナルトレーナーが「エビデンスベース」のサプリ提案で信頼と単価を上げる具体策</h1>
+
+    <p class="post-subtitle">「なんとなく」の指導から脱却し、論理と科学で裏付けされた提案がトレーナーの価値とジムの収益を同時に引き上げます。</p>
+
+    <div class="author-strip">
+      <div class="author-avatar">田</div>
+      <div>
+        <p class="author-name">田舞 弘徳</p>
+        <p class="author-role">ORIVEX. 代表</p>
+      </div>
+    </div>
+
+    <div class="post-divider"></div>
+
+    <div class="post-body">
+
+      <p class="lead">パーソナルトレーナーの皆様、日々のセッションと店舗運営、本当にお疲れ様です。ORIVEX.（オリベックス）代表の田舞弘徳です。クライアントから「おすすめのプロテインやサプリは何ですか？」とLINEで聞かれ、セッションの合間や業務終了後に一生懸命リサーチし、長文で返信をしているトレーナーの方は多いのではないでしょうか。しかし、その親切な指導時間は、あなたの「収益」に結びついているでしょうか？</p>
+
+      <div class="toc">
+        <p class="toc-title">この記事の内容</p>
+        <ol>
+          <li><a href="#section1">なぜ今、パーソナルジムに「エビデンスベース」が求められるのか？</a></li>
+          <li><a href="#section2">成果と信頼を生む！サプリ提案の「3つの鉄則」</a></li>
+          <li><a href="#section3">サプリ指導を「無料のボランティア」で終わらせない戦略</a></li>
+          <li><a href="#section4">忙しい現場を救う「デジタル処方箋」という最適解</a></li>
+        </ol>
+      </div>
+
+      <h2 id="section1">1. なぜ今、パーソナルジムに「エビデンスベース」が求められるのか？</h2>
+
+      <p>近年、フィットネスブームの定着により、一般の方の栄養リテラシーも飛躍的に向上しています。YouTubeやSNSで簡単に専門的な情報が手に入る時代です。</p>
+
+      <h3>「経験則だけ」の指導はリスクでしかない</h3>
+
+      <p>これまでは「私が飲んで効いたから」「なんとなく疲れが取れるから」といった感覚的なアドバイスでも通用したかもしれません。しかし、経験則だけの指導は、今の「賢いクライアント」には通用せず、不信感を生む原因になっています。</p>
+
+      <blockquote>
+        「なぜその成分が必要なのか」「なぜその摂取量なのか」を論理的に説明できない提案は、プロフェッショナルとしての価値を下げてしまいます。さらに、誤った成分摂取の推奨は、ジムのブランドを破壊する致命的なリスク（健康被害・クレーム）を常に孕んでいるのです。
+      </blockquote>
+
+      <p>だからこそ、科学的文献（エビデンス）をもとに、しっかりと説明できる提案が求められています。</p>
+
+      <h2 id="section2">2. 成果と信頼を生む！サプリ提案の「3つの鉄則」</h2>
+
+      <p>では、具体的にどのような基準でサプリメントを提案すべきなのでしょうか。現場で実践すべき3つの鉄則をご紹介します。</p>
+
+      <div class="rule-cards">
+
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-badge">鉄則 01</span>
+            <p class="rule-title">徹底した「安全性」の事前スクリーニング</p>
+          </div>
+          <div class="rule-body">
+            <p>サプリメントは食品ですが、クライアントの体質や持病によっては毒になることもあります。提案前に必ず以下の情報をヒアリングしてください。</p>
+            <ul class="rule-checklist">
+              <li><strong>疾患の有無：</strong>高血圧、腎機能不安、甲状腺疾患などはないか</li>
+              <li><strong>服薬状況：</strong>処方薬や低用量ピルなどを服用していないか</li>
+            </ul>
+            <p style="margin-top:12px;">健康リスクに関わる項目を事前にチェックし、禁忌となる成分を除外することが、クレームや健康被害を防ぐ第一歩です。</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-badge">鉄則 02</span>
+            <p class="rule-title">PubMed等に基づいた「根拠ある成分と用量」</p>
+          </div>
+          <div class="rule-body">
+            <p>「ビタミンを飲みましょう」ではなく、「あなたの体重と目的なら、この論文データに基づき、〇〇mgの摂取が推奨されます」と伝える必要があります。PubMed参照の根拠ベースで成分・用量・タイミングを整理することで、提案の説得力は劇的に変わります。</p>
+            <p>また、複数サプリの併用による過剰摂取（特に脂溶性ビタミンなど）を防ぐため、体重・性別に応じた上限値の確認も必須です。</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-badge">鉄則 03</span>
+            <p class="rule-title">ライフスタイルに合わせた「摂取スケジュール」の明示</p>
+          </div>
+          <div class="rule-body">
+            <p>良いサプリも飲むタイミングを間違えれば効果は半減します。「朝食後」「トレーニング前（トレ前）」「就寝前」など、どのタイミングで何を飲むべきか、クライアントが迷わない推奨摂取スケジュールを視覚的に提示してあげることが継続のコツです。</p>
+          </div>
+        </div>
+
+      </div>
+
+      <h2 id="section3">3. サプリ指導を「無料のボランティア」で終わらせない戦略</h2>
+
+      <p>ここまで丁寧な指導を行うと、当然かなりの時間がかかります。以前の現場では、クライアント一人ひとりに合わせてサプリメントを調べ、LINEで長文を送るのに15分はかかっていました。</p>
+
+      <blockquote>
+        一番の「もったいない」は、トレーナーが時間をかけてアドバイスをした結果、クライアントがAmazonやiHerbで勝手に購入してしまい、ジム側に1円の利益も落ちないことです。
+      </blockquote>
+
+      <h3>物販収益の取りこぼしを防ぐアフィリエイト連携</h3>
+
+      <p>この課題を解決するのが、アフィリエイト（紹介料）の仕組みです。適切なサプリを提案すると同時に、「こちらのリンクから購入するとスムーズです」とご自身のアフィリエイトリンクを案内することで、次のようなWin-Winのスキームが完成します。</p>
+
+      <div class="scheme-diagram">
+        <p class="scheme-diagram-title">アフィリエイト収益化スキーム</p>
+        <div class="scheme-flow">
+          <div class="scheme-node">
+            <div class="node-icon">🏋️</div>
+            <p class="node-label">トレーナー</p>
+            <p class="node-sub">提案＋リンク案内</p>
+          </div>
+          <span class="scheme-arrow">→</span>
+          <div class="scheme-node">
+            <div class="node-icon">👤</div>
+            <p class="node-label">クライアント</p>
+            <p class="node-sub">迷わず正しい商品を購入</p>
+          </div>
+          <span class="scheme-arrow">→</span>
+          <div class="scheme-node">
+            <div class="node-icon">💰</div>
+            <p class="node-label">紹介料が発生</p>
+            <p class="node-sub">在庫不要・自動収益</p>
+          </div>
+        </div>
+        <p class="scheme-result">✓ クライアントは正しい商品を入手　✓ ジムには収益が入る　Win-Win！</p>
+      </div>
+
+      <h2 id="section4">4. 忙しい現場を救う「デジタル処方箋」という最適解</h2>
+
+      <p>「エビデンスに基づく安全な提案」と「アフィリエイトによる収益化」。これらを頭では理解していても、日々のセッションに追われる現場で実践するのは困難です。そこで私たちが開発したのが、パーソナルトレーナー向けサプリメント診断ツール<strong>「SUPPLEMENT-ORACLE-」</strong>です。</p>
+
+      <div class="feature-summary">
+        <div class="feature-summary-item">
+          <span class="fs-icon">⚡</span>
+          <div>
+            <p class="fs-title">約1分でレポート自動生成</p>
+            <p class="fs-body">体重・性別・目的を入力するだけ。15分かかった業務が1/15に短縮。</p>
+          </div>
+        </div>
+        <div class="feature-summary-item">
+          <span class="fs-icon">🛡️</span>
+          <div>
+            <p class="fs-title">安全性チェック自動化</p>
+            <p class="fs-body">病気・服薬状況を入力すると禁忌成分を自動フラグ表示・除外。</p>
+          </div>
+        </div>
+        <div class="feature-summary-item">
+          <span class="fs-icon">💰</span>
+          <div>
+            <p class="fs-title">収益化の自動化</p>
+            <p class="fs-body">アフィリエイトリンクを設定するだけで手間なく副収入の柱を構築（竹・松プラン）。</p>
+          </div>
+        </div>
+        <div class="feature-summary-item">
+          <span class="fs-icon">📲</span>
+          <div>
+            <p class="fs-title">共有も簡単</p>
+            <p class="fs-body">URLやテキストでLINEへ即時送付。PDF処方箋として発行も可能。</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>まとめ：テクノロジーで、本質的な指導に集中する</h2>
+
+      <p>サプリ提案の自動化は、手抜きではありません。ITが苦手な方でもフォームに沿って入力するだけで運用しやすい設計にしており、業務を整理することで、トレーナーがクライアントとより深く向き合える余裕を取り戻すためのものです。</p>
+
+      <div class="cta-block">
+        <span class="cta-tag">完全無料ではじめられます</span>
+        <h3>「なんとなく指導」から卒業する<br>第一歩を、今日踏み出す</h3>
+        <p>ORIVEX.では、15種類限定のサプリ提案が無制限で利用できる「梅（Lite）プラン」を、初期費用・月額0円の完全無料で提供しています。まずはその圧倒的なスピードと質をご体感ください。</p>
+        <a href="https://app.orivex.jp" target="_blank" rel="noopener">
+          無料で試してみる <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <p class="cta-note">クレジットカード不要・登録1分</p>
+      </div>
+
+    </div>
+
+    <!-- Post Footer -->
+    <div class="post-footer">
+      <div class="author-card">
+        <div class="author-card-avatar">田</div>
+        <div>
+          <p class="author-card-name">田舞 弘徳</p>
+          <p class="author-card-role">ORIVEX. 代表</p>
+          <p class="author-card-bio">「健康づくりは人づくりである」を理念に、パーソナルトレーナーの現場課題をテクノロジーで解決するプロダクトを開発・提供。Supplement Oracle、NutriMind など、現場で使えるツールをつくり続けています。</p>
+        </div>
+      </div>
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> ブログ一覧へ戻る
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ORIVEX<em>.</em></div>
+    <ul class="footer-links">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="index.html">ブログ</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+      <li><a href="http://policy.orivex.jp/" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>
