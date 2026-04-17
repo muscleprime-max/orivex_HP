@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パーソナルジムのサプリ指導に潜むリスク。クライアントを守る「安全性スクリーニング」の重要性 | ORIVEX. ブログ</title>
+  <meta name="description" content="パーソナルトレーナーのサプリ事故・クレームを防ぐ方法を解説。薬との相互作用・持病・過剰摂取リスクをシステムで自動チェックし、ジム経営のリスク管理を強化する手法とは。">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:    #10b981;
+      --green-dk: #059669;
+      --green-lt: #d1fae5;
+      --bg:       #ffffff;
+      --bg-warm:  #f9fafb;
+      --bg-dark:  #0f1117;
+      --ink:      #111827;
+      --ink-mid:  #374151;
+      --ink-light:#6b7280;
+      --border:   #e5e7eb;
+      --radius:   10px;
+      --font-sans:'Noto Sans JP', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --max:      1080px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== HEADER ===== */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; transition: box-shadow .2s;
+    }
+    #site-header.scrolled { box-shadow: var(--shadow-sm); }
+    .header-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: .04em; }
+    .header-logo em { font-style: normal; color: var(--green); }
+    .header-nav ul { display: flex; gap: 24px; list-style: none; }
+    .header-nav a { font-size: .83rem; font-weight: 500; color: var(--ink-light); transition: color .2s; }
+    .header-nav a:hover { color: var(--ink); }
+    .header-nav a.active { color: var(--green); font-weight: 700; }
+    .header-cta { font-size: .82rem; font-weight: 700; color: #fff; background: var(--green); padding: 8px 18px; border-radius: 8px; transition: background .2s; }
+    .header-cta:hover { background: var(--green-dk); }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb { margin-top: 64px; padding: 14px 0; background: var(--bg-warm); border-bottom: 1px solid var(--border); }
+    .breadcrumb-inner { max-width: var(--max); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--ink-light); }
+    .breadcrumb-inner a { color: var(--ink-light); transition: color .2s; }
+    .breadcrumb-inner a:hover { color: var(--green); }
+    .breadcrumb-inner i { font-size: .6rem; }
+
+    /* ===== LAYOUT ===== */
+    .article-wrap { max-width: 780px; margin: 0 auto; padding: 64px 32px 100px; }
+
+    /* ===== POST HEADER ===== */
+    .post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .post-category { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--green-dk); background: var(--green-lt); padding: 4px 12px; border-radius: 100px; }
+    .post-date { font-size: .78rem; color: var(--ink-light); font-family: var(--font-mono); }
+    .post-readtime { font-size: .78rem; color: var(--ink-light); display: flex; align-items: center; gap: 5px; }
+    .post-title { font-size: clamp(1.4rem, 3.5vw, 1.95rem); font-weight: 700; line-height: 1.5; color: var(--ink); margin-bottom: 16px; }
+    .post-subtitle { font-size: .93rem; color: var(--ink-light); line-height: 1.9; border-left: 3px solid var(--green); padding-left: 16px; margin-bottom: 36px; }
+    .post-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 44px; }
+    .author-strip { display: flex; align-items: center; gap: 14px; margin-bottom: 44px; }
+    .author-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--green-lt); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; color: var(--green-dk); flex-shrink: 0; }
+    .author-name { font-size: .88rem; font-weight: 700; }
+    .author-role { font-size: .75rem; color: var(--ink-light); }
+
+    /* ===== BODY ===== */
+    .post-body { font-size: .95rem; line-height: 2; color: var(--ink-mid); }
+    .post-body p { margin-bottom: 1.5em; }
+    .post-body h2 {
+      font-size: 1.18rem; font-weight: 700; color: var(--ink);
+      margin: 2.8em 0 .9em; padding: 14px 18px;
+      background: var(--bg-warm); border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .post-body .lead {
+      font-size: 1rem; line-height: 2;
+      background: var(--bg-warm); border-radius: var(--radius);
+      padding: 24px 28px; margin-bottom: 2em;
+    }
+    .post-body blockquote {
+      border-left: 3px solid var(--green);
+      background: var(--green-lt); border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 18px 22px; margin: 1.6em 0;
+      font-size: .92rem; color: var(--ink); line-height: 1.9;
+    }
+
+    /* 警告バナー */
+    .warning-banner {
+      background: #fff7ed; border: 1px solid #fed7aa;
+      border-left: 4px solid #f97316;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 18px 22px; margin: 1.8em 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .warning-banner-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; color: #f97316; }
+    .warning-banner p { font-size: .88rem; color: #9a3412; line-height: 1.85; margin: 0; }
+    .warning-banner strong { color: #7c2d12; }
+
+    /* リスクグリッド */
+    .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 1.8em 0; }
+    .risk-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px 18px;
+      text-align: center; transition: box-shadow .2s;
+    }
+    .risk-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+    .risk-card-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .risk-card-title { font-size: .88rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    .risk-card-body { font-size: .8rem; color: var(--ink-light); line-height: 1.8; }
+
+    /* チェック機能リスト */
+    .check-list { display: flex; flex-direction: column; gap: 14px; margin: 1.8em 0; }
+    .check-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px;
+      transition: border-color .2s;
+    }
+    .check-item:hover { border-color: var(--green); }
+    .check-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--green-lt); color: var(--green-dk);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .82rem; flex-shrink: 0;
+    }
+    .check-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .check-body { font-size: .83rem; color: var(--ink-light); line-height: 1.85; }
+
+    /* バージョンタイムライン */
+    .version-timeline { margin: 1.8em 0; position: relative; padding-left: 24px; }
+    .version-timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+    .version-item { position: relative; margin-bottom: 20px; }
+    .version-item:last-child { margin-bottom: 0; }
+    .version-dot { position: absolute; left: -20px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--green); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--green); }
+    .version-item.current .version-dot { background: var(--green); box-shadow: 0 0 0 3px rgba(16,185,129,.3); }
+    .version-label { font-size: .72rem; font-weight: 700; font-family: var(--font-mono); color: var(--green); letter-spacing: .08em; margin-bottom: 4px; }
+    .version-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+    .version-body { font-size: .82rem; color: var(--ink-light); line-height: 1.8; }
+
+    /* CTA */
+    .cta-block { background: var(--bg-dark); border-radius: var(--radius); padding: 40px 36px; text-align: center; margin: 2.5em 0; }
+    .cta-block .cta-tag { font-size: .7rem; font-weight: 700; letter-spacing: .14em; color: var(--green); background: rgba(16,185,129,.15); padding: 4px 14px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
+    .cta-block h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.5; }
+    .cta-block p { font-size: .86rem; color: rgba(255,255,255,.6); line-height: 1.9; margin-bottom: 24px; max-width: 440px; margin-left: auto; margin-right: auto; }
+    .cta-block a { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: #fff; font-size: .9rem; font-weight: 700; padding: 14px 32px; border-radius: 8px; transition: background .2s, transform .2s; }
+    .cta-block a:hover { background: var(--green-dk); transform: translateY(-1px); }
+    .cta-block .cta-note { font-size: .74rem; color: rgba(255,255,255,.35); margin-top: 12px; margin-bottom: 0; }
+
+    /* ===== POST FOOTER ===== */
+    .post-footer { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .author-card { background: var(--bg-warm); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; display: flex; gap: 20px; align-items: flex-start; margin-bottom: 40px; }
+    .author-card-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--green-lt); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; color: var(--green-dk); flex-shrink: 0; }
+    .author-card-name { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .author-card-role { font-size: .78rem; color: var(--green-dk); font-weight: 600; margin-bottom: 10px; }
+    .author-card-bio { font-size: .84rem; color: var(--ink-light); line-height: 1.85; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-size: .86rem; font-weight: 700; color: var(--green); border: 1.5px solid var(--green); padding: 10px 22px; border-radius: 8px; transition: background .2s, color .2s; }
+    .back-btn:hover { background: var(--green); color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--bg-dark); color: rgba(255,255,255,.65); padding: 48px 0 32px; font-size: .82rem; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+    .footer-logo em { font-style: normal; color: var(--green); }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.9); }
+    .footer-copy { font-size: .74rem; color: rgba(255,255,255,.3); width: 100%; text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      #site-header { padding: 0 18px; }
+      .header-nav { display: none; }
+      .header-cta { display: none; }
+      .breadcrumb-inner { padding: 0 18px; }
+      .article-wrap { padding: 48px 18px 72px; }
+      .post-body h2 { font-size: 1rem; padding: 12px 14px; }
+      .risk-grid { grid-template-columns: 1fr; }
+      .cta-block { padding: 28px 20px; }
+      .author-card { flex-direction: column; gap: 14px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="site-header">
+  <a href="../index.html" class="header-logo">ORIVEX<em>.</em></a>
+  <nav class="header-nav">
+    <ul>
+      <li><a href="../index.html#about">ORIVEX.について</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="index.html" class="active">ブログ</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <a href="https://app.orivex.jp" target="_blank" rel="noopener" class="header-cta">無料で試す</a>
+</header>
+
+<!-- ===== BREADCRUMB ===== -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">ホーム</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <a href="index.html">ブログ</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>サプリ指導のリスク管理</span>
+  </div>
+</div>
+
+<!-- ===== ARTICLE ===== -->
+<main>
+  <article class="article-wrap">
+
+    <div class="post-meta">
+      <span class="post-category">リスク管理</span>
+      <span class="post-date">2026.04.15</span>
+      <span class="post-readtime"><i class="fa-regular fa-clock"></i> 約5分</span>
+    </div>
+
+    <h1 class="post-title">パーソナルジムのサプリ指導に潜むリスク。<br>クライアントを守る「安全性スクリーニング」の重要性</h1>
+
+    <p class="post-subtitle">「この成分を勧めて大丈夫だろうか？」その不安をシステムで解消し、クライアントの安全とジムのブランドを同時に守る方法。</p>
+
+    <div class="author-strip">
+      <div class="author-avatar">田</div>
+      <div>
+        <p class="author-name">田舞 弘徳</p>
+        <p class="author-role">ORIVEX. 代表</p>
+      </div>
+    </div>
+
+    <div class="post-divider"></div>
+
+    <div class="post-body">
+
+      <p class="lead">皆様、こんにちは。ORIVEX. 代表の田舞弘徳です。パーソナルトレーナーとしてクライアントにサプリメントを提案する際、「この成分を勧めて本当に大丈夫だろうか？」「現在飲んでいる薬と飲み合わせが悪くないだろうか？」と不安に感じたことはありませんか？ 今回は、パーソナルジムにおけるサプリメント指導のリスクと、テクノロジーを用いてクライアントの安全とジムのブランドを守る「リスク管理」の手法について解説します。</p>
+
+      <h2>誤ったサプリ指導が招く「致命的なリスク」</h2>
+
+      <p>サプリメントは食品に分類されるものの、摂取方法やクライアントの体質によっては健康被害を引き起こす可能性があります。経験則だけの指導は、今の「賢いクライアント」には通用せず、不信感を生む原因になっています。</p>
+
+      <div class="warning-banner">
+        <span class="warning-banner-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <p>誤った成分摂取の推奨は、ジムのブランドを破壊する致命的なリスク（<strong>健康被害・クレーム</strong>）を常に孕んでいます。「良かれと思って」の一言では済まされない事態になる前に、体制を整えることが重要です。</p>
+      </div>
+
+      <p>特に注意すべきなのは以下の3つのケースです。</p>
+
+      <div class="risk-grid">
+        <div class="risk-card">
+          <div class="risk-card-icon">💊</div>
+          <p class="risk-card-title">薬との相互作用</p>
+          <p class="risk-card-body">クライアントが服用している処方薬とサプリメント成分の組み合わせによる副作用。</p>
+        </div>
+        <div class="risk-card">
+          <div class="risk-card-icon">🫀</div>
+          <p class="risk-card-title">持病への悪影響</p>
+          <p class="risk-card-body">高血圧や腎機能障害など、特定の疾患を持つ方に推奨してはいけない成分の提案。</p>
+        </div>
+        <div class="risk-card">
+          <div class="risk-card-icon">⚠️</div>
+          <p class="risk-card-title">過剰摂取（オーバードーズ）</p>
+          <p class="risk-card-body">複数サプリの併用による特定成分（脂溶性ビタミンなど）の過剰摂取。</p>
+        </div>
+      </div>
+
+      <h2>提案の前に必ず走る「安全性チェック機能」</h2>
+
+      <p>こうした現場のリスクを排除するために、ORIVEX.のサプリメント診断ツール「SUPPLEMENT-ORACLE-」は、<strong>「提案する前に守る」</strong>という設計思想で作られています。診断を開始する前に必ず安全性スクリーニングを実行し、クライアントの体調に基づくチェックを行います。</p>
+
+      <div class="check-list">
+        <div class="check-item">
+          <div class="check-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <p class="check-title">自動除外と警告フラグ</p>
+            <p class="check-body">高血圧気味、不眠傾向、腎機能不安、甲状腺疾患、処方薬や低用量ピルの服用といったチェック項目に該当する成分は、診断結果から自動で除外・フラグ表示されます。</p>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><i class="fa-solid fa-calculator"></i></div>
+          <div>
+            <p class="check-title">過剰摂取を防ぐ計算ロジック</p>
+            <p class="check-body">体重や性別に応じた成分の上限値を自動計算し、重複摂取のリスクも検知して確認しやすくします。</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>常に進化する安全性ロジック</h2>
+
+      <p>医学データやサプリメントに関する知見は日々更新されていきます。そのため、一度ツールを作って終わりにするのではなく、継続的な改善が不可欠です。SUPPLEMENT-ORACLE-の安全性ロジックは常にアップデートされ続けています。</p>
+
+      <div class="version-timeline">
+        <div class="version-item">
+          <div class="version-dot"></div>
+          <p class="version-label">リリース時</p>
+          <p class="version-title">基本的な禁忌チェックから開始</p>
+          <p class="version-body">高血圧・服薬中など主要な禁忌項目に対応。</p>
+        </div>
+        <div class="version-item current">
+          <div class="version-dot"></div>
+          <p class="version-label">現在（v12）</p>
+          <p class="version-title">6カテゴリ対応の自動除外ロジックを搭載</p>
+          <p class="version-body">疾患・服薬・生活習慣・体質など幅広い条件をスクリーニング。松（Pro）プランではトレーナーが独自のブラックリストを設定可能。</p>
+        </div>
+        <div class="version-item">
+          <div class="version-dot" style="background:var(--border); box-shadow:none;"></div>
+          <p class="version-label">今後の予定</p>
+          <p class="version-title">アスリート対応など、安全性精度のさらなる向上</p>
+          <p class="version-body">競技者向けのドーピング成分チェックや、より細かな体質別ロジックを開発予定。</p>
+        </div>
+      </div>
+
+      <blockquote>
+        「安全です」と口で言うだけでなく、システムとしてどのような配慮をしているかが、クライアントからの真の信頼に繋がります。安全性を第一に考えた提案は、トレーナーとしての専門性を高め、ジムの価値をさらに引き上げます。
+      </blockquote>
+
+      <h2>まとめ：誠実な設計が、安心と信頼につながる</h2>
+
+      <p>クライアントの健康を守ることは、トレーナーとしての責務です。そして、その責務を果たすための仕組みを整えることが、ジム経営者としての誠実さでもあります。</p>
+
+      <div class="cta-block">
+        <span class="cta-tag">安全性チェック機能を無料体験</span>
+        <h3>「デジタル処方箋」の<br>安全性をご体感ください</h3>
+        <p>ORIVEX.では、安全性チェック機能を搭載したSUPPLEMENT-ORACLE-を、15種類限定で無料でお試しいただける「梅（Lite）プラン」をご用意しています。クライアントの健康とジムのブランドを守るための第一歩として、ぜひ一度お試しください。</p>
+        <a href="https://app.orivex.jp" target="_blank" rel="noopener">
+          無料で試してみる <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <p class="cta-note">クレジットカード不要・登録1分</p>
+      </div>
+
+    </div>
+
+    <!-- Post Footer -->
+    <div class="post-footer">
+      <div class="author-card">
+        <div class="author-card-avatar">田</div>
+        <div>
+          <p class="author-card-name">田舞 弘徳</p>
+          <p class="author-card-role">ORIVEX. 代表</p>
+          <p class="author-card-bio">「健康づくりは人づくりである」を理念に、パーソナルトレーナーの現場課題をテクノロジーで解決するプロダクトを開発・提供。Supplement Oracle、NutriMind など、現場で使えるツールをつくり続けています。</p>
+        </div>
+      </div>
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> ブログ一覧へ戻る
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ORIVEX<em>.</em></div>
+    <ul class="footer-links">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="index.html">ブログ</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+      <li><a href="http://policy.orivex.jp/" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>

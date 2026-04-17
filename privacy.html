@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>プライバシーポリシー | ORIVEX</title>
+    <meta name="description" content="ORIVEXのプライバシーポリシー（個人情報保護方針）について定めています。">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111827;
+            --accent-color: #10b981;
+            --accent-dark: #059669;
+            --gray-light: #f3f4f6;
+            --font-main: 'Noto Sans JP', sans-serif;
+            --font-eng: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--gray-light); /* 背景を少しグレーにして白枠を際立たせる */
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.8;
+            word-break: auto-phrase;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        /* --- Animations --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-family: var(--font-eng);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--text-color);
+        }
+
+        .logo span { color: var(--accent-color); }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav li a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* 戻るボタン用のスタイル */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--gray-light);
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+        /* --- Page Header --- */
+        .page-header {
+            padding: 150px 20px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, #fff 0%, #f9fafb 100%);
+        }
+
+        .section-tag {
+            font-family: var(--font-eng);
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* --- Privacy Content Box --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .privacy-box {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            color: #4b5563;
+        }
+
+        .privacy-box p {
+            margin-bottom: 15px;
+        }
+
+        .privacy-box h2 {
+            color: var(--text-color);
+            font-size: 1.4rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        .privacy-box h2:first-child {
+            margin-top: 0;
+        }
+
+        .privacy-box h3 {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .privacy-box ul, .privacy-box ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+
+        .privacy-box li {
+            margin-bottom: 8px;
+        }
+
+        .privacy-box .date-stamp {
+            margin-top: 60px;
+            text-align: right;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--text-color);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-eng);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-logo span { color: var(--accent-color); }
+        .copyright { font-size: 0.8rem; color: #9ca3af; }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            nav ul { display: none; } /* スマホではヘッダーのナビを隠す */
+            .page-title { font-size: 1.8rem; }
+            .privacy-box { padding: 30px 20px; }
+            .privacy-box h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ORIVEX<span>.</span></div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> トップページへ戻る</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header fade-in">
+        <span class="section-tag">PRIVACY POLICY</span>
+        <h1 class="page-title">プライバシーポリシー</h1>
+    </div>
+
+    <div class="container fade-in" style="transition-delay: 0.2s;">
+        <div class="privacy-box">
+            <p>ORIVEX（以下「当方」といいます。）は、パーソナルトレーナー向け指導支援ツールおよびオーダーメイドツール作成サービス（以下「本サービス」といいます。）の提供にあたり、ユーザー（本サービスをご利用になるパーソナルトレーナー等の事業者を指します。）およびそのクライアント（ユーザーの顧客を指します。）の個人情報の取扱いについて、個人情報の保護に関する法律（以下「個人情報保護法」といいます。）その他の関係法令を遵守するとともに、以下のとおりプライバシーポリシー（以下「本ポリシー」といいます。）を定め、その適切な保護と厳重な管理に努めます。</p>
+
+            <h2>第1条（取得する情報）</h2>
+            <p>当方は、本サービスの提供にあたり、以下の情報を取得します。</p>
+            
+            <h3>1. ユーザー（トレーナー）に関する情報</h3>
+            <ul>
+                <li>氏名</li>
+                <li>メールアドレス</li>
+                <li>決済情報（※実際のクレジットカード番号等の決済情報は、Stripe等の外部決済サービスにおいて安全に処理・保管され、当方システム内には保持されません。）</li>
+                <li>その他、本サービスの提供に必要な情報</li>
+            </ul>
+
+            <h3>2. クライアント（ユーザーの顧客）に関する情報</h3>
+            <p>ユーザーが本サービスを利用する過程で、以下のクライアント情報が当方のサーバーに送信・保管されます。</p>
+            <ul>
+                <li>性別、年齢</li>
+                <li>トレーニング目的</li>
+                <li>体格データ</li>
+                <li>ユーザーが本サービスを通じて入力または生成した診断結果および処方箋データ</li>
+            </ul>
+
+            <h2>第2条（個人情報の利用目的）</h2>
+            <p>当方は、取得した情報を以下の目的で利用いたします。なお、クライアント情報については、ユーザーからの委託に基づき、本サービスのシステム提供および以下の目的の範囲内でのみ厳格に取り扱います。</p>
+            <ol>
+                <li>本サービスの提供、維持、保護および改善のため</li>
+                <li>ユーザーの本人確認および各種認証のため</li>
+                <li>利用料金の請求および決済処理のため</li>
+                <li>ユーザーからのご案内、お問い合わせへの対応（カスタマーサポート）のため</li>
+                <li>本サービスにおける新機能の開発、およびエビデンスに基づくアルゴリズムの精度向上のため（※クライアント情報を用いてアルゴリズム改善を行う場合、個人を特定できない統計的なデータとして匿名化処理を行った上で利用いたします。）</li>
+                <li>本ポリシーまたは利用規約に違反する行為に対する対応のため</li>
+            </ol>
+
+            <h2>第3条（個人情報の安全管理措置・セキュリティ）</h2>
+            <p>当方は、お預かりした個人情報の漏えい、滅失または毀損の防止その他の安全管理のために、必要かつ適切な措置を講じます。</p>
+            <ul>
+                <li><strong>強固なインフラ基盤の採用:</strong> 本サービスのシステム管理基盤として、エンタープライズ級のセキュリティ基準を満たす Google Cloud Platform (Firebase) を採用しております。</li>
+                <li><strong>厳格なアクセス制御:</strong> Firestore Security Rules 等を活用し、データベースへのアクセス権限を厳重に制限・管理しております。これにより、第三者による不正アクセスや、ユーザー間でのデータの混同を物理的・論理的に防止し、最高水準のデータ保護を実現しています。</li>
+            </ul>
+
+            <h2>第4条（個人情報の第三者提供）</h2>
+            <p>当方は、個人情報保護法その他の法令により許容される場合を除き、ユーザーの同意を得ることなく、個人情報を第三者に提供いたしません。ただし、以下の場合はこの限りではありません。</p>
+            <ol>
+                <li>当方が利用目的の達成に必要な範囲内において、個人情報の取扱いの全部または一部を外部に委託する場合</li>
+                <li>合併その他の事由による事業の承継に伴って個人情報が提供される場合</li>
+                <li>国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合</li>
+            </ol>
+
+            <h2>第5条（情報収集モジュールおよびトラッキング技術の利用）</h2>
+            <p>当方は、本サービスの利用状況の分析や広告効果の測定を目的として、Meta Pixel等の情報収集モジュールおよびCookie（クッキー）等のトラッキング技術を利用する場合があります。これにより収集されるデータは匿名化されており、個人を特定するものではありません。</p>
+
+            <h2>第6条（免責事項：医療行為の非該当性について）</h2>
+            <ol>
+                <li>本サービスが提供するエビデンス（PubMed等）に基づく診断結果および処方箋データは、健康増進やトレーニング指導の支援を目的としたものであり、<strong>医師法に基づく医師の診断、治療、その他の医療行為に代わるものではありません。</strong></li>
+                <li>本サービスを通じて得られた判定結果およびデータのクライアントへの提供、ならびにそれに伴う指導等の利用については、<strong>ユーザー自身の専門的判断と自己責任において行われるものとします。</strong> 当方は、本サービスの利用に起因してユーザーまたはクライアントに生じた健康上の問題、トラブル、損害について、一切の責任を負いかねます。</li>
+            </ol>
+
+            <h2>第7条（個人情報の開示・訂正・利用停止等）</h2>
+            <p>当方は、ユーザーから、個人情報保護法の定めに基づき個人情報の開示、訂正、追加、削除、利用停止または消去を求められたときは、ユーザーご本人からのご請求であることを確認の上で、遅滞なく必要な調査を行い、その結果に基づき適切な対応を行います。</p>
+
+            <h2>第8条（プライバシーポリシーの変更）</h2>
+            <p>当方は、必要に応じて本ポリシーを変更することがあります。変更した場合には、本サービス内または当方が別途定める方法によりユーザーに通知いたします。</p>
+
+            <h2>第9条（お問い合わせ窓口）</h2>
+            <p>ご意見、ご質問、苦情のお申出、その他個人情報の取扱いに関するお問い合わせは、下記の窓口までお願いいたします。</p>
+            
+            <div style="background: var(--gray-light); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                <p style="margin-bottom: 5px;"><strong>屋号：</strong>ORIVEX（オリベックス）</p>
+                <p style="margin-bottom: 5px;"><strong>代表：</strong>田舞 弘徳</p>
+                <p style="margin-bottom: 5px;"><strong>所在地：</strong>京都府京都市北区紫竹下本町27ミノアール305</p>
+                <p style="margin-bottom: 0;"><strong>連絡先メールアドレス：</strong>muscleprime17@gmail.com</p>
+            </div>
+
+            <div class="date-stamp">
+                制定日：2026年3月6日
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">ORIVEX<span>.</span></div>
+        <div style="margin: 20px 0; font-size: 0.9rem; line-height: 1.8; color: #d1d5db;">
+            <p>所在地：京都府京都市北区紫竹下本町27ミノアール305</p>
+            <p>代表：田舞弘徳</p>
+            <p>電話番号：070-9111-6002</p>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <a href="index.html" style="font-size: 0.85rem; color: #9ca3af; text-decoration: underline;">トップページへ戻る</a>
+        </div>
+        <div class="copyright">&copy; 2026 ORIVEX. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

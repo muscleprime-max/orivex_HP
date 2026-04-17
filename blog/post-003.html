@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パーソナルジムの属人化を防ぐ！新人トレーナーが初日からベテラン級のサプリ指導をする方法 | ORIVEX. ブログ</title>
+  <meta name="description" content="スタッフによる指導品質のバラつきを解消。SUPPLEMENT-ORACLE-でパーソナルジムの属人化を防ぎ、新人トレーナーでも初日からエビデンス基づくサプリ指導が可能になる方法を解説。">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:    #10b981;
+      --green-dk: #059669;
+      --green-lt: #d1fae5;
+      --bg:       #ffffff;
+      --bg-warm:  #f9fafb;
+      --bg-dark:  #0f1117;
+      --ink:      #111827;
+      --ink-mid:  #374151;
+      --ink-light:#6b7280;
+      --border:   #e5e7eb;
+      --radius:   10px;
+      --font-sans:'Noto Sans JP', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --max:      1080px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== HEADER ===== */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; transition: box-shadow .2s;
+    }
+    #site-header.scrolled { box-shadow: var(--shadow-sm); }
+    .header-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: .04em; }
+    .header-logo em { font-style: normal; color: var(--green); }
+    .header-nav ul { display: flex; gap: 24px; list-style: none; }
+    .header-nav a { font-size: .83rem; font-weight: 500; color: var(--ink-light); transition: color .2s; }
+    .header-nav a:hover { color: var(--ink); }
+    .header-nav a.active { color: var(--green); font-weight: 700; }
+    .header-cta { font-size: .82rem; font-weight: 700; color: #fff; background: var(--green); padding: 8px 18px; border-radius: 8px; transition: background .2s; }
+    .header-cta:hover { background: var(--green-dk); }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb { margin-top: 64px; padding: 14px 0; background: var(--bg-warm); border-bottom: 1px solid var(--border); }
+    .breadcrumb-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: .78rem; color: var(--ink-light);
+    }
+    .breadcrumb-inner a { color: var(--ink-light); transition: color .2s; }
+    .breadcrumb-inner a:hover { color: var(--green); }
+    .breadcrumb-inner i { font-size: .6rem; }
+
+    /* ===== LAYOUT ===== */
+    .article-wrap { max-width: 780px; margin: 0 auto; padding: 64px 32px 100px; }
+
+    /* ===== POST HEADER ===== */
+    .post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .post-category { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--green-dk); background: var(--green-lt); padding: 4px 12px; border-radius: 100px; }
+    .post-date { font-size: .78rem; color: var(--ink-light); font-family: var(--font-mono); }
+    .post-readtime { font-size: .78rem; color: var(--ink-light); display: flex; align-items: center; gap: 5px; }
+    .post-title { font-size: clamp(1.4rem, 3.5vw, 1.95rem); font-weight: 700; line-height: 1.5; color: var(--ink); margin-bottom: 16px; letter-spacing: -.01em; }
+    .post-subtitle { font-size: .93rem; color: var(--ink-light); line-height: 1.9; border-left: 3px solid var(--green); padding-left: 16px; margin-bottom: 36px; }
+    .post-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 44px; }
+    .author-strip { display: flex; align-items: center; gap: 14px; margin-bottom: 44px; }
+    .author-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--green-lt); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; color: var(--green-dk); flex-shrink: 0; }
+    .author-name { font-size: .88rem; font-weight: 700; }
+    .author-role { font-size: .75rem; color: var(--ink-light); }
+
+    /* ===== BODY ===== */
+    .post-body { font-size: .95rem; line-height: 2; color: var(--ink-mid); }
+    .post-body p { margin-bottom: 1.5em; }
+    .post-body h2 {
+      font-size: 1.18rem; font-weight: 700; color: var(--ink);
+      margin: 2.8em 0 .9em; padding: 14px 18px;
+      background: var(--bg-warm); border-left: 4px solid var(--green);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .post-body .lead {
+      font-size: 1rem; line-height: 2;
+      background: var(--bg-warm); border-radius: var(--radius);
+      padding: 24px 28px; margin-bottom: 2em;
+    }
+
+    /* リスクリスト */
+    .risk-list { display: flex; flex-direction: column; gap: 14px; margin: 1.8em 0; }
+    .risk-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px;
+    }
+    .risk-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #fef2f2; color: #dc2626;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .82rem; flex-shrink: 0;
+    }
+    .risk-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .risk-body { font-size: .83rem; color: var(--ink-light); line-height: 1.85; }
+
+    /* 機能カード */
+    .feature-cards { display: flex; flex-direction: column; gap: 20px; margin: 2em 0; }
+    .feature-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .feature-card:hover { box-shadow: 0 8px 24px rgba(16,185,129,.10); border-color: var(--green); }
+    .feature-card-head {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 24px; border-bottom: 1px solid var(--border);
+      background: var(--bg-warm);
+    }
+    .feature-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--green); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .76rem; font-weight: 700; flex-shrink: 0;
+    }
+    .feature-title { font-size: .97rem; font-weight: 700; color: var(--ink); }
+    .feature-body { padding: 18px 24px; font-size: .87rem; color: var(--ink-light); line-height: 1.9; }
+
+    /* CTA */
+    .cta-block {
+      background: var(--bg-dark); border-radius: var(--radius);
+      padding: 40px 36px; text-align: center; margin: 2.5em 0;
+    }
+    .cta-block .cta-tag { font-size: .7rem; font-weight: 700; letter-spacing: .14em; color: var(--green); background: rgba(16,185,129,.15); padding: 4px 14px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
+    .cta-block h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.5; }
+    .cta-block p { font-size: .86rem; color: rgba(255,255,255,.6); line-height: 1.9; margin-bottom: 24px; max-width: 440px; margin-left: auto; margin-right: auto; }
+    .cta-block a { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: #fff; font-size: .9rem; font-weight: 700; padding: 14px 32px; border-radius: 8px; transition: background .2s, transform .2s; }
+    .cta-block a:hover { background: var(--green-dk); transform: translateY(-1px); }
+    .cta-block .cta-note { font-size: .74rem; color: rgba(255,255,255,.35); margin-top: 12px; margin-bottom: 0; }
+
+    /* ===== POST FOOTER ===== */
+    .post-footer { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .author-card { background: var(--bg-warm); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; display: flex; gap: 20px; align-items: flex-start; margin-bottom: 40px; }
+    .author-card-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--green-lt); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; color: var(--green-dk); flex-shrink: 0; }
+    .author-card-name { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .author-card-role { font-size: .78rem; color: var(--green-dk); font-weight: 600; margin-bottom: 10px; }
+    .author-card-bio { font-size: .84rem; color: var(--ink-light); line-height: 1.85; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-size: .86rem; font-weight: 700; color: var(--green); border: 1.5px solid var(--green); padding: 10px 22px; border-radius: 8px; transition: background .2s, color .2s; }
+    .back-btn:hover { background: var(--green); color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--bg-dark); color: rgba(255,255,255,.65); padding: 48px 0 32px; font-size: .82rem; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+    .footer-logo em { font-style: normal; color: var(--green); }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.9); }
+    .footer-copy { font-size: .74rem; color: rgba(255,255,255,.3); width: 100%; text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      #site-header { padding: 0 18px; }
+      .header-nav { display: none; }
+      .header-cta { display: none; }
+      .breadcrumb-inner { padding: 0 18px; }
+      .article-wrap { padding: 48px 18px 72px; }
+      .post-body h2 { font-size: 1rem; padding: 12px 14px; }
+      .feature-card-head { padding: 14px 18px; }
+      .feature-body { padding: 14px 18px; }
+      .cta-block { padding: 28px 20px; }
+      .author-card { flex-direction: column; gap: 14px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="site-header">
+  <a href="../index.html" class="header-logo">ORIVEX<em>.</em></a>
+  <nav class="header-nav">
+    <ul>
+      <li><a href="../index.html#about">ORIVEX.について</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="index.html" class="active">ブログ</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <a href="https://app.orivex.jp" target="_blank" rel="noopener" class="header-cta">無料で試す</a>
+</header>
+
+<!-- ===== BREADCRUMB ===== -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">ホーム</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <a href="index.html">ブログ</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>属人化を防ぐサプリ指導</span>
+  </div>
+</div>
+
+<!-- ===== ARTICLE ===== -->
+<main>
+  <article class="article-wrap">
+
+    <div class="post-meta">
+      <span class="post-category">ジム経営</span>
+      <span class="post-date">2026.04.15</span>
+      <span class="post-readtime"><i class="fa-regular fa-clock"></i> 約5分</span>
+    </div>
+
+    <h1 class="post-title">パーソナルジムの属人化を防ぐ！<br>新人トレーナーが初日からベテラン級のサプリ指導をする方法</h1>
+
+    <p class="post-subtitle">スタッフの知識差に左右されない「サービスの標準化」を、テクノロジーで実現する方法を解説します。</p>
+
+    <div class="author-strip">
+      <div class="author-avatar">田</div>
+      <div>
+        <p class="author-name">田舞 弘徳</p>
+        <p class="author-role">ORIVEX. 代表</p>
+      </div>
+    </div>
+
+    <div class="post-divider"></div>
+
+    <div class="post-body">
+
+      <p class="lead">皆様、こんにちは。ORIVEX. 代表の田舞弘徳です。多店舗展開やスタッフ雇用を進めるパーソナルジム経営者の皆様、「スタッフによって指導レベルにバラつきがある」と悩んでいませんか？ 専門知識の差によって提案品質が左右される現状は、多くのジムが抱える課題です。今回は、テクノロジーを活用して属人化を防ぎ、新人トレーナーでも導入初日からベテラン級のサプリ指導が可能になる「サービスの標準化」について解説します。</p>
+
+      <h2>ジム経営における「属人化」のリスク</h2>
+
+      <p>サプリメントや栄養指導において、個人のスキルに依存しすぎる状態には以下のリスクがあります。</p>
+
+      <div class="risk-list">
+        <div class="risk-item">
+          <div class="risk-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div>
+            <p class="risk-title">品質のバラつき</p>
+            <p class="risk-body">スタッフの知識量によって、クライアントへのアドバイス内容が変わってしまう。同じジムなのに担当者によって提案が異なれば、ブランドへの信頼は損なわれます。</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-icon"><i class="fa-solid fa-clock"></i></div>
+          <div>
+            <p class="risk-title">教育コストの増大</p>
+            <p class="risk-body">栄養学やサプリメントの深い知識を新人に教え込むには、膨大な時間と労力がかかります。採用のたびに発生する教育コストは、ジム経営の大きな負担です。</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div>
+            <p class="risk-title">信頼失墜の危険性</p>
+            <p class="risk-body">経験則だけの「なんとなく指導」や誤った成分摂取の推奨は、ジムのブランドを破壊する致命的なリスク（健康被害・クレーム）を常に孕んでいます。</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>「SUPPLEMENT-ORACLE-」が実現する指導の標準化</h2>
+
+      <p>ORIVEX.は、サプリ提案にとどまらず、減量管理やトレーニングメニュー作成支援など、現場の声をもとにした現場の「不」を解消するツールを順次開発していくブランドです。その主力プロダクトである「SUPPLEMENT-ORACLE-」は、ジムの指導品質を均一化する強力な武器になります。</p>
+
+      <div class="feature-cards">
+
+        <div class="feature-card">
+          <div class="feature-card-head">
+            <div class="feature-num">1</div>
+            <p class="feature-title">導入初日から「即戦力」に</p>
+          </div>
+          <p class="feature-body">性別・体重・トレーニング歴・目的を入力するだけで、約1分で処方箋のようなレポートが作成されます。特別な知識がなくてもフォームに沿って入力するだけなので、ITが苦手なスタッフや経験の浅いトレーナーでもすぐに運用できます。</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-head">
+            <div class="feature-num">2</div>
+            <p class="feature-title">エビデンスに基づく「圧倒的な信頼感」</p>
+          </div>
+          <p class="feature-body">提案内容はPubMedなどの学術文献に基づいており、根拠のない誇張表現は避けています。スタッフの個人的な感覚ではなく、最新の論文データに基づき自動計算された用量を提案できるため、誰が対応しても説得力のある説明が可能になります。</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-head">
+            <div class="feature-num">3</div>
+            <p class="feature-title">自動の安全性チェックでリスク管理</p>
+          </div>
+          <p class="feature-body">病気の有無や服用中のサプリを入力すると、禁忌の可能性がある成分を自動でフラグ表示します。高血圧や腎機能不安などのリスク項目をシステム側でスクリーニングするため、スタッフの知識不足による事故を防ぎます。</p>
+        </div>
+
+      </div>
+
+      <h2>まとめ：テクノロジーで組織全体の底上げを</h2>
+
+      <p>個人のスキルに依存する経営から、システムによって品質が担保される経営へ。サービスの標準化は、組織全体の底上げと経営の安定化に直結します。</p>
+
+      <div class="cta-block">
+        <span class="cta-tag">無料で体験できます</span>
+        <h3>まずは「梅プラン」で<br>標準化の第一歩を体験</h3>
+        <p>ORIVEX.では、15種類限定のサプリ提案を無料でお試しいただける「梅（Lite）プラン」をご提供しています。現場の教育コスト削減と標準化の第一歩として、ぜひお試しください。</p>
+        <a href="https://app.orivex.jp" target="_blank" rel="noopener">
+          無料で試してみる <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <p class="cta-note">クレジットカード不要・登録1分</p>
+      </div>
+
+    </div>
+
+    <!-- Post Footer -->
+    <div class="post-footer">
+      <div class="author-card">
+        <div class="author-card-avatar">田</div>
+        <div>
+          <p class="author-card-name">田舞 弘徳</p>
+          <p class="author-card-role">ORIVEX. 代表</p>
+          <p class="author-card-bio">「健康づくりは人づくりである」を理念に、パーソナルトレーナーの現場課題をテクノロジーで解決するプロダクトを開発・提供。Supplement Oracle、NutriMind など、現場で使えるツールをつくり続けています。</p>
+        </div>
+      </div>
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> ブログ一覧へ戻る
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ORIVEX<em>.</em></div>
+    <ul class="footer-links">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="index.html">ブログ</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+      <li><a href="http://policy.orivex.jp/" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>
