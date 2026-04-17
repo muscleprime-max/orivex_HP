@@ -512,30 +512,43 @@
     .feature-item span { font-size: .9rem; color: var(--ink-mid); line-height: 1.7; }
     .feature-item strong { color: var(--ink); }
 
-    /* Screen mockup */
-    .screen-mockup {
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 20px 56px rgba(0,0,0,.16);
-      background: var(--ink);
+    /* Screen mockup – smartphone */
+    .screen-mockup-wrap {
+      display: flex;
+      justify-content: center;
     }
-    .screen-topbar { background: #1a1e2e; padding: 11px 14px; display: flex; align-items: center; gap: 7px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot-r { background: #ff5f57; }
-    .dot-y { background: #ffbd2e; }
-    .dot-g { background: #28c840; }
-    .screen-url {
-      background: rgba(255,255,255,.07);
-      border-radius: 5px;
-      padding: 3px 10px;
-      font-family: var(--font-mono);
-      font-size: .68rem;
-      color: rgba(255,255,255,.4);
-      margin-left: 6px;
-      flex: 1;
+    .screen-mockup {
+      width: 240px;
+      flex-shrink: 0;
+      background: #1a1a2e;
+      border-radius: 38px;
+      padding: 14px 10px;
+      box-shadow: 0 0 0 2px #333, 0 0 0 4px #111, 0 28px 64px rgba(0,0,0,.35);
+    }
+    .screen-mockup::before {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      margin: 0 auto 10px;
+    }
+    .screen-mockup::after {
+      content: '';
+      display: block;
+      width: 44px;
+      height: 5px;
+      background: #333;
+      border-radius: 3px;
+      margin: 10px auto 0;
+    }
+    .screen-body {
+      border-radius: 22px;
+      overflow: hidden;
     }
     .screen-body img { width: 100%; display: block; }
-    .screen-note { margin-top: 10px; font-size: .76rem; color: var(--ink-light); text-align: center; }
+    .screen-note { margin-top: 12px; font-size: .76rem; color: var(--ink-light); text-align: center; }
     .screen-note a { color: var(--green-dk); text-decoration: underline; }
 
     /* ORIVEX LAB card */
@@ -1462,15 +1475,11 @@
 
         </div>
         <div>
-          <div class="screen-mockup">
-            <div class="screen-topbar">
-              <div class="dot dot-r"></div>
-              <div class="dot dot-y"></div>
-              <div class="dot dot-g"></div>
-              <div class="screen-url">supplement-oracle.app</div>
-            </div>
-            <div class="screen-body">
-                            <img src="images/診断画面.jpg" alt="Supplement Oracle 診断画面" style="width:100%;display:block;">
+          <div class="screen-mockup-wrap">
+            <div class="screen-mockup">
+              <div class="screen-body">
+                <img src="images/診断画面.jpg" alt="Supplement Oracle 診断画面">
+              </div>
             </div>
           </div>
           <p class="screen-note">
