@@ -756,6 +756,139 @@
       font-family: var(--font-sans); cursor: pointer;
     }
 
+    /* RESOURCE REQUEST MODAL */
+    #resource-modal {
+      display: none;
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .resource-modal-wrap {
+      max-width: 540px; width: 100%;
+      background: #fff; border-radius: 16px;
+      overflow: hidden; position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,.25);
+      max-height: 90vh; overflow-y: auto;
+    }
+    .resource-modal-head {
+      background: var(--bg-dark);
+      padding: 28px 32px 24px; position: relative;
+      position: sticky; top: 0; z-index: 2;
+    }
+    .resource-modal-head::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .resource-modal-head-inner { position: relative; z-index: 1; }
+    .resource-modal-kicker {
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+      color: var(--green); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .resource-modal-head h3 { font-size: 1.15rem; font-weight: 700; color: #fff; line-height: 1.4; }
+    .resource-modal-head p { font-size: .8rem; color: rgba(255,255,255,.5); margin-top: 6px; }
+    .resource-modal-close {
+      position: absolute; top: 14px; right: 14px; z-index: 2;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,.12); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.7); font-size: .95rem; transition: background .2s;
+    }
+    .resource-modal-close:hover { background: rgba(255,255,255,.22); }
+    .resource-modal-preview {
+      margin: 0 32px; margin-top: 24px;
+      background: linear-gradient(135deg, var(--green-lt) 0%, #f0fdf7 100%);
+      border: 1px solid rgba(16,185,129,.2);
+      border-radius: 12px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .resource-modal-preview-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--green); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .resource-modal-preview-text { flex: 1; }
+    .resource-modal-preview-text strong { font-size: .88rem; font-weight: 700; color: var(--ink); display: block; margin-bottom: 2px; }
+    .resource-modal-preview-text span { font-size: .75rem; color: var(--ink-light); }
+    .resource-modal-body { padding: 24px 32px 32px; }
+    .resource-form-group { margin-bottom: 16px; }
+    .resource-form-group label {
+      display: block; font-size: .79rem; font-weight: 700;
+      color: var(--ink-mid); margin-bottom: 7px; letter-spacing: .04em;
+    }
+    .resource-form-group label span { color: var(--green); margin-left: 3px; }
+    .resource-form-group input,
+    .resource-form-group select {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-family: var(--font-sans); font-size: .9rem; color: var(--ink);
+      background: var(--bg-warm); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .resource-form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .resource-form-group input:focus,
+    .resource-form-group select:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(16,185,129,.12);
+      background: #fff;
+    }
+    .resource-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .resource-submit-btn {
+      width: 100%; padding: 14px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: var(--font-sans); font-size: .95rem; font-weight: 700;
+      cursor: pointer; transition: background .2s, transform .1s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 4px;
+    }
+    .resource-submit-btn:hover { background: var(--green-dk); }
+    .resource-submit-btn:active { transform: scale(.98); }
+    .resource-submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .resource-form-note { font-size: .72rem; color: var(--ink-light); margin-top: 12px; text-align: center; line-height: 1.7; }
+    .resource-error-msg {
+      display: none; margin-top: 12px;
+      padding: 10px 14px; background: #fef2f2;
+      border: 1px solid #fca5a5; border-radius: 8px;
+      font-size: .8rem; color: #dc2626;
+    }
+    .resource-success {
+      display: none; text-align: center; padding: 44px 32px 36px;
+    }
+    .resource-success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--green-lt); color: var(--green);
+      font-size: 1.6rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .resource-success h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .resource-success p { font-size: .87rem; color: var(--ink-mid); line-height: 1.85; margin-bottom: 20px; }
+    .resource-dl-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; background: var(--green); color: #fff;
+      border: none; border-radius: 10px; font-family: var(--font-sans);
+      font-size: .95rem; font-weight: 700; cursor: pointer; text-decoration: none;
+      transition: background .2s;
+    }
+    .resource-dl-btn:hover { background: var(--green-dk); }
+    @media (max-width: 600px) {
+      .resource-form-row { grid-template-columns: 1fr; }
+      .resource-modal-body { padding: 20px 20px 28px; }
+      .resource-modal-preview { margin: 0 20px; margin-top: 20px; }
+    }
+
     /* REASON */
     .reason-grid {
       display: grid;
@@ -1470,6 +1603,9 @@
             <a href="https://muscleprime-max.github.io/SUPPLEMENT-ORACLE-/" target="_blank" class="btn btn--dark">
               <i class="fa-regular fa-circle-play"></i> デモを確認する
             </a>
+            <button onclick="openResourceModal()" class="btn btn--green" style="font-family:var(--font-sans);cursor:pointer;border:none;">
+              <i class="fa-solid fa-file-arrow-down"></i> 資料請求する
+            </button>
             <a href="#contact" class="btn btn--outline">導入について相談する</a>
           </div>
 
@@ -2404,6 +2540,59 @@
     });
   }
 
+  // Resource request modal
+  function openResourceModal() {
+    document.getElementById('resource-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeResourceModal() {
+    document.getElementById('resource-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('resource-contact-form').reset();
+    document.getElementById('resource-form-wrap').style.display = 'block';
+    document.getElementById('resource-success').style.display = 'none';
+    document.getElementById('resource-error-msg').style.display = 'none';
+    const btn = document.getElementById('resource-submit-btn');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-file-arrow-down"></i> 資料をダウンロードする';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const resourceForm = document.getElementById('resource-contact-form');
+    if (resourceForm) {
+      resourceForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('resource-submit-btn');
+        const errorMsg = document.getElementById('resource-error-msg');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 送信中...';
+        errorMsg.style.display = 'none';
+        const formData = new FormData(this);
+        try {
+          const res = await fetch('https://formspree.io/f/xojyvgvr', {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            // Show success screen
+            document.getElementById('resource-form-wrap').style.display = 'none';
+            document.getElementById('resource-success').style.display = 'block';
+            // Auto-trigger download
+            const link = document.getElementById('resource-dl-link');
+            link.click();
+          } else {
+            throw new Error();
+          }
+        } catch {
+          errorMsg.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-file-arrow-down"></i> 資料をダウンロードする';
+        }
+      });
+    }
+  });
+
   // Mail modal
   function openMailModal() {
     document.getElementById('mail-modal').style.display = 'flex';
@@ -2453,6 +2642,84 @@
     }
   });
 </script>
+
+<!-- RESOURCE REQUEST MODAL -->
+<div id="resource-modal" onclick="if(event.target===this)closeResourceModal()">
+  <div class="resource-modal-wrap">
+    <div class="resource-modal-head">
+      <div class="resource-modal-head-inner">
+        <div class="resource-modal-kicker">FREE DOWNLOAD</div>
+        <h3>Supplement Oracle サービス資料</h3>
+        <p>フォームにご入力いただくと、資料をダウンロードできます</p>
+      </div>
+      <button class="resource-modal-close" onclick="closeResourceModal()" aria-label="閉じる">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="resource-modal-preview">
+      <div class="resource-modal-preview-icon"><i class="fa-solid fa-file-pdf"></i></div>
+      <div class="resource-modal-preview-text">
+        <strong>サービス紹介資料（PDF）</strong>
+        <span>機能詳細・導入事例・料金プラン収録</span>
+      </div>
+    </div>
+
+    <div id="resource-form-wrap">
+      <div class="resource-modal-body">
+        <form id="resource-contact-form">
+          <input type="hidden" name="_subject" value="【資料請求】Supplement Oracle サービス資料ダウンロード">
+          <input type="hidden" name="form_type" value="資料請求">
+          <div class="resource-form-row">
+            <div class="resource-form-group">
+              <label>お名前<span>*</span></label>
+              <input type="text" name="name" placeholder="田舞 弘徳" required>
+            </div>
+            <div class="resource-form-group">
+              <label>メールアドレス<span>*</span></label>
+              <input type="email" name="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="resource-form-row">
+            <div class="resource-form-group">
+              <label>ジム名<span>*</span></label>
+              <input type="text" name="gym_name" placeholder="〇〇パーソナルジム" required>
+            </div>
+            <div class="resource-form-group">
+              <label>ジムの規模<span>*</span></label>
+              <select name="gym_size" required>
+                <option value="" disabled selected>選択してください</option>
+                <option value="1〜3名（個人・一人経営）">1〜3名（個人・一人経営）</option>
+                <option value="4〜10名（小規模）">4〜10名（小規模）</option>
+                <option value="11〜30名（中規模）">11〜30名（中規模）</option>
+                <option value="31名以上（大規模）">31名以上（大規模）</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="resource-submit-btn" id="resource-submit-btn">
+            <i class="fa-solid fa-file-arrow-down"></i> 資料をダウンロードする
+          </button>
+          <div class="resource-error-msg" id="resource-error-msg">送信に失敗しました。しばらく経ってから再度お試しください。</div>
+          <p class="resource-form-note">
+            ご入力いただいた情報はサービスご案内のみに使用します。<br>
+            第三者への提供は行いません。
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <div class="resource-success" id="resource-success">
+      <div class="resource-success-icon"><i class="fa-solid fa-check"></i></div>
+      <h4>ありがとうございます！</h4>
+      <p>資料のダウンロードが始まります。<br>ダウンロードが始まらない場合は下のボタンをクリックしてください。</p>
+      <a href="assets/supplement-oracle-guide.pdf" download="Supplement_Oracle_サービス紹介.pdf" class="resource-dl-btn" id="resource-dl-link">
+        <i class="fa-solid fa-file-arrow-down"></i> 資料をダウンロードする
+      </a>
+      <br>
+      <button onclick="closeResourceModal()" style="margin-top:16px;background:none;border:none;color:var(--ink-light);font-size:.82rem;cursor:pointer;text-decoration:underline;">閉じる</button>
+    </div>
+  </div>
+</div>
 
 <!-- MAIL FORM MODAL -->
 <div id="mail-modal" onclick="if(event.target===this)closeMailModal()">
