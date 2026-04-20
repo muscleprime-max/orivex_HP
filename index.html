@@ -889,6 +889,122 @@
       .resource-modal-preview { margin: 0 20px; margin-top: 20px; }
     }
 
+    /* RESOURCE CTA BANNER */
+    .resource-cta-banner {
+      background: var(--bg-dark);
+      padding: 72px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .resource-cta-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .resource-cta-banner::after {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(16,185,129,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .resource-cta-inner {
+      position: relative; z-index: 1;
+      max-width: 640px; margin: 0 auto;
+    }
+    .resource-cta-free-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+      color: var(--green); background: rgba(16,185,129,.15);
+      border: 1px solid rgba(16,185,129,.3);
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+    }
+    .resource-cta-banner h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      font-weight: 700; color: #fff; line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .resource-cta-banner h2 em { font-style: normal; color: var(--green); }
+    .resource-cta-banner p {
+      font-size: .9rem; color: rgba(255,255,255,.5);
+      line-height: 1.85; margin-bottom: 36px;
+    }
+    .resource-cta-btn-wrap { position: relative; display: inline-block; }
+    .resource-cta-btn-wrap::before {
+      content: '';
+      position: absolute; inset: -6px; border-radius: 16px;
+      background: var(--green);
+      opacity: .25;
+      animation: cta-pulse 2.2s ease-out infinite;
+    }
+    @keyframes cta-pulse {
+      0%   { transform: scale(1);   opacity: .28; }
+      70%  { transform: scale(1.12); opacity: 0; }
+      100% { transform: scale(1.12); opacity: 0; }
+    }
+    .resource-cta-main-btn {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 18px 40px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; border: none; border-radius: 12px;
+      font-family: var(--font-sans); font-size: 1.05rem; font-weight: 700;
+      cursor: pointer; transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 8px 32px rgba(16,185,129,.4);
+      text-decoration: none;
+    }
+    .resource-cta-main-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(16,185,129,.5);
+    }
+    .resource-cta-main-btn:active { transform: translateY(0); }
+    .free-pill {
+      display: inline-block;
+      font-size: .6rem; font-weight: 700; letter-spacing: .1em;
+      background: rgba(255,255,255,.22); color: #fff;
+      padding: 2px 8px; border-radius: 100px;
+      text-transform: uppercase; vertical-align: middle;
+      margin-left: 4px;
+    }
+    .resource-cta-meta {
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      margin-top: 20px; flex-wrap: wrap;
+    }
+    .resource-cta-meta span {
+      font-size: .78rem; color: rgba(255,255,255,.4);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .resource-cta-meta i { color: var(--green); }
+
+    /* Product section CTA button enhancement */
+    .btn-resource {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; border: none; border-radius: 10px;
+      font-family: var(--font-sans); font-size: .93rem; font-weight: 700;
+      cursor: pointer; transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 4px 18px rgba(16,185,129,.35);
+      position: relative; overflow: visible;
+      text-decoration: none;
+    }
+    .btn-resource:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(16,185,129,.45); }
+    .btn-resource .free-badge {
+      position: absolute; top: -9px; right: -9px;
+      background: #f59e0b; color: #fff;
+      font-size: .58rem; font-weight: 700; letter-spacing: .08em;
+      padding: 2px 7px; border-radius: 100px;
+      text-transform: uppercase; white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+    }
+
     /* REASON */
     .reason-grid {
       display: grid;
@@ -1603,7 +1719,8 @@
             <a href="https://muscleprime-max.github.io/SUPPLEMENT-ORACLE-/" target="_blank" class="btn btn--dark">
               <i class="fa-regular fa-circle-play"></i> デモを確認する
             </a>
-            <button onclick="openResourceModal()" class="btn btn--green" style="font-family:var(--font-sans);cursor:pointer;border:none;">
+            <button onclick="openResourceModal()" class="btn-resource">
+              <span class="free-badge">無料</span>
               <i class="fa-solid fa-file-arrow-down"></i> 資料請求する
             </button>
             <a href="#contact" class="btn btn--outline">導入について相談する</a>
@@ -1755,6 +1872,30 @@
     </div>
   </div>
 </section>
+
+
+<!-- RESOURCE CTA BANNER -->
+<div class="resource-cta-banner reveal">
+  <div class="resource-cta-inner">
+    <div class="resource-cta-free-tag">
+      <i class="fa-solid fa-gift"></i> 完全無料 · 登録不要
+    </div>
+    <h2>Supplement Oracle の<em>サービス資料</em>を<br>無料でダウンロード</h2>
+    <p>機能詳細・導入事例・料金プランをまとめた資料を<br>必要事項の入力だけでそのまま入手できます。</p>
+    <div class="resource-cta-btn-wrap">
+      <button onclick="openResourceModal()" class="resource-cta-main-btn">
+        <i class="fa-solid fa-file-arrow-down"></i>
+        無料で資料をダウンロードする
+        <span class="free-pill">FREE</span>
+      </button>
+    </div>
+    <div class="resource-cta-meta">
+      <span><i class="fa-solid fa-lock"></i> 個人情報は厳重に管理</span>
+      <span><i class="fa-solid fa-clock"></i> 入力30秒・即ダウンロード</span>
+      <span><i class="fa-solid fa-file-pdf"></i> PDF形式</span>
+    </div>
+  </div>
+</div>
 
 
 <section class="section section--alt" id="faq">
@@ -2567,6 +2708,9 @@
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 送信中...';
         errorMsg.style.display = 'none';
+        // _replyto に入力メールアドレスをセット
+        const emailVal = this.querySelector('[name="email"]').value;
+        document.getElementById('resource-replyto-field').value = emailVal;
         const formData = new FormData(this);
         try {
           const res = await fetch('https://formspree.io/f/xojyvgvr', {
@@ -2670,6 +2814,7 @@
         <form id="resource-contact-form">
           <input type="hidden" name="_subject" value="【資料請求】Supplement Oracle サービス資料ダウンロード">
           <input type="hidden" name="form_type" value="資料請求">
+          <input type="hidden" name="_replyto" id="resource-replyto-field" value="">
           <div class="resource-form-row">
             <div class="resource-form-group">
               <label>お名前<span>*</span></label>
