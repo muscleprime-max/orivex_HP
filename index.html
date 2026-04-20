@@ -756,6 +756,121 @@
       font-family: var(--font-sans); cursor: pointer;
     }
 
+    /* ===== RESOURCE POPUP ===== */
+    #resource-popup {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 200;
+      width: 310px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.08);
+      overflow: hidden;
+      transform: translateY(24px) scale(.96);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .38s cubic-bezier(.34,1.56,.64,1), opacity .3s ease;
+    }
+    #resource-popup.popup-show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #resource-popup.popup-hide {
+      transform: translateY(16px) scale(.95);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .popup-head {
+      background: var(--bg-dark);
+      padding: 18px 20px 16px;
+      position: relative;
+    }
+    .popup-head::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .popup-head-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px; }
+    .popup-icon {
+      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #10b981, #059669);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: #fff;
+      box-shadow: 0 4px 14px rgba(16,185,129,.4);
+    }
+    .popup-head-text { flex: 1; }
+    .popup-tag {
+      font-size: .62rem; font-weight: 700; letter-spacing: .12em;
+      color: var(--green); text-transform: uppercase; margin-bottom: 3px;
+    }
+    .popup-head-text strong { font-size: .88rem; font-weight: 700; color: #fff; line-height: 1.4; display: block; }
+    .popup-close-btn {
+      position: absolute; top: 10px; right: 10px; z-index: 2;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(255,255,255,.1); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.6); font-size: .75rem;
+      transition: background .2s;
+    }
+    .popup-close-btn:hover { background: rgba(255,255,255,.2); }
+    .popup-body { padding: 16px 20px 18px; }
+    .popup-desc { font-size: .8rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 14px; }
+    .popup-features {
+      display: flex; flex-direction: column; gap: 6px;
+      margin-bottom: 16px;
+    }
+    .popup-feature {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .75rem; color: var(--ink-mid);
+    }
+    .popup-feature i { color: var(--green); font-size: .72rem; width: 14px; }
+    .popup-cta-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 12px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; border: none; border-radius: 10px;
+      font-family: var(--font-sans); font-size: .88rem; font-weight: 700;
+      cursor: pointer; transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 4px 16px rgba(16,185,129,.35);
+    }
+    .popup-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(16,185,129,.45); }
+    .popup-cta-btn:active { transform: translateY(0); }
+    .popup-free-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.22); color: #fff;
+      font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+      padding: 2px 7px; border-radius: 100px; text-transform: uppercase;
+      margin-left: 2px;
+    }
+    .popup-skip {
+      display: block; text-align: center; margin-top: 10px;
+      font-size: .72rem; color: var(--ink-light);
+      cursor: pointer; background: none; border: none;
+      font-family: var(--font-sans);
+      transition: color .2s;
+    }
+    .popup-skip:hover { color: var(--ink); }
+    .popup-progress {
+      height: 3px; background: var(--border);
+      position: relative; overflow: hidden;
+    }
+    .popup-progress-bar {
+      height: 100%; background: var(--green);
+      width: 100%;
+      animation: popup-countdown 8s linear forwards;
+    }
+    @keyframes popup-countdown {
+      from { width: 100%; }
+      to   { width: 0%; }
+    }
+    @media (max-width: 480px) {
+      #resource-popup { right: 16px; bottom: 16px; width: calc(100vw - 32px); }
+    }
+
     /* RESOURCE REQUEST MODAL */
     #resource-modal {
       display: none;
@@ -2681,6 +2796,40 @@
     });
   }
 
+  // Resource popup (auto-show)
+  (function() {
+    if (sessionStorage.getItem('popup_dismissed')) return;
+    var popup = document.getElementById('resource-popup');
+    var shown = false;
+
+    function showPopup() {
+      if (shown) return;
+      shown = true;
+      popup.classList.add('popup-show');
+    }
+
+    // 8秒後に表示
+    var timer = setTimeout(showPopup, 8000);
+
+    // スクロール40%でも表示
+    window.addEventListener('scroll', function onScroll() {
+      var scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      if (scrolled > 0.4) {
+        clearTimeout(timer);
+        showPopup();
+        window.removeEventListener('scroll', onScroll);
+      }
+    }, { passive: true });
+  })();
+
+  function closePopup(dismiss) {
+    var popup = document.getElementById('resource-popup');
+    popup.classList.remove('popup-show');
+    popup.classList.add('popup-hide');
+    if (dismiss) sessionStorage.setItem('popup_dismissed', '1');
+    setTimeout(function() { popup.classList.remove('popup-hide'); }, 400);
+  }
+
   // Resource request modal
   function openResourceModal() {
     document.getElementById('resource-modal').style.display = 'flex';
@@ -2786,6 +2935,37 @@
     }
   });
 </script>
+
+<!-- RESOURCE POPUP -->
+<div id="resource-popup" role="dialog" aria-label="資料請求ポップアップ">
+  <div class="popup-progress"><div class="popup-progress-bar" id="popup-progress-bar"></div></div>
+  <div class="popup-head">
+    <div class="popup-head-inner">
+      <div class="popup-icon"><i class="fa-solid fa-file-pdf"></i></div>
+      <div class="popup-head-text">
+        <div class="popup-tag">Free Download</div>
+        <strong>Supplement Oracle<br>サービス資料 配布中</strong>
+      </div>
+    </div>
+    <button class="popup-close-btn" onclick="closePopup(true)" aria-label="閉じる">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div class="popup-body">
+    <p class="popup-desc">機能詳細・料金プランをまとめた資料を<strong>無料</strong>でお届けしています。</p>
+    <div class="popup-features">
+      <div class="popup-feature"><i class="fa-solid fa-check"></i>導入事例・活用シーン掲載</div>
+      <div class="popup-feature"><i class="fa-solid fa-check"></i>料金プラン・ROI試算つき</div>
+      <div class="popup-feature"><i class="fa-solid fa-check"></i>入力30秒・即ダウンロード</div>
+    </div>
+    <button class="popup-cta-btn" onclick="closePopup(false);openResourceModal();">
+      <i class="fa-solid fa-file-arrow-down"></i>
+      無料で資料をもらう
+      <span class="popup-free-tag">FREE</span>
+    </button>
+    <button class="popup-skip" onclick="closePopup(true)">今は不要です</button>
+  </div>
+</div>
 
 <!-- RESOURCE REQUEST MODAL -->
 <div id="resource-modal" onclick="if(event.target===this)closeResourceModal()">
