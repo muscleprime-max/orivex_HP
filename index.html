@@ -2796,10 +2796,20 @@
     });
   }
 
-  // Resource popup (auto-show)
-  (function() {
+  // Resource popup (auto-show) — DOMContentLoaded 後に実行
+  function closePopup(dismiss) {
+    var popup = document.getElementById('resource-popup');
+    if (!popup) return;
+    popup.classList.remove('popup-show');
+    popup.classList.add('popup-hide');
+    if (dismiss) sessionStorage.setItem('popup_dismissed', '1');
+    setTimeout(function() { popup.classList.remove('popup-hide'); }, 400);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
     if (sessionStorage.getItem('popup_dismissed')) return;
     var popup = document.getElementById('resource-popup');
+    if (!popup) return;
     var shown = false;
 
     function showPopup() {
@@ -2813,22 +2823,16 @@
 
     // スクロール40%でも表示
     window.addEventListener('scroll', function onScroll() {
-      var scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      var total = document.body.scrollHeight - window.innerHeight;
+      if (total <= 0) return;
+      var scrolled = window.scrollY / total;
       if (scrolled > 0.4) {
         clearTimeout(timer);
         showPopup();
         window.removeEventListener('scroll', onScroll);
       }
     }, { passive: true });
-  })();
-
-  function closePopup(dismiss) {
-    var popup = document.getElementById('resource-popup');
-    popup.classList.remove('popup-show');
-    popup.classList.add('popup-hide');
-    if (dismiss) sessionStorage.setItem('popup_dismissed', '1');
-    setTimeout(function() { popup.classList.remove('popup-hide'); }, 400);
-  }
+  });
 
   // Resource request modal
   function openResourceModal() {
