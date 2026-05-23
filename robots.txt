@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /web/
+Disallow: /nutrimind/
+Disallow: /code/
+
+Sitemap: https://orivex.jp/sitemap.xml
