@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初回体験セッションにサプリ診断を組み込む3ステップ——成約率と客単価を同時に上げるヒアリング設計術 | ORIVEX. ブログ</title>
+  <meta name="description" content="体験セッションのどのタイミングでサプリ診断を挟めばいいか。押し売り感ゼロで成約率と客単価を同時に上げるヒアリング設計を3ステップで解説します。">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:    #10b981;
+      --green-dk: #059669;
+      --green-lt: #d1fae5;
+      --bg:       #ffffff;
+      --bg-warm:  #f9fafb;
+      --bg-dark:  #0f1117;
+      --ink:      #111827;
+      --ink-mid:  #374151;
+      --ink-light:#6b7280;
+      --border:   #e5e7eb;
+      --radius:   10px;
+      --font-sans:'Noto Sans JP', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --max:      1080px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== HEADER ===== */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      transition: box-shadow .2s;
+    }
+    #site-header.scrolled { box-shadow: var(--shadow-sm); }
+    .header-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: .04em; }
+    .header-logo em { font-style: normal; color: var(--green); }
+    .header-nav ul { display: flex; gap: 24px; list-style: none; }
+    .header-nav a { font-size: .83rem; font-weight: 500; color: var(--ink-light); transition: color .2s; }
+    .header-nav a:hover { color: var(--ink); }
+    .header-nav a.active { color: var(--green); font-weight: 700; }
+    .header-cta { font-size: .82rem; font-weight: 700; color: #fff; background: var(--green); padding: 8px 18px; border-radius: 8px; transition: background .2s; }
+    .header-cta:hover { background: var(--green-dk); }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      margin-top: 64px;
+      padding: 14px 0;
+      background: var(--bg-warm);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: .78rem; color: var(--ink-light);
+    }
+    .breadcrumb-inner a { color: var(--ink-light); transition: color .2s; }
+    .breadcrumb-inner a:hover { color: var(--green); }
+    .breadcrumb-inner i { font-size: .6rem; }
+
+    /* ===== ARTICLE LAYOUT ===== */
+    .article-wrap {
+      max-width: 780px; margin: 0 auto; padding: 64px 32px 100px;
+    }
+
+    /* ===== POST HEADER ===== */
+    .post-meta {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .post-category {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--green-dk); background: var(--green-lt);
+      padding: 4px 12px; border-radius: 100px;
+    }
+    .post-date {
+      font-size: .78rem; color: var(--ink-light);
+      font-family: var(--font-mono);
+    }
+    .post-readtime {
+      font-size: .78rem; color: var(--ink-light);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .post-title {
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700; line-height: 1.5;
+      color: var(--ink); margin-bottom: 16px;
+      letter-spacing: -.01em;
+    }
+    .post-subtitle {
+      font-size: .93rem; color: var(--ink-light); line-height: 1.9;
+      border-left: 3px solid var(--green);
+      padding-left: 16px; margin-bottom: 40px;
+    }
+    .post-divider {
+      width: 100%; height: 1px; background: var(--border); margin-bottom: 48px;
+    }
+
+    /* ===== AUTHOR ===== */
+    .author-strip {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 48px;
+    }
+    .author-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--green-lt);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: var(--green-dk);
+      flex-shrink: 0;
+    }
+    .author-info { display: flex; flex-direction: column; gap: 2px; }
+    .author-name { font-size: .88rem; font-weight: 700; color: var(--ink); }
+    .author-role { font-size: .75rem; color: var(--ink-light); }
+
+    /* ===== ARTICLE BODY ===== */
+    .post-body { font-size: .95rem; line-height: 2; color: var(--ink-mid); }
+    .post-body p { margin-bottom: 1.6em; }
+    .post-body h2 {
+      font-size: 1.2rem; font-weight: 700; color: var(--ink);
+      margin: 2.5em 0 .8em;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--green);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .post-body h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px; height: 1.2em;
+      background: var(--green);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .post-body h3 {
+      font-size: 1rem; font-weight: 700; color: var(--ink);
+      margin: 2em 0 .7em;
+    }
+    .post-body .lead {
+      font-size: 1.02rem; font-weight: 500;
+      color: var(--ink); line-height: 2;
+      background: var(--bg-warm);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 2em;
+    }
+    .post-body blockquote {
+      border-left: 3px solid var(--green);
+      background: var(--green-lt);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px;
+      margin: 1.8em 0;
+      font-size: .92rem; color: var(--ink); line-height: 2;
+    }
+    .post-body .callout {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin: 2em 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .post-body .callout-icon {
+      font-size: 1.2rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .post-body .callout p { margin: 0; font-size: .88rem; }
+
+    /* ===== STEP CARDS ===== */
+    .step-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      margin: 1.6em 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--green);
+    }
+    .step-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--green); color: #fff;
+      font-size: .82rem; font-weight: 700;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+    }
+    .step-card h3 {
+      font-size: 1.02rem; font-weight: 700; color: var(--ink);
+      margin: 0 0 10px; line-height: 1.6;
+    }
+    .step-card p {
+      font-size: .88rem; color: var(--ink-light); line-height: 1.9; margin: 0;
+    }
+
+    /* ===== RESULT BOX ===== */
+    .result-box {
+      background: var(--bg-dark);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      margin: 2.4em 0;
+      color: rgba(255,255,255,.85);
+    }
+    .result-box h3 {
+      font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+      color: var(--green); text-transform: uppercase;
+      margin-bottom: 20px; font-family: var(--font-mono);
+    }
+    .result-box ul {
+      list-style: none; display: flex; flex-direction: column; gap: 12px;
+    }
+    .result-box li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: .88rem; line-height: 1.8;
+    }
+    .result-box li::before {
+      content: '✓';
+      color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* ===== POST FOOTER ===== */
+    .post-footer {
+      margin-top: 64px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .author-card {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      display: flex; gap: 20px; align-items: flex-start;
+      margin-bottom: 40px;
+    }
+    .author-card-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--green-lt);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 700; color: var(--green-dk);
+      flex-shrink: 0;
+    }
+    .author-card-name { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .author-card-role { font-size: .78rem; color: var(--green-dk); font-weight: 600; margin-bottom: 10px; }
+    .author-card-bio { font-size: .84rem; color: var(--ink-light); line-height: 1.85; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .86rem; font-weight: 700; color: var(--green);
+      border: 1.5px solid var(--green);
+      padding: 10px 22px; border-radius: 8px;
+      transition: background .2s, color .2s;
+    }
+    .back-btn:hover { background: var(--green); color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-dark); color: rgba(255,255,255,.65);
+      padding: 48px 0 32px;
+      font-size: .82rem;
+    }
+    .footer-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+    .footer-logo em { font-style: normal; color: var(--green); }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.9); }
+    .footer-copy { font-size: .74rem; color: rgba(255,255,255,.3); width: 100%; text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      #site-header { padding: 0 18px; }
+      .header-nav { display: none; }
+      .header-cta { display: none; }
+      .breadcrumb-inner { padding: 0 18px; }
+      .article-wrap { padding: 48px 18px 72px; }
+      .post-body h2 { font-size: 1.05rem; }
+      .author-card { flex-direction: column; gap: 14px; padding: 20px; }
+      .step-card { padding: 20px 20px 18px; }
+      .result-box { padding: 24px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="site-header">
+  <a href="../index.html" class="header-logo">ORIVEX<em>.</em></a>
+  <nav class="header-nav">
+    <ul>
+      <li><a href="../index.html#about">ORIVEX.について</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="index.html" class="active">ブログ</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <a href="../index.html#contact" class="header-cta">お問い合わせ</a>
+</header>
+
+<!-- ===== BREADCRUMB ===== -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">ホーム</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <a href="index.html">ブログ</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>初回体験セッションにサプリ診断を組み込む3ステップ</span>
+  </div>
+</div>
+
+<!-- ===== ARTICLE ===== -->
+<main>
+  <article class="article-wrap">
+
+    <!-- Post Header -->
+    <div class="post-meta">
+      <span class="post-category">活用ガイド</span>
+      <span class="post-date">2026.05.23</span>
+      <span class="post-readtime"><i class="fa-regular fa-clock"></i> 約6分</span>
+    </div>
+
+    <h1 class="post-title">初回体験セッションにサプリ診断を組み込む3ステップ——<br>成約率と客単価を同時に上げるヒアリング設計術</h1>
+
+    <p class="post-subtitle">体験セッションの「どこ」で・「どう」提案するかだけで、クライアントの反応は180度変わる。押し売りゼロで成果につなげる設計を解説。</p>
+
+    <div class="author-strip">
+      <div class="author-avatar">田</div>
+      <div class="author-info">
+        <span class="author-name">田舞 弘徳</span>
+        <span class="author-role">ORIVEX. 代表</span>
+      </div>
+    </div>
+
+    <div class="post-divider"></div>
+
+    <!-- Body -->
+    <div class="post-body">
+
+      <p class="lead">「体験セッションでサプリを提案すると押し売りっぽくなる気がして…」——多くのトレーナーからこんな声を聞きます。しかし実際は、<strong>提案のタイミングと文脈さえ設計できていれば</strong>、サプリ診断は成約率と客単価を同時に上げる最強の「体験価値」になります。</p>
+
+      <p>ORIVEX.が現場のトレーナーと対話を重ねる中でわかってきたのは、「何を提案するか」より「いつ・どの文脈で提案するか」が決定的に重要だということです。今回は、初回体験セッションにSUPPLEMENT-ORACLE-を組み込む際に、すぐ使える3ステップのヒアリング設計を紹介します。</p>
+
+      <h2>なぜ「体験セッション×サプリ診断」が強いのか</h2>
+
+      <p>体験セッションとは、クライアントにとって「このジムでいいか」を判断する唯一の機会です。ここでどれだけ具体的な価値を感じてもらえるかが、成約率を左右します。</p>
+
+      <p>一般的な体験セッションでは、簡単なカウンセリング→運動→フィードバック、という流れが多いですが、この段階でクライアントが感じるのは「気持ちよかった」「親切だった」といった感情的な印象止まりになりがちです。</p>
+
+      <blockquote>
+        しかしそこに「データに基づくサプリ診断」を加えると、クライアントは「自分の身体のことを、ここまで具体的に提案してくれるジムは他にない」という<strong>理性的・専門的な信頼</strong>を持つようになります。
+      </blockquote>
+
+      <p>感情的な好印象＋専門的な信頼の両方が揃ったとき、人は初めて「ここに通う理由」を確信します。それが、成約率と単価の同時改善につながる本質的な理由です。</p>
+
+      <h2>3ステップのヒアリング設計</h2>
+
+      <p>以下の3ステップは、体験セッションの流れに沿って自然にサプリ診断を組み込むための設計です。セッション全体の時間は通常通り60〜90分で、サプリ診断に割くのは後半15〜20分程度が理想です。</p>
+
+      <div class="step-card">
+        <div class="step-badge">01</div>
+        <h3>ゴール設定ヒアリングで「困りごと」を言語化する</h3>
+        <p>セッション序盤のカウンセリングで、体型・体重・筋力といった目標だけでなく、「日常のコンディション」についても掘り下げます。「最近、疲れが取れにくいと感じることはありますか？」「睡眠の質はどうですか？」といった質問は、後のサプリ提案への自然な伏線になります。クライアントが自分の言葉で「困りごと」を口にした瞬間、それがそのまま診断の動機になります。</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">02</div>
+        <h3>運動後のクールダウンで診断を「ご褒美」として提示する</h3>
+        <p>運動パートの直後、身体が温まり気持ちが開いているタイミングで診断を提案します。「せっかくなので、今日の目標やお身体の状態に合ったサプリを科学的に調べてみましょうか」という一言で、クライアントは診断を「追加の費用」ではなく「このジムのサービスの一部」として受け取ります。この文脈のずらし方が最も重要です。</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">03</div>
+        <h3>診断結果をフィードバックの「軸」に組み込む</h3>
+        <p>SUPPLEMENT-ORACLE-が出力した診断レポートを画面や印刷物で共有しながら、「○○さんの目標には、このサプリが科学的に有効とされています。PubMedのデータにも記載があります」と伝えます。ここで重要なのは「売り込まない」こと。「まずは試してみることもできますし、継続的な指導の中で様子を見ながら調整していくこともできます」という選択肢を渡すことで、クライアントは押し売りではなく「専門家のアドバイス」として受け取ります。</p>
+      </div>
+
+      <h2>成約率と単価が同時に上がる理由</h2>
+
+      <p>このフローには、心理的な裏付けがあります。</p>
+
+      <p>人が購買を決断するとき、感情と理性の両方が必要です。体験セッションで「気持ちよかった・信頼できそう」という感情的な印象を作り、診断結果で「科学的根拠がある・自分に合った提案だ」という理性的な納得を得られたとき、決断への抵抗が最も小さくなります。</p>
+
+      <div class="callout">
+        <span class="callout-icon">💡</span>
+        <p>診断レポートは「自分専用の提案書」として機能します。クライアントは「汎用的なサプリを買わされた」ではなく「私のデータに基づいた最適解を提示してもらった」と感じる。この差が、後日の継続購入率とLTVにも大きく影響します。</p>
+      </div>
+
+      <p>また、サプリ提案が「オプションサービス」として自然に体験の一部になることで、入会プランにサプリ込みのパッケージを提示しやすくなり、<strong>平均客単価の引き上げ</strong>も実現しやすくなります。実際に体験に組み込んでいるトレーナーからは、「体験セッション後の月額プラン＋サプリセットでの成約率が上がった」という声が届いています。</p>
+
+      <h2>よくある失敗パターンと回避策</h2>
+
+      <h3>失敗①：カウンセリング冒頭でいきなり診断を提案する</h3>
+      <p>まだ信頼関係ができていない段階でのサプリ提案は、クライアントに「最初からサプリを売りたいんだ」という警戒心を与えます。診断はあくまでセッション後半、ラポールが形成されてからが原則です。</p>
+
+      <h3>失敗②：診断結果を一方的に読み上げる</h3>
+      <p>「このサプリが必要です」と断定的に伝えると、クライアントはその瞬間から「断る理由」を探し始めます。「お身体の状態に合わせて、こういう選択肢があります」という提示型のコミュニケーションを徹底してください。</p>
+
+      <h3>失敗③：体験の都度、異なる流れで提案する</h3>
+      <p>スタッフによってサプリ提案の有無がバラバラだと、クライアントはそのジムのサービス品質を信頼しにくくなります。3ステップのフローをスタッフ全員で共有し、体験セッションを標準化することが長期的な信頼醸成につながります。</p>
+
+      <h2>このフローで得られる3つの成果</h2>
+
+      <div class="result-box">
+        <h3>Expected Outcomes</h3>
+        <ul>
+          <li>体験からの成約率の向上：「専門性」と「個別感」が同時に伝わり、クライアントが通う明確な理由を持つ</li>
+          <li>初月からの客単価アップ：入会プランにサプリをセット提案しやすくなり、平均単価が自然に上昇する</li>
+          <li>スタッフ間の指導品質の均一化：診断フローを標準化することで、新人トレーナーでも同じレベルの体験を提供できる</li>
+        </ul>
+      </div>
+
+      <h2>おわりに</h2>
+
+      <p>体験セッションは、クライアントとジムの関係がスタートする「ゼロ回目の信頼形成」の場です。そこにデータと科学的根拠を組み込むことで、感情的な好感に加えて理性的な納得を生み出せる。これが、ORIVEX.がSUPPLEMENT-ORACLE-の開発を通じて現場で実証してきた価値です。</p>
+
+      <blockquote>
+        サプリ提案は「売る行為」ではなく、「クライアントの目標に向き合う姿勢を示す行為」です。
+      </blockquote>
+
+      <p>今回紹介した3ステップは、どんな規模のジムでも今日から導入できる設計です。ぜひ次の体験セッションから試してみてください。疑問点や現場での活用事例があれば、ぜひお問い合わせからお聞かせください。現場の声が、プロダクトをさらに良くする力になります。</p>
+
+    </div>
+
+    <!-- Post Footer -->
+    <div class="post-footer">
+      <div class="author-card">
+        <div class="author-card-avatar">田</div>
+        <div>
+          <p class="author-card-name">田舞 弘徳</p>
+          <p class="author-card-role">ORIVEX. 代表</p>
+          <p class="author-card-bio">「健康づくりは人づくりである」を理念に、パーソナルトレーナーの現場課題をテクノロジーで解決するプロダクトを開発・提供。Supplement Oracle、NutriMind など、現場で使えるツールをつくり続けています。</p>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> ブログ一覧へ戻る
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<!-- ===== FOOTER ===== */
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ORIVEX<em>.</em></div>
+    <ul class="footer-links">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="index.html">ブログ</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+      <li><a href="http://policy.orivex.jp/" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>
