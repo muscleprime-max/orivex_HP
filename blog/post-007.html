@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サプリ提案は「渡して終わり」ではない。クライアントの継続を支える30日フォロー設計 | ORIVEX. ブログ</title>
+  <meta name="description" content="サプリメントを提案したのに「まだ買っていません」「飲み忘れました」と言われた経験はありませんか。提案当日・1週間後・30日後の3つの確認ポイントで、継続されるフォロー設計を解説します。">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:    #10b981;
+      --green-dk: #059669;
+      --green-lt: #d1fae5;
+      --bg:       #ffffff;
+      --bg-warm:  #f9fafb;
+      --bg-dark:  #0f1117;
+      --ink:      #111827;
+      --ink-mid:  #374151;
+      --ink-light:#6b7280;
+      --border:   #e5e7eb;
+      --radius:   10px;
+      --font-sans:'Noto Sans JP', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --max:      1080px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--ink); background: var(--bg); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== HEADER ===== */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      transition: box-shadow .2s;
+    }
+    #site-header.scrolled { box-shadow: var(--shadow-sm); }
+    .header-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: .04em; }
+    .header-logo em { font-style: normal; color: var(--green); }
+    .header-nav ul { display: flex; gap: 24px; list-style: none; }
+    .header-nav a { font-size: .83rem; font-weight: 500; color: var(--ink-light); transition: color .2s; }
+    .header-nav a:hover { color: var(--ink); }
+    .header-nav a.active { color: var(--green); font-weight: 700; }
+    .header-cta { font-size: .82rem; font-weight: 700; color: #fff; background: var(--green); padding: 8px 18px; border-radius: 8px; transition: background .2s; }
+    .header-cta:hover { background: var(--green-dk); }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      margin-top: 64px;
+      padding: 14px 0;
+      background: var(--bg-warm);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: .78rem; color: var(--ink-light);
+    }
+    .breadcrumb-inner a { color: var(--ink-light); transition: color .2s; }
+    .breadcrumb-inner a:hover { color: var(--green); }
+    .breadcrumb-inner i { font-size: .6rem; }
+
+    /* ===== ARTICLE LAYOUT ===== */
+    .article-wrap {
+      max-width: 780px; margin: 0 auto; padding: 64px 32px 100px;
+    }
+
+    /* ===== POST HEADER ===== */
+    .post-meta {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .post-category {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--green-dk); background: var(--green-lt);
+      padding: 4px 12px; border-radius: 100px;
+    }
+    .post-date {
+      font-size: .78rem; color: var(--ink-light);
+      font-family: var(--font-mono);
+    }
+    .post-readtime {
+      font-size: .78rem; color: var(--ink-light);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .post-title {
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700; line-height: 1.5;
+      color: var(--ink); margin-bottom: 16px;
+      letter-spacing: -.01em;
+    }
+    .post-subtitle {
+      font-size: .93rem; color: var(--ink-light); line-height: 1.9;
+      border-left: 3px solid var(--green);
+      padding-left: 16px; margin-bottom: 40px;
+    }
+    .post-divider {
+      width: 100%; height: 1px; background: var(--border); margin-bottom: 48px;
+    }
+
+    /* ===== AUTHOR ===== */
+    .author-strip {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 48px;
+    }
+    .author-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--green-lt);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: var(--green-dk);
+      flex-shrink: 0;
+    }
+    .author-info { display: flex; flex-direction: column; gap: 2px; }
+    .author-name { font-size: .88rem; font-weight: 700; color: var(--ink); }
+    .author-role { font-size: .75rem; color: var(--ink-light); }
+
+    /* ===== ARTICLE BODY ===== */
+    .post-body { font-size: .95rem; line-height: 2; color: var(--ink-mid); }
+    .post-body p { margin-bottom: 1.6em; }
+    .post-body h2 {
+      font-size: 1.2rem; font-weight: 700; color: var(--ink);
+      margin: 2.5em 0 .8em;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--green);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .post-body h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px; height: 1.2em;
+      background: var(--green);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .post-body h3 {
+      font-size: 1rem; font-weight: 700; color: var(--ink);
+      margin: 2em 0 .7em;
+    }
+    .post-body .lead {
+      font-size: 1.02rem; font-weight: 500;
+      color: var(--ink); line-height: 2;
+      background: var(--bg-warm);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 2em;
+    }
+    .post-body blockquote {
+      border-left: 3px solid var(--green);
+      background: var(--green-lt);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px;
+      margin: 1.8em 0;
+      font-size: .92rem; color: var(--ink); line-height: 2;
+    }
+    .post-body .callout {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin: 2em 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .post-body .callout-icon {
+      font-size: 1.2rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .post-body .callout p { margin: 0; font-size: .88rem; }
+
+    .post-body ul, .post-body ol {
+      margin: 1em 0 1.6em 1.4em;
+    }
+    .post-body li { margin-bottom: .5em; font-size: .95rem; line-height: 1.9; }
+
+    /* ===== CHECKPOINT CARDS ===== */
+    .checkpoint-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      margin: 1.6em 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .checkpoint-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--green);
+    }
+    .checkpoint-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 28px; padding: 0 14px;
+      background: var(--green); color: #fff;
+      font-size: .72rem; font-weight: 700;
+      border-radius: 100px;
+      margin-bottom: 12px;
+      font-family: var(--font-mono); letter-spacing: .06em;
+    }
+    .checkpoint-card h3 {
+      font-size: 1.02rem; font-weight: 700; color: var(--ink);
+      margin: 0 0 12px; line-height: 1.6;
+    }
+    .checkpoint-card p {
+      font-size: .9rem; color: var(--ink-light); line-height: 1.9; margin: 0 0 .8em;
+    }
+    .checkpoint-card ul {
+      margin: .6em 0 0 1.2em;
+    }
+    .checkpoint-card li {
+      font-size: .88rem; color: var(--ink-light); line-height: 1.9; margin-bottom: .3em;
+    }
+    .checkpoint-card .example {
+      background: var(--green-lt);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-size: .87rem; color: var(--ink); line-height: 1.9;
+    }
+
+    /* ===== FAILURE BOX ===== */
+    .failure-box {
+      border: 1px solid #fee2e2;
+      background: #fff8f8;
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin: 1.4em 0;
+    }
+    .failure-box h3 {
+      font-size: .9rem; font-weight: 700; color: #dc2626;
+      margin: 0 0 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .failure-box p { font-size: .88rem; color: var(--ink-mid); line-height: 1.9; margin: 0; }
+
+    /* ===== RESULT BOX ===== */
+    .result-box {
+      background: var(--bg-dark);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      margin: 2.4em 0;
+      color: rgba(255,255,255,.85);
+    }
+    .result-box h3 {
+      font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+      color: var(--green); text-transform: uppercase;
+      margin-bottom: 20px; font-family: var(--font-mono);
+    }
+    .result-box ul {
+      list-style: none; display: flex; flex-direction: column; gap: 12px;
+    }
+    .result-box li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: .88rem; line-height: 1.8;
+    }
+    .result-box li::before {
+      content: '✓';
+      color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* ===== CTA ===== */
+    .cta-block {
+      background: var(--bg-dark);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      margin: 3em 0;
+      text-align: center;
+    }
+    .cta-block p {
+      color: rgba(255,255,255,.7);
+      font-size: .92rem; line-height: 1.9;
+      margin-bottom: 1.4em;
+    }
+    .cta-block .cta-title {
+      font-size: 1.1rem; font-weight: 700; color: #fff;
+      margin-bottom: .6em; line-height: 1.5;
+    }
+    .cta-btns {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .cta-btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green); color: #fff;
+      font-size: .88rem; font-weight: 700;
+      padding: 13px 28px; border-radius: 8px;
+      transition: background .2s;
+    }
+    .cta-btn-primary:hover { background: var(--green-dk); }
+    .cta-btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: rgba(255,255,255,.8);
+      font-size: .88rem; font-weight: 700;
+      padding: 13px 28px; border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,.3);
+      transition: border-color .2s, color .2s;
+    }
+    .cta-btn-secondary:hover { border-color: rgba(255,255,255,.7); color: #fff; }
+
+    /* ===== POST FOOTER ===== */
+    .post-footer {
+      margin-top: 64px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .author-card {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      display: flex; gap: 20px; align-items: flex-start;
+      margin-bottom: 40px;
+    }
+    .author-card-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--green-lt);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 700; color: var(--green-dk);
+      flex-shrink: 0;
+    }
+    .author-card-name { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .author-card-role { font-size: .78rem; color: var(--green-dk); font-weight: 600; margin-bottom: 10px; }
+    .author-card-bio { font-size: .84rem; color: var(--ink-light); line-height: 1.85; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .86rem; font-weight: 700; color: var(--green);
+      border: 1.5px solid var(--green);
+      padding: 10px 22px; border-radius: 8px;
+      transition: background .2s, color .2s;
+    }
+    .back-btn:hover { background: var(--green); color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-dark); color: rgba(255,255,255,.65);
+      padding: 48px 0 32px;
+      font-size: .82rem;
+    }
+    .footer-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 700; color: #fff; }
+    .footer-logo em { font-style: normal; color: var(--green); }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,.9); }
+    .footer-copy { font-size: .74rem; color: rgba(255,255,255,.3); width: 100%; text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.07); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      #site-header { padding: 0 18px; }
+      .header-nav { display: none; }
+      .header-cta { display: none; }
+      .breadcrumb-inner { padding: 0 18px; }
+      .article-wrap { padding: 48px 18px 72px; }
+      .post-body h2 { font-size: 1.05rem; }
+      .author-card { flex-direction: column; gap: 14px; padding: 20px; }
+      .checkpoint-card { padding: 20px 20px 18px; }
+      .result-box { padding: 24px 22px; }
+      .cta-block { padding: 32px 20px; }
+      .cta-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
+
+  <!-- SEO / OGP -->
+  <meta property="og:title" content="サプリ提案は「渡して終わり」ではない。クライアントの継続を支える30日フォロー設計 | ORIVEX. ブログ">
+  <meta property="og:description" content="サプリメントを提案したのに「まだ買っていません」「飲み忘れました」と言われた経験はありませんか。提案当日・1週間後・30日後の3つの確認ポイントで、継続されるフォロー設計を解説します。">
+  <meta property="og:url" content="https://orivex.jp/blog/post-007.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://orivex.jp/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="ORIVEX.">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="サプリ提案は「渡して終わり」ではない。クライアントの継続を支える30日フォロー設計 | ORIVEX.">
+  <meta name="twitter:description" content="提案当日・1週間後・30日後の3つの確認ポイントで、サプリ提案を継続指導につなげる30日フォロー設計を解説します。">
+  <meta name="twitter:image" content="https://orivex.jp/ogp.png">
+  <link rel="canonical" href="https://orivex.jp/blog/post-007.html">
+
+  <!-- 構造化データ (Article) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "サプリ提案は「渡して終わり」ではない。クライアントの継続を支える30日フォロー設計",
+    "description": "サプリメントを提案したのに「まだ買っていません」「飲み忘れました」と言われた経験はありませんか。提案当日・1週間後・30日後の3つの確認ポイントで、継続されるフォロー設計を解説します。",
+    "datePublished": "2026-07-14",
+    "dateModified": "2026-07-14",
+    "author": {
+      "@type": "Person",
+      "name": "田舞 弘徳"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ORIVEX.",
+      "url": "https://orivex.jp"
+    },
+    "url": "https://orivex.jp/blog/post-007.html",
+    "image": "https://orivex.jp/ogp.png",
+    "keywords": "サプリメント提案,パーソナルトレーナー,フォロー設計,継続指導,サプリ継続,ジム経営,クライアント管理"
+  }
+  </script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="site-header">
+  <a href="../index.html" class="header-logo">ORIVEX<em>.</em></a>
+  <nav class="header-nav">
+    <ul>
+      <li><a href="../index.html#about">ORIVEX.について</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="index.html" class="active">ブログ</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <a href="../index.html#contact" class="header-cta">お問い合わせ</a>
+</header>
+
+<!-- ===== BREADCRUMB ===== -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">ホーム</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <a href="index.html">ブログ</a>
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>サプリ提案は「渡して終わり」ではない</span>
+  </div>
+</div>
+
+<!-- ===== ARTICLE ===== -->
+<main>
+  <article class="article-wrap">
+
+    <!-- Post Header -->
+    <div class="post-meta">
+      <span class="post-category">継続指導</span>
+      <span class="post-date">2026.07.14</span>
+      <span class="post-readtime"><i class="fa-regular fa-clock"></i> 約8分</span>
+    </div>
+
+    <h1 class="post-title">サプリ提案は「渡して終わり」ではない。<br>クライアントの継続を支える30日フォロー設計</h1>
+
+    <p class="post-subtitle">提案書を渡しても「まだ買っていません」「飲み忘れました」と言われる。その原因は、クライアントの意識ではなく、継続するための仕組みが設計されていないことにある。</p>
+
+    <div class="author-strip">
+      <div class="author-avatar">田</div>
+      <div class="author-info">
+        <span class="author-name">田舞 弘徳</span>
+        <span class="author-role">ORIVEX. 代表</span>
+      </div>
+    </div>
+
+    <div class="post-divider"></div>
+
+    <!-- Body -->
+    <div class="post-body">
+
+      <p class="lead">クライアントにサプリメントを提案し、摂取量やタイミングを説明した。提案書も渡した。購入先も案内した。しかし次のセッションで確認すると「まだ買っていません」「数日飲んで忘れました」「いつ飲めばいいか分からなくなりました」——このような経験があるトレーナーは少なくないはずです。</p>
+
+      <p>問題は、クライアントの意識が低いことだけではありません。サプリメントの提案が<strong>「説明して終わる業務」</strong>になっており、継続するための仕組みまで設計されていないことにも原因があります。</p>
+
+      <p>今回は、サプリ提案を一度きりのアドバイスで終わらせず、継続指導につなげるための<strong>「30日フォロー設計」</strong>を解説します。</p>
+
+      <h2>良い提案と、継続される提案は違う</h2>
+
+      <p>科学的根拠があり、安全性にも配慮された提案であっても、クライアントが実行できなければ意味がありません。</p>
+
+      <p>クライアントは、トレーナーほどサプリメントを重要視しているとは限りません。仕事や家事で忙しくなれば飲み忘れます。複数の商品を一度に提示されれば、どれから始めるべきか分からなくなります。体感がすぐに得られなければ、必要性を疑うこともあります。</p>
+
+      <blockquote>
+        提案時に考えるべきなのは「何を飲んでもらうか」だけではない。<br>
+        <strong>なぜ取り入れるのか・何から始めるのか・いつ摂取するのか・何を基準に見直すのか</strong>——ここまで明確にして、初めて実行可能な提案になります。
+      </blockquote>
+
+      <h2>30日間を3つの確認ポイントに分ける</h2>
+
+      <p>30日という期間は、すべてのサプリメントの効果を判定する期限ではありません。成分によって作用や評価に必要な期間は異なります。ここでの30日間は、クライアントが無理なく実行できているかを確認し、指導内容を見直すための<strong>運用サイクル</strong>です。</p>
+
+      <!-- Checkpoint 1 -->
+      <div class="checkpoint-card">
+        <div class="checkpoint-badge">DAY 0 ／ 提案当日</div>
+        <h3>最優先の1つを決める</h3>
+        <p>提案当日に最も重要なのは、多くの商品を紹介することではありません。クライアントが最初に取り組む「優先順位1位」を決めることです。</p>
+        <p>必要性が考えられる成分が複数あったとしても、一度にすべてを始めると費用負担が大きくなり、どの成分が自分に合っているかも判断しにくくなります。提案時には最低限、次の3点を共有します。</p>
+        <ul>
+          <li>今回その成分を選んだ理由</li>
+          <li>摂取する量とタイミング</li>
+          <li>次回確認する日</li>
+        </ul>
+        <div class="example">
+          💬 例：「候補はいくつかありますが、まずは一番優先度が高いものから始めましょう。朝食後に摂る形で1週間続けて、次回のセッションで飲み忘れや体調面を確認します」
+        </div>
+        <p style="margin-top:14px;">重要なのは「全部必要です」と伝えるのではなく、クライアントが実行できる範囲に整理することです。</p>
+      </div>
+
+      <!-- Checkpoint 2 -->
+      <div class="checkpoint-card">
+        <div class="checkpoint-badge">DAY 7 ／ 1週間後</div>
+        <h3>効果ではなく、実行状況を確認する</h3>
+        <p>開始から1週間後の確認で、いきなり「効果はありましたか」と質問するのは適切とは限りません。短期間では変化を判断しにくい成分もあり、クライアントが「まだ分かりません」と答えるのは自然なことです。</p>
+        <p>最初の1週間で確認するべきなのは、<strong>効果よりも継続上の障害</strong>です。</p>
+        <ul>
+          <li>決めたタイミングで摂取できたか</li>
+          <li>飲み忘れが多い時間帯はないか</li>
+          <li>味や錠剤の大きさが負担になっていないか</li>
+          <li>胃腸の不快感など、気になる変化はないか</li>
+          <li>費用面で継続が難しくないか</li>
+        </ul>
+        <p style="margin-top:.8em;">例えば、朝食後に飲み忘れるのであれば、生活動線に合っていない可能性があります。その場合は成分の性質や安全性を確認したうえで、昼食後など続けやすいタイミングへ調整することも検討します。</p>
+        <div class="example">
+          💡 続かない原因を意志の弱さだけで片付けず、実行しやすい環境へ修正することがトレーナーの役割です。
+        </div>
+      </div>
+
+      <!-- Checkpoint 3 -->
+      <div class="checkpoint-card">
+        <div class="checkpoint-badge">DAY 30 ／ 1ヶ月後</div>
+        <h3>継続・変更・中止を判断する</h3>
+        <p>30日後には、摂取状況とクライアントの状態をあらためて整理します。確認する項目は次の4つです。</p>
+        <ul>
+          <li>実際にどの程度継続できたか</li>
+          <li>体調や生活面で気になる変化があったか</li>
+          <li>費用や手間に対して納得できているか</li>
+          <li>現在の目的に対して、引き続き優先度が高いか</li>
+        </ul>
+        <p style="margin-top:.8em;">ここで重要なのは、「一度提案したから続けてもらう」という考えを持たないことです。必要性が下がった場合、継続が大きな負担になっている場合、体調面で気になる点がある場合は、<strong>変更や中止も選択肢に入れます</strong>。</p>
+        <div class="example">
+          💡 サプリメントを増やすことだけが専門的な指導ではありません。現在の状況を確認し、必要のないものを減らす判断も、クライアントを守るための重要な仕事です。
+        </div>
+      </div>
+
+      <h2>よくあるフォローの失敗パターン</h2>
+
+      <div class="failure-box">
+        <h3><i class="fa-solid fa-circle-xmark"></i> 「どうでしたか？」だけで終わる</h3>
+        <p>質問が抽象的すぎると、クライアントも「よく分かりません」としか答えられません。摂取頻度、飲み忘れ、体調、費用、続けにくかった理由など、確認項目を具体的に分ける必要があります。</p>
+      </div>
+
+      <div class="failure-box">
+        <h3><i class="fa-solid fa-circle-xmark"></i> 体感がないことを理由に、すぐ別の商品を追加する</h3>
+        <p>短期間で明確な体感がないからといって、次々と成分を追加すると、費用と摂取数だけが増えていきます。まずは実際に決めた量を継続できていたのか、評価期間が適切なのか、食事や睡眠などの基本条件に問題がないかを確認するべきです。</p>
+      </div>
+
+      <div class="failure-box">
+        <h3><i class="fa-solid fa-circle-xmark"></i> 提案内容を記録していない</h3>
+        <p>前回何を、どのような理由で提案したのかが残っていなければ、継続的な評価はできません。担当トレーナーが変わった場合にも、説明の一貫性が失われます。提案した成分・量・タイミング・提案理由・確認予定日を共通の形式で残すことが必要です。</p>
+      </div>
+
+      <h2>ツールは「提案の代行」ではなく、対話の共通基準になる</h2>
+
+      <p>サプリメント提案を仕組み化する目的は、トレーナーとクライアントの会話を減らすことではありません。情報の整理や提案書の作成を効率化し、その分、<strong>クライアントが実際に続けられているかを確認する時間を確保すること</strong>です。</p>
+
+      <p>SUPPLEMENT-ORACLE-で作成した提案レポートを初回の基準として残しておけば、次回以降のセッションで「前回の提案から何が変わったか」を確認しやすくなります。</p>
+
+      <div class="callout">
+        <span class="callout-icon">💡</span>
+        <p>ツールが表示した内容をそのまま読み上げるだけでは、継続指導にはなりません。クライアントの生活・予算・理解度・実行状況を確認し、継続・変更・中止を判断するのはトレーナーです。テクノロジーは判断を奪うものではなく、より丁寧に判断するための余裕をつくるものです。</p>
+      </div>
+
+      <h2>まとめ｜提案の価値は、その後のフォローで決まる</h2>
+
+      <p>サプリメント指導は、商品を紹介した時点で完了するものではありません。</p>
+
+      <div class="result-box">
+        <h3>30日フォロー設計のポイント</h3>
+        <ul>
+          <li>提案当日：最優先の1つを決め、量・タイミング・次回確認日を共有する</li>
+          <li>1週間後：効果ではなく実行状況と継続上の障害を確認する</li>
+          <li>30日後：継続・変更・中止を根拠をもって判断する</li>
+          <li>記録：提案した成分・理由・確認予定日を共通フォーマットで残す</li>
+        </ul>
+      </div>
+
+      <p>この流れを仕組みとして持つことで、サプリメント提案は単発の販売ではなく、クライアントの目標に継続して向き合う指導になります。</p>
+
+      <p>クライアントに必要なのは、サプリメントの知識を一度に大量に渡すことではありません。自分に必要な選択肢を理解し、無理なく実行し、状況に合わせて見直せる環境です。</p>
+
+      <blockquote>
+        サプリメントを「提案して終わり」にせず、継続的な健康づくりにつなげる。<br>
+        その積み重ねが、クライアントから選ばれ続けるトレーナーとジムをつくります。
+      </blockquote>
+
+      <!-- CTA -->
+      <div class="cta-block">
+        <p class="cta-title">Supplement Oracle を無料で試す</p>
+        <p>クライアント情報をもとにサプリメント提案を整理し、継続指導の基準となるレポートを作成できます。まずは無料の Lite プランから、実際の提案フローをご確認ください。</p>
+        <div class="cta-btns">
+          <a href="../index.html#product" class="cta-btn-primary">
+            <i class="fa-solid fa-arrow-right"></i> 無料プランを試す
+          </a>
+          <a href="../index.html#contact" class="cta-btn-secondary">
+            <i class="fa-regular fa-envelope"></i> 導入について相談する
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Post Footer -->
+    <div class="post-footer">
+      <div class="author-card">
+        <div class="author-card-avatar">田</div>
+        <div>
+          <p class="author-card-name">田舞 弘徳</p>
+          <p class="author-card-role">ORIVEX. 代表</p>
+          <p class="author-card-bio">「健康づくりは人づくりである」を理念に、パーソナルトレーナーの現場課題をテクノロジーで解決するプロダクトを開発・提供しています。</p>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> ブログ一覧へ戻る
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ORIVEX<em>.</em></div>
+    <ul class="footer-links">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="index.html">ブログ</a></li>
+      <li><a href="../index.html#product">プロダクト</a></li>
+      <li><a href="../index.html#contact">お問い合わせ</a></li>
+      <li><a href="http://policy.orivex.jp/" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 ORIVEX. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>
